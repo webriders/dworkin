@@ -1,0 +1,43 @@
+{% load user_avatar %}
+
+<div class="article-item">
+    <div class="item-date-block">
+        <div class="binary-date">
+            {{ article.binary_date|safe }}
+        </div>
+        <div class="formatted-date">
+            {{ article.formatted_date|safe }}
+        </div>
+    </div>
+
+    <div class="article-block">
+        <div class="min-height"></div>
+        <div class="article-content">
+            <h2 class="article-title">
+                {% if article.description and article_mode != 'description' %}
+                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
+                {% else %}
+                    {{ article.title }}
+                {% endif %}
+            </h2>
+            <div class="article-short rich-content">
+                {{ article.short|safe }}
+            </div>
+            {% if article_mode == 'description' and article.description %}
+                <div class="article-uncut rich-content">
+                    {{ article.description|safe }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="clear"></div> <!-- IE6 fix -->
+    </div>
+
+    {% with article.author as user %}
+        <div class="item-author-block">
+            <div class="item-author-photo">
+                <a href="/users/{{ user.username }}/">{% user_avatar user 32 %}</a>
+            </div>
+            <a href="/users/{{ user.username }}/">{{ user.username }}</a>
+        </div>
+    {% endwith %}
+</div>

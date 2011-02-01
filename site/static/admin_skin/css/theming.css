@@ -1,0 +1,55 @@
+/** 
+ * theming styles
+ * 
+ */
+
+#header {
+    background: transparent url(../img/header_bg.png) 0 0 repeat-x;
+}
+
+#header #branding h1 {
+    margin: 0;
+    text-indent: -9999px;
+    background: transparent url(../img/logo.png) 0 0 no-repeat;
+    height: 70px;
+    width: 206px;
+    padding: 0;
+}
+
+div.breadcrumbs {
+    display: block;
+    padding: 10px 15px;
+    border: 0;
+    background-position: 0 -8px;
+    border-bottom: 1px solid #ededed;
+}
+
+div.breadcrumbs a {
+    display: inline;
+}
+
+/* Forbidden override */
+/*.dashboard-module h2 {*/
+    /*background: transparent url("../img/items_bg.png") 0 -5px repeat-x;*/
+    /*color: white;*/
+    /*font-weight: normal;*/
+/*}*/
+
+/*.dashboard-module h2 a.toggle-icon {*/
+    /*outline: none;*/
+/*}*/
+
+/*.dashboard-module {*/
+    /*overflow: hidden;*/
+    /*background: transparent url("../img/items_bg.png") 0 -3px repeat-x;*/
+/*}*/
+
+/*.group .dashboard-module {*/
+    /*background: transparent url("../img/items_bg.png") 0 0 repeat-x;*/
+/*}*/
+
+/*.group .ui-widget-content {*/
+    /*background: transparent;*/
+}
+
+

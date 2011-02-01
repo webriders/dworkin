@@ -1,0 +1,95 @@
+.site-header {
+    position: relative;
+    z-index: 1;
+    background: #45443c;
+}
+
+.site-header .logo {
+
+}
+
+@font-face {
+	font-family: 'FuroreRegular';
+	src: url('/static/web_fonts/furore/Furore-webfont.eot');
+	src: local('☺'), url('/static/web_fonts/furore/Furore-webfont.otf') format('opentype'), url('/static/web_fonts/furore/Furore-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*
+@font-face {
+	font-family: 'DaysRegular';
+	src: url('/static/web_fonts/days/Days-webfont.eot');
+	src: local('☺'), url('/static/web_fonts/days/Days-webfont.otf') format('opentype'), url('/static/web_fonts/days/Days-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'DitedRegular';
+	src: url('/static/web_fonts/dited/Dited-webfont.eot');
+	src: local('☺'), url('/static/web_fonts/dited/Dited-webfont.otf') format('opentype'), url('/static/web_fonts/dited/Dited-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+*/
+
+.site-header .page-title {
+    font: 48px/64px FuroreRegular,Tahoma,sans-serif;
+    color: white;
+    text-shadow: 2px 2px 0 black;
+    text-align: center;
+}
+
+.site-header .page-title a {
+    color: white;
+    text-decoration: none;
+}
+
+.site-header .page-subtitle {
+    font: 14px Tahoma,sans-serif;
+    color: white;
+    text-shadow: 1px 1px 0 black;
+    text-align: center;
+}
+
+.site-header .auth-block {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: right;
+    padding: 10px 10px 0 0;
+}
+
+.site-header .auth-block a {
+    text-decoration: none;
+    border-bottom: 1px dashed white;
+}
+
+.site-header .auth-block strong {
+    font-weight: bold;
+}
+
+.site-header .auth-block a:hover {
+    border-bottom: none;
+}
+
+.site-header .auth-block ul.user-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    margin-left: 20px;
+}
+
+.site-header .auth-block ul.user-actions li {
+    margin-bottom: 10px;
+}
+
+.site-header .auth-block ul.user-actions li a {
+    color: white;
+}
+
+.site-header .auth-block .greeting {
+    margin-bottom: 10px;
+}

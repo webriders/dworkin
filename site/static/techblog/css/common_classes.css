@@ -1,0 +1,9 @@
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.test { outline: 2px dashed red; }

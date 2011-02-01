@@ -1,0 +1,1 @@
+This is the local copy of django-markitup-0.6.1 media's part - to customize the skin

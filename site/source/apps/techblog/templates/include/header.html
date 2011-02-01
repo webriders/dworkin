@@ -1,0 +1,26 @@
+<div class="site-header">
+    <h1 class="page-title"><a href="/">Progressors</a></h1>
+    <h2 class="page-subtitle">прогрессивный web-dev живёт здесь</h2>
+
+    {% include 'include/menu.html' %}
+
+    <div class="auth-block">
+        {% if not request.user.is_authenticated %}
+            <ul class="user-actions">
+                <li><a href="{% url registration_register %}">Регистрация</a></li>
+                <li><a href="{% url auth_login %}">Вход</a></li>
+            </ul>
+        {% else %}
+            <ul class="user-actions">
+                <li><a href="/articles/add/">Написать статью</a></li>
+                <li><a href="/users/{{ request.user.username }}/">Профиль</a></li>
+                <li><a href="/users/{{ request.user.username }}/creative/">Креатив</a></li>
+                <li><a href="/users/{{ request.user.username }}/marked/">Избранное</a></li>
+            </ul>
+            <ul class="user-actions">
+                <li>Здравствуй, <strong>{{ request.user.username }}</strong>!</li>
+                <li><a href="{% url auth_logout %}?next=/">Выход</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</div>

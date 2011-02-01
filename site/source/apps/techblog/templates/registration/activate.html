@@ -1,0 +1,15 @@
+{% extends "abstract/base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/techblog/css/big_forms.css" />
+{% endblock css %}
+
+{% block content %}
+    <h1 class="big-form-title">Активация</h1>
+
+    <div class="big-form-text">
+        Привет, {{ account }}!<br/>
+        <br/>
+        Ваша учетная запись активирована. <a href="{% url auth_login %}">Заходите</a> на сайт.
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+.site-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #45443c;
+    text-shadow: 1px 1px 0 black;
+}
+
+.site-footer .footer-block {
+    padding: 20px;
+    overflow: hidden;
+}
+
+.pusher {
+    height: 160px;
+}
+
+.site-footer .bottom-menu {
+    margin-right: 40px;
+    float: left;
+}
+
+.site-footer .bottom-menu h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.site-footer .bottom-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 10px;
+}
+
+.site-footer .bottom-menu ul li {
+    margin-bottom: 10px;
+}
+
+.site-footer .bottom-menu ul li:last-child {
+    margin-bottom: 0;
+}
+
+.site-footer .bottom-menu ul li a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px dashed white;
+}
+
+.site-footer .bottom-menu ul li a:hover {
+    border-bottom: none;
+}

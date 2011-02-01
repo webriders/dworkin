@@ -1,0 +1,71 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{% block title %}Добро пожаловать на Your Site! {{ info.title }}{% endblock %}</title>
+
+	<!--<meta name="google-site-verification" content="agxLQbFL58g6gUHVA0ugA5H4xkQkdGUYk-pQ2VUfkA4" />-->
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    {% block meta_keywords %}
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+	{% endblock %}
+
+	<!-- Common CSS -->
+	<link href="/static/techblog/css/content_styles.css" rel="stylesheet" type="text/css" />
+	<link href="/static/techblog/css/common_classes.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="/static/techblog/css/site/header.css" />
+    <link rel="stylesheet" href="/static/techblog/css/site/menu.css" />
+    <link rel="stylesheet" href="/static/techblog/css/site/page.css" />
+    <link rel="stylesheet" href="/static/techblog/css/site/footer.css" />
+
+	{% block css %}
+	{% endblock css %}
+
+    <!-- jQuery & Co -->
+    <script type="text/javascript" src="/static/techblog/js/ext/jq/jquery-1.4.2.min.js"></script>
+
+    <!-- Site Scripts -->
+    <script type="text/javascript" src="/static/techblog/js/ext/wr/webriders-0.9.js"></script>
+    <script type="text/javascript" src="/static/techblog/js/common.js"></script>
+
+	{% block script %}
+	{% endblock script %}
+
+    {% comment %}Media could be both scripts and css{% endcomment %}
+    {% block media %}
+	{% endblock media %}
+
+    <!--[if lt IE 7]>
+    {% comment %}<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>{% endcomment %}
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container">
+        <!-- Page header -->
+        {% include 'include/header.html' %}
+
+        <!-- Page Content Block -->
+        <div class="page-container">
+            {% block content %}
+                Пока на сайте пусто! <a href="/admin/">Перейти в Административную часть сайта</a>
+            {% endblock content %}
+        </div>
+
+        <!-- Pusher - to add space for footer -->
+        <div class="pusher"></div>
+
+        <!-- Footer -->
+        {% include 'include/footer.html' %}
+
+        <!-- Popup block -->
+        {% comment %}<div class="popup-block-container">
+        </div>{% endcomment %}
+    </div>
+</body>
+</html>

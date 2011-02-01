@@ -1,0 +1,33 @@
+{% extends "abstract/base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/techblog/css/big_forms.css" />
+{% endblock css %}
+
+{% block content %}
+    <h1 class="big-form-title">Регистрация</h1>
+
+    <form method="post" class="big-form">
+        <dl>
+            {% for field in form %}
+                <dt>{{ field.label_tag }}</dt>
+                <dd>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="hint">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="myerrors">{{ field.errors }}</div>
+                    {% endif %}
+                </dd>
+            {% endfor %}
+        </dl>
+        <input type="submit" class="submit-form" value="Зарегистрироваться" />
+    </form>
+
+    <script type="text/javascript">
+        // < ![CDATA[
+        (function(){ var u = document.getElementById('id_username'); if (u) u.focus(); })();
+        // ]]>
+    </script>
+{% endblock %}

@@ -1,0 +1,134 @@
+.article-list {
+    padding-top: 40px;
+}
+
+.article-item {
+    position: relative;
+    padding-left: 40px;
+    zoom: 1; /* IE fix */
+    margin-bottom: 40px;
+}
+
+.article-item .item-date-block {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 100px;
+    background: #707070;
+    border-radius: 6px 0 0 6px;
+    -moz-border-radius: 6px 0 0 6px;
+    -webkit-border-radius: 6px 0 0 6px;
+}
+
+.article-item .item-date-block .binary-date {
+    padding: 5px;
+    width: 30px;
+}
+
+.article-item .item-date-block .binary-date .day-line,
+.article-item .item-date-block .binary-date .month-line,
+.article-item .item-date-block .binary-date .year-line {
+    height: 6px;
+    background: #707070 url("../../img/pages/articles/bclock_0.png") left top repeat;
+}
+
+.article-item .item-date-block .binary-date .day-line span,
+.article-item .item-date-block .binary-date .month-line span,
+.article-item .item-date-block .binary-date .year-line span {
+    display: block;
+    width: 6px;
+    height: 6px;
+    font-size: 1px; /* IE6 fix */
+    float: right;
+}
+
+.article-item .item-date-block .binary-date .day-line span.bit-1,
+.article-item .item-date-block .binary-date .month-line span.bit-1,
+.article-item .item-date-block .binary-date .year-line span.bit-1 {
+    background: #707070 url("../../img/pages/articles/bclock_1.png") left top no-repeat;
+}
+
+.article-item .item-date-block .formatted-date { text-align: center; padding-top: 2px; }
+.article-item .item-date-block .formatted-date span { display: block; }
+.article-item .item-date-block .formatted-date span.date-day { font-size: 24px; line-height: 18px; }
+.article-item .item-date-block .formatted-date span.date-month { font-size: 14px; }
+.article-item .item-date-block .formatted-date span.date-year { font-size: 12px; }
+.article-item .item-date-block .formatted-date span.date-time { font-size: 10px; }
+
+.article-item .item-author-block {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: #707070;
+    padding: 0 4px 4px;
+    border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+}
+
+.article-item .item-author-block .item-author-photo {
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    width: 32px;
+    height: 32px;
+    padding: 4px 4px 0;
+    background: #707070;
+    border-radius: 4px 0 0 0;
+    -moz-border-radius: 4px 0 0 0;
+    -webkit-border-radius: 4px 0 0 0;
+}
+
+.article-item .item-author-block .item-author-photo img {
+    vertical-align: middle;
+}
+
+.article-item .item-author-block a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px dashed white;
+}
+
+.article-item .item-author-block a:hover {
+    border-bottom: none;
+}
+
+.article-item .article-block {
+    overflow: hidden;
+    background-color: #45443c;
+}
+
+.article-block .min-height {
+    float: left;
+    width: 0;
+    height: 130px;
+}
+
+.article-block .article-content {
+    overflow: hidden;
+    padding: 4px 8px 8px;
+}
+
+.article-block .article-content h2.article-title {
+    color: #ffffff;
+    font-size: 24px;
+    text-shadow: 1px 1px 0 black;
+    margin-bottom: 8px;
+}
+
+.article-block .article-content h2.article-title a { color: #2173fc; }
+
+.article-block .article-short {
+    position: relative;
+}
+
+/* Details */
+.article-details {
+    padding-top: 40px;
+}
+
+.article-block .article-uncut {
+    padding-top: 10px;
+    position: relative;
+}

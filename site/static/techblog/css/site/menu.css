@@ -1,0 +1,13 @@
+.main-menu {
+    text-align: center;
+    padding: 4px 0 10px;
+}
+
+.main-menu a {
+    display: inline-block;
+    margin: 0 8px;
+    color: #2173fc;
+    font-size: 24px;
+    font-family: /*FuroreRegular,*/Tahoma,sans-serif;
+    text-shadow: 1px 1px 0 black;
+}

@@ -1,0 +1,24 @@
+<div class="site-footer">
+    <div class="footer-block">
+        <div class="bottom-menu">
+            <h2>Блог</h2>
+            <ul>
+                <li><a href="/">Статьи</a></li>
+                <li><a href="/users/">Авторы</a></li>
+                <li><a href="/tags/">Теги</a></li>
+            </ul>
+        </div>
+        {% if request.user.is_authenticated %}
+            <div class="bottom-menu">
+                <h2>Моё</h2>
+                <ul>
+                    <li><a href="/articles/add/">Написать статью</a></li>
+                    <li><a href="/users/{{ request.user.username }}/">Профиль</a></li>
+                    <li><a href="/users/{{ request.user.username }}/creative/">Креатив</a></li>
+                    <li><a href="/users/{{ request.user.username }}/marked/">Избранное</a></li>
+                </ul>
+            </div>
+        {% endif %}
+        <div class="clear"></div>  <!-- IE6 fix -->
+    </div>
+</div>

@@ -1,0 +1,2 @@
+Please, skip createadmin attempt on first manage.py syncdb, because techblog_userprofile db is not yet created
+(because it's under South control), when signal to create a Profile record is dispatched.

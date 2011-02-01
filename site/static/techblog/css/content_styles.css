@@ -1,0 +1,138 @@
+/**
+ * CSS Reset
+ * @author
+ *     Yahoo - URL http://developer.yahoo.com/yui/reset/
+ */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+	margin: 0;
+	padding: 0;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+fieldset,img {
+	border: 0;
+}
+address,caption,cite,code,dfn,th,var {
+	font-style: normal;
+	font-weight: normal;
+}
+ol,ul {
+	list-style: none;
+}
+caption,th {
+	text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+q:before, q:after {
+	content:'';
+}
+abbr,acronym { border: 0; }
+
+/**
+ * Default content styles
+ */
+html, body {
+    height: 100%;
+}
+
+body, td, pre {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+}
+
+a {
+    text-decoration: underline;
+    color: #2173fc;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+	border: none;
+}
+
+/* RTE Article */
+.rich-content {
+	font-size: 12px;
+    font-family: Tahoma,sans-serif;
+}
+
+.rich-content  *:last-child {
+    margin-bottom: 0;
+}
+
+.rich-content  p {
+	margin-bottom: 10px;
+}
+
+.rich-content h1, .rich-content h2, .rich-content h3, .rich-content h4, .rich-content h5, .rich-content h6 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.rich-content h1 {
+    font-size: 24px;
+}
+
+.rich-content h2 {
+    font-size: 20px;
+}
+
+.rich-content h3 {
+    font-size: 18px;
+}
+
+.rich-content h4 {
+	font-size: 16px;
+}
+
+.rich-content h5 {
+	font-size: 14px;
+}
+
+.rich-content h6 {
+	font-size: 12px;
+}
+
+.rich-content ul, .rich-content ol {
+	margin-bottom: 10px;
+	padding-left: 40px;
+}
+
+.rich-content ul li {
+    list-style: disc;
+	margin-bottom: 4px;
+}
+
+.rich-content ol li {
+	list-style: decimal;
+	margin-bottom: 4px;
+}
+
+.rich-content blockquote {
+    padding: 0 10px;
+	border-left: 2px solid lightgray;
+    margin-bottom: 10px;
+}
+
+.rich-content pre {
+    padding: 10px;
+    background: #555;
+    border: 1px dashed #777;
+	font-family: Courier New,monospace;
+    margin-bottom: 10px;
+}
+
+.rich-content code {
+	font-family: Courier New,monospace;
+    /*color: #d3d3d3;*/
+}
