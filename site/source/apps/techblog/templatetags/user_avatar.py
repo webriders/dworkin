@@ -28,41 +28,23 @@ class AvatarNode(template.Node):
 
     def render(self, context):
         img_url = ''
-
-        avatar_var = '%s.get_profile.avatar' % self.user_var
-        fb_version = '"square%s"' % self.size
         user = Variable(self.user_var).resolve(context)
 
         try:
-            default_img_url = DEFAULT_AVATAR_URLS[user.get_profile().gender] % self.size
+            profile = user.get_profile()
         except:
-            logger.warning("Can't get default avatar thumbnail for %s: no profile or gender is wrong (not in %s)" % (user, DEFAULT_AVATAR_URLS.keys()))
-            default_img_url = DEFAULT_AVATAR_URLS[''] % self.size
+            profile = None
+            logger.warning("Can't get user profile")
 
-        profile = user.get_profile()
-
-        if profile and profile.use_gravatar:
-            # import code for encoding urls and generating md5 hashes
-            import urllib, hashlib
-
-            # Set your variables here
-            email = user.email
-            size = self.size
-
-            # construct the url
-            img_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
-            img_url += urllib.urlencode({ 'd': default_img_url, 's': str(size) })
-        else:
-            try:
-                avatar = profile.avatar
-                if not avatar:
-                    raise
-                from filebrowser.templatetags.fb_versions import VersionNode
-                thumb_node = VersionNode(avatar_var, fb_version)
-                img_url = thumb_node.render(context)
-            except:
-                logger.warning("Can't get avatar thumbnail for %s: no profile, no avatar or no django-filebrowser" % user)
-                img_url = default_img_url
+        if profile:
+            if profile.use_gravatar:
+                import urllib, hashlib
+                img_url = "http://www.gravatar.com/avatar/" + hashlib.md5(user.email.lower()).hexdigest() + "?"
+                img_url += urllib.urlencode({ 'd': img_url, 's': str(self.size) })
+            elif profile.avatar:
+                img_url = profile.avatar.url
+            else:
+                img_url = DEFAULT_AVATAR_URLS[profile.gender or '']
 
         return u'<img src="%s" alt="%s" title="%s" width="%s" height="%s" />' % (img_url, user.username, user.get_full_name() or user.username, self.size, self.size)
 

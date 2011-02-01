@@ -1,9 +1,9 @@
-WR.techblog = {
+Dworkin = {
     init: function() {
         
     }
-}
+};
 
 $(function() {
-    WR.techblog.init();
+    Dworkin.init();
 });

@@ -36,14 +36,13 @@ EMAIL_HOST_PASSWORD = '93W374'
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT_PREFIX = '[TechBlog] '
 
-
-# DB settings will be overrided
-DATABASE_ENGINE = 'sqlite3'    # 'postgresql', 'mysql', 'sqlite3', 'ado_mssql', etc.
-DATABASE_NAME = os.path.abspath('db/database.sqlite') # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+# New DB-settings style (Django 1.2+)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.abspath('db/database.sqlite')
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -133,7 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    
+
     # External apps
     'south',
     'registration',

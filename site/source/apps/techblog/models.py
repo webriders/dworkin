@@ -7,6 +7,7 @@ from django.db.models.fields.files import ImageField
 from django.db.models.signals import post_save
 from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
+from django.conf import settings
 
 class Article(models.Model):
     class Meta:
@@ -56,7 +57,7 @@ class UserProfile(models.Model):
     )
     gender = models.CharField('Пол', max_length=16, choices=GENDERS, blank=True, null=True)
     birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
-    avatar = ImageField(u'Фото', blank=True, null=True, max_length=256, format='Image', directory='users/', help_text = '64x64')
+    avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
 
     def gravatar(self): pass

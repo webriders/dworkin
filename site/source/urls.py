@@ -12,9 +12,7 @@ STATIC_URL = getattr(settings, 'STATIC_URL', '/static/')
 urlpatterns = patterns('',
     ## External applications mappings
     (r'^admin_tools/', include('admin_tools.urls')),
-    (r'^admin/filebrowser/', include('filebrowser.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^tinymce/', include('tinymce.urls')),
     (r'^accounts/', include('registration.urls')),
 	(r'^robots\.txt$', 'django.views.generic.simple.redirect_to', {'url': '%srobots.txt' % STATIC_URL[1:]}),
 	## Internal applications mappings

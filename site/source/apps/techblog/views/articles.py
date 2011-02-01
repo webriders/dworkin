@@ -9,13 +9,15 @@ from techblog import models
 from techblog.models import Article
 
 
-def article_list(request, params={}, *args, **kwargs):
-    params['page'] = 'article_list'
+def article_list(request):
+    params = dict(page='article_list')
     articles = models.Article.objects.filter(is_public=True).order_by('-date')
     return object_list(request, articles, template_name='articles/article_list.html', extra_context=params)
 
 
-def add_or_edit_article(request, article_id=None, params={}, *args, **kwargs):
+def add_or_edit_article(request, article_id=None):
+    params = {}
+
     if request.user.is_authenticated():
         params['page'] = 'add_article'
         params['edit_allowed'] = True
@@ -44,7 +46,7 @@ def add_or_edit_article(request, article_id=None, params={}, *args, **kwargs):
                 else:
                     article.is_public = False
                 article.save()
-                return redirect('view_article', article_id=article.id)
+                return redirect('view_article', article.id)
         else:
             form = ArticleForm(instance=article) # An unbound form
         params['form'] = form
@@ -53,6 +55,5 @@ def add_or_edit_article(request, article_id=None, params={}, *args, **kwargs):
 
 def view_article(request, article_id=None, params={}, *args, **kwargs):
     params['page'] = 'view_article'
-    params['page']
     articles = models.Article.objects.filter(is_public=True).order_by('-date')
     return object_detail(request, articles, article_id, template_name='articles/view_article.html', extra_context=params)

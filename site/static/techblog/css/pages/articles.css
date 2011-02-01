@@ -65,6 +65,8 @@
     border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     -webkit-border-radius: 0 0 6px 6px;
+    min-width: 32px;
+    text-align: center;
 }
 
 .article-item .item-author-block .item-author-photo {
