@@ -8,7 +8,7 @@ Requirements:
 Installation:
 -------------
 1. Create empty virtual environment:
-   virtualenv --no-site-packages dworkin
+   virtualenv --no-site-packages --distribute dworkin
 2. Install all required libs via pip (use ./requirements.txt)
 3. Copy apps static:
    env/dworkin/.../site-packages/admin_tools/media/admin_tools -> ./site/static/ext/admin_tools
