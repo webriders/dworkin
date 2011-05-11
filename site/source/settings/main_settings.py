@@ -84,8 +84,8 @@ STATIC_URL = '/static/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/adminmedia/'
-ADMIN_MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'adminmedia') 
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+#ADMIN_MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'adminmedia')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'c^7$)t^ka7oe+z6nfw)#$10auo=_$5oqv%6@nhhzm%k5s$1mxr'
@@ -117,9 +117,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    # Django 1.2+
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'django.core.context_processors.static',
 )
 
 INSTALLED_APPS = (
@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.staticfiles',
 
     # External apps
     'south',
@@ -141,6 +142,20 @@ INSTALLED_APPS = (
 
     # Internal apps
     'techblog',
+)
+
+import markitup
+import admin_tools
+
+STATICFILES_DIRS = (
+    (os.path.join("ext", "markitup"), os.path.join(markitup.__path__[0], "media", "markitup")),
+    (os.path.join("ext", "admin_tools"), os.path.join(admin_tools.__path__[0], "media", "admin_tools")),
+)
+
+STATICFILES_FINDERS = (
+    'conf.staticfiles.finders.StaticFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
 INTERNAL_IPS = ('127.0.0.1', 'localhost', 'django.local')
