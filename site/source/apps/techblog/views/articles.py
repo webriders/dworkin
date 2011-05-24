@@ -1,19 +1,33 @@
 from django.views.generic.list_detail import object_list, object_detail
+from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect
 from datetime import datetime
 
-
 from techblog.forms import ArticleForm
 from techblog import models
-from techblog.models import Article
+from techblog.models import Article, UserProfile
 
 
-def article_list(request):
-    params = dict(page='article_list')
-    articles = models.Article.objects.filter(is_public=True).order_by('-date')
-    return object_list(request, articles, template_name='articles/article_list.html', extra_context=params)
+class ArticleList(ListView):
+    context_object_name = 'article_list'
+    template_name = 'articles/article_list.html'
 
+    def get_queryset(self):
+        author = self.request.GET.get("author", None)
+        if not author:
+            return models.Article.objects.filter(is_public=True).order_by('-date')
+        else:
+            return models.Article.objects.filter(is_public=True, author=author).order_by('-date')
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleList, self).get_context_data(**kwargs)
+        context['page'] = 'articles_page'
+        author_id = self.request.GET.get("author", None)
+        if author_id:
+            user = UserProfile.objects.get(id = author_id).user
+            context['author'] = user.first_name.capitalize() + ' ' + user.last_name.capitalize()
+        return context
 
 def add_or_edit_article(request, article_id=None):
     params = {}

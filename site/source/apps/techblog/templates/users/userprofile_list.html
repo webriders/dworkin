@@ -1,0 +1,9 @@
+{% extends 'abstract/base.html' %}
+
+{% block content %}
+    {% for profile in user_profiles %}
+        <div>
+            {% include 'users/userprofile_item.html' %}
+        </div>
+    {% endfor %}
+{% endblock %}

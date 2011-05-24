@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields.files import ImageField
@@ -19,7 +19,7 @@ class Article(models.Model):
 
     author = models.ForeignKey(User, verbose_name=u'Автор', null=True)
     title = models.CharField(u'Заголовок статьи', max_length=1024)
-    date = models.DateTimeField(u'Время публикации', blank=True, null=True)
+    date = models.DateTimeField(u'Время публикации', default=datetime.now())
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
     markup = models.CharField(u'Формат', max_length=16, default='html')
     short_raw = models.TextField(u'Начало')
@@ -59,6 +59,10 @@ class UserProfile(models.Model):
     birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
     avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
+
+    def get_articles_count(self):
+        query = Article.objects.filter(author=self).count()
+        return query
 
     def gravatar(self): pass
 

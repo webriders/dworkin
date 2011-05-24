@@ -7,8 +7,20 @@
 
 {% block content %}
     <div class="article-list">
-        {% for article in object_list %}
-            {% include 'articles/article_item.html' %}
-        {% endfor %}
+        {% if article_list %}
+
+            {% if author %}
+                <h1>Статьи написаные пользователем {{ author }}.</h1>
+            {% else %}
+                <h1>Все статьи</h1>
+            {% endif %}
+
+            {% for article in article_list %}
+                {% include 'articles/article_item.html' %}
+            {% endfor %}
+            
+        {% else %}
+            Автор не написал ни одной статьи.
+        {% endif %}
     </div>
 {% endblock content %}
