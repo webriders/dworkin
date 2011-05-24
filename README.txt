@@ -18,6 +18,3 @@ Installation:
    python ./manage.py syncdb
    python ./manage.py migrate
 5. Run server!
-
-
-1

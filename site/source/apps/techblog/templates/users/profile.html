@@ -25,7 +25,7 @@
 
         <p>Последняя активность: {{ user.last_login }} </p>
 
-        {% if is_authenticated %}
+        {% if edit_allowed %}
             <p><a href="/profile/edit/">РЕДАКТТРОВАТЬ</a> </p>
         {% endif %}
 
