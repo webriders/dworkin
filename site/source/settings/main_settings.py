@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'registration',
     'markitup',
     'haystack',
+    'taggit',
 
     # Internal apps
     'techblog',

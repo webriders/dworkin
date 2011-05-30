@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields.files import ImageField
 from django.db.models.signals import post_save
+from taggit.managers import TaggableManager
 from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
 from django.conf import settings
@@ -27,6 +28,7 @@ class Article(models.Model):
 
     short = models.TextField(u'Начало')
     description = models.TextField(u'Под катом', blank=True)
+    #tags = TaggableManager()
 
     def save(self, *args, **kwargs):
         self.short = html_parser(self.short_raw)

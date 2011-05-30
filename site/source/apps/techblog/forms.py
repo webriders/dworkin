@@ -30,13 +30,23 @@ class UserForm(forms.ModelForm):
 
     def clean_oldpassword(self):
         cd = self.cleaned_data
+        #self.instance.set_password('1')
         if cd.get('oldpassword') and not self.instance.check_password(cd['oldpassword']):
             raise ValidationError(u'Неверный пароль.')
         return cd['oldpassword']
 
+    def clean_password1(self):
+        cd = self.cleaned_data
+        if cd.get('oldpassword') != '' and cd.get('password1') == '':
+            raise ValidationError(u'Введите новый пароль')
+        return cd['password1']
+
+
     def clean_password2(self):
         cd = self.cleaned_data
-        if cd.get('password1') and cd.get('password2') and cd['password1'] != cd['password2']:
+        if cd.get('oldpassword') != '' and cd.get('password2') == '':
+            raise ValidationError(u'Введите новый пароль')
+        if cd.get('password1') and cd['password1'] != cd['password2']:
             raise ValidationError(u'Пароли не совпадают')
         return cd['password2']
 
