@@ -1,6 +1,10 @@
+# -*- coding: UTF-8 -*-
+
 from django import forms
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from markitup.widgets import MarkItUpWidget
-from techblog.models import Article
+from techblog.models import Article, UserProfile
 
 class ArticleForm(forms.ModelForm):
     #short = forms.TextField()
@@ -14,3 +18,31 @@ class ArticleForm(forms.ModelForm):
         }
 
 
+class UserForm(forms.ModelForm):
+    oldpassword = forms.CharField( widget=forms.PasswordInput, label='Страрый пароль', required=False )
+    password1 = forms.CharField( widget=forms.PasswordInput, label=u'Новый пароль', required=False )
+    password2 = forms.CharField( widget=forms.PasswordInput, label=u'Повтор пароля', required=False )
+
+    class Meta(object):
+        model = User
+        fields = ('first_name', 'last_name', 'oldpassword', 'password1', 'password2',)
+        # TODO: add editing for field 'email'
+
+    def clean_oldpassword(self):
+        cd = self.cleaned_data
+        if cd.get('oldpassword') and not self.instance.check_password(cd['oldpassword']):
+            raise ValidationError(u'Неверный пароль.')
+        return cd['oldpassword']
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd.get('password1') and cd.get('password2') and cd['password1'] != cd['password2']:
+            raise ValidationError(u'Пароли не совпадают')
+        return cd['password2']
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta(object):
+        model = UserProfile
+        fields = ('gender', 'birth_date', 'avatar',)
+         # TODO: add editing for field 'use_gravatar'

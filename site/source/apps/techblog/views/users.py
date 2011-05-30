@@ -1,8 +1,11 @@
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
+from django.shortcuts import redirect
 from django.views.generic.list_detail import object_list, object_detail
 from techblog.models import UserProfile
+from techblog.forms import UserProfileForm, UserForm
+
 
 class UserProfilesList(ListView):
     model = UserProfile
@@ -14,21 +17,65 @@ class UserProfilesList(ListView):
         context['page'] = 'users_page'
         return context
 
+
 class UserProfileDetail(DetailView):
     context_object_name = 'profile'
     template_name = 'users/profile.html'
 
     def get_object(self, queryset=None):
-        user_name = self.kwargs['user_name']
-        return UserProfile.objects.all().get(user__username=user_name)
+        user_name = self.kwargs.get('user_name') or self.request.user.username
+        if user_name:
+            return UserProfile.objects.all().get(user__username=user_name)
+        else:
+            return None
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        user_name = self.kwargs['user_name']
         context = super(UserProfileDetail, self).get_context_data(**kwargs)
         context['page'] = 'user_profile'
-        context['edit_allowed'] = user.is_authenticated() and user.username == user_name
+        context['is_authenticated'] = user.is_authenticated()
         return context
+
+
+class UserProfileEdit(TemplateView):
+    template_name = 'users/profile_edit.html'
+
+    def get(self, request, *args, **kwargs):
+        user =  request.user
+        context = {}
+
+        if user.is_authenticated():
+            user_profile = UserProfile.objects.get(user=user)
+
+            context['is_authenticated'] = True
+            context['UserForm'] = UserForm(instance=user)
+            context['UserProfileForm'] = UserProfileForm(instance=user_profile)
+        else:
+            context['is_authenticated'] = False
+
+        return self.render_to_response(context)
+
+    def post(self, request):
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+
+        user_form = UserForm(request.POST, request.FILES, instance=user)
+        user_profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+        if user_form.is_valid() and user_profile_form.is_valid():
+            password2 = user_form.cleaned_data['password2']
+            if password2:
+                user.set_password(password2)
+            user_form.save()
+            user_profile_form.save()
+            return redirect('/profile/')
+
+        context = {}
+        context['is_authenticated'] = True
+        context['UserForm'] = user_form
+        context['UserProfileForm'] = user_profile_form
+
+        return self.render_to_response(context=context)
 
 
 def user_creative(request, user_name=None, params={}, *args, **kwargs):

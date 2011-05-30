@@ -1,0 +1,34 @@
+{% extends 'abstract/base.html' %}
+
+{% load user_avatar %}
+
+{% block content %}
+
+    {% if is_authenticated %}
+
+         <h1>Редактирование профиля</h1>
+
+         <form enctype="multipart/form-data" method="post">
+            {% for field in UserForm %}
+                <p> <b>{{ field.label }}</b> {{ field }} </p>
+                {% if field.errors %}
+                    <p style="color:red;"> {{ field.errors }} </p>
+                {% endif %}
+            {% endfor %}
+
+            {% for field in UserProfileForm %}
+                <p> <b>{{ field.label }}</b> {{ field }} </p>
+                {% if field.errors %}
+                    <p style="color:red;"> {{ field.errors }} </p>
+                {% endif %}
+            {% endfor %}
+
+            <input type="submit" value="Save" />
+        </form>
+
+    {% else %}
+        <p> Вы не залогинены! </p>
+        <p> <a href="/accounts/login/"> Login </a> </p>
+    {% endif %}
+
+{% endblock %}

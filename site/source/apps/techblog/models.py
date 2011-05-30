@@ -50,7 +50,7 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return u'Профиль пользователя %s' % self.user.username
 
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User, unique=True)
     GENDERS = (
         (GENDER_MALE, u'Мужской'),
         (GENDER_FEMALE, u'Женский'),

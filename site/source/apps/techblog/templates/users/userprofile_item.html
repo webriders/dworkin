@@ -1,9 +1,9 @@
 {% load user_avatar %}
 
 <div>
-    {% with profile.user as user %}
-        {% user_avatar user 64 %}
-        <h1>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }} </h1>
+    {% with profile.user as p_user %}
+        {% user_avatar p_user 64 %}
+        <h1>{{ p_user.first_name|capfirst }} {{ p_user.last_name|capfirst }} </h1>
 
         {% if profile.gender %}
             <p>Пол: {{ profile.get_gender_display }}</p>
@@ -14,10 +14,16 @@
         {% endif %}
 
         {% if profile.get_articles_count %}
-            <p> <a href="/?author={{ profile.id }}">Статьи</a> </p>
+            <p> <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a> </p>
         {% endif %}
 
-        <p> <a href="/users/{{ user.username }}/">Профиль пользователя</a> </p>
+        {% ifequal p_user user %}
+            <p> <a href="/profile/">Это Ваш профиль</a> </p>
+        {% endifequal %}
+
+        {% ifnotequal p_user user %}
+            <p> <a href="/users/{{ p_user.username }}/">Профиль пользователя</a> </p>
+        {% endifnotequal %}
 
     {% endwith %}
 </div>

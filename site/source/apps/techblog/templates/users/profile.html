@@ -4,32 +4,37 @@
 
 {% block content %}
 
-    {% with profile.user as user %}
-        <h1>Профиль пользователя {{ user.first_name|capfirst }} {{ user.last_name|capfirst }} </h1>
+    {% if profile %}
+        {% with profile.user as p_user %}
+            <h1>Профиль пользователя {{ user.first_name|capfirst }} {{ user.last_name|capfirst }} </h1>
 
-        {% user_avatar profile.user 128 %}
-    
-        {% if profile.gender %}
-            <p>Пол: {{ profile.get_gender_display }}</p>
-        {% endif %}
+            {% user_avatar p_user 128 %}
 
-        {% if profile.birth_date %}
-            <p>Дата рождения: {{ profile.birth_date }}</p>
-        {% endif %}
+            {% if profile.gender %}
+                <p>Пол: {{ profile.get_gender_display }}</p>
+            {% endif %}
 
-        {% if  profile.get_articles_count %}
-            <p> <a href="/?author={{ profile.id }}">Статьи</a> </p>
-        {% endif %}
+            {% if profile.birth_date %}
+                <p>Дата рождения: {{ profile.birth_date }}</p>
+            {% endif %}
 
-        <p>Зарегистрирован: {{ user.date_joined }} </p>
+            {% if  profile.get_articles_count %}
+                <p><a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a></p>
+            {% endif %}
 
-        <p>Последняя активность: {{ user.last_login }} </p>
+            <p>Зарегистрирован: {{ user.date_joined }} </p>
 
-        {% if edit_allowed %}
-            <p><a href="/profile/edit/">РЕДАКТТРОВАТЬ</a> </p>
-        {% endif %}
+            <p>Последняя активность: {{ user.last_login }} </p>
 
-    {% endwith %}
+            {% if is_authenticated %}
+                <p><a href="/profile/edit/">РЕДАКТТРОВАТЬ</a></p>
+            {% endif %}
 
+        {% endwith %}
+
+    {% else %}
+        <p> Вы не залогинены! </p>
+        <p><a href="/accounts/login/"> Login </a></p>
+    {% endif %}
 
 {% endblock %}
