@@ -10,7 +10,9 @@
         {% if tags_list %}
 
             {% for tag in tags_list %}
-                <div><a href="/?tag={{ tag }}">{{ tag }}</a></div>
+                {% if tag.tagged_count %}
+                    <div><a href="/?tags={{ tag }} ">{{ tag }} ({{ tag.tagged_count }})</a>  </div>
+                {% endif %}
             {% endfor %}
 
         {% else %}

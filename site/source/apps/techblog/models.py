@@ -10,6 +10,7 @@ from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
 from django.conf import settings
 
+
 class Article(models.Model):
     class Meta:
         verbose_name = u'статья'
@@ -28,7 +29,7 @@ class Article(models.Model):
 
     short = models.TextField(u'Начало')
     description = models.TextField(u'Под катом', blank=True)
-    tags = TaggableManager(blank=True,)
+    tags = TaggableManager(blank=True)
 
     def save(self, *args, **kwargs):
         self.short = html_parser(self.short_raw)

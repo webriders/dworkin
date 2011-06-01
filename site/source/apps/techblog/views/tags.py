@@ -1,12 +1,17 @@
 from django.http import HttpResponse
 
 from django.views.generic import ListView
-from taggit.models import Tag
+from taggit.models import Tag, TaggedItem
 
 class TagsList(ListView):
     context_object_name = 'tags_list'
     template_name = 'tags/tags_list.html'
-    model = Tag
+
+    def get_queryset(self):
+        tags = Tag.objects.all()
+        for tag in tags:
+            tag.tagged_count = TaggedItem.objects.filter(tag=tag).count()
+        return tags
 
     def get_context_data(self, **kwargs):
         context = super(TagsList, self).get_context_data(**kwargs)
