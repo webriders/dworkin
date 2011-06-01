@@ -27,6 +27,7 @@ class UserProfileDetail(DetailView):
         if user_name:
             user_profile = UserProfile.objects.all().filter(user__username=user_name)
             user_profile = user_profile and user_profile[0]
+            return user_profile
         else:
             return None
 
