@@ -10,7 +10,11 @@
         {% if article_list %}
 
             {% if author %}
-                <h1>Статьи написаные пользователем {{ author }}.</h1>
+                {% ifequal author user %}
+                    <h1>Ваши статьи.</h1>
+                {% else %}
+                    <h1>Статьи написаные пользователем {{  author.first_name|capfirst }} {{ user.last_name|capfirst }}.</h1>
+                {% endifequal %}
             {% else %}
                 <h1>Все статьи</h1>
             {% endif %}

@@ -32,7 +32,7 @@ class ArticleList(ListView):
         author = self.request.GET.get("author", None)
         if author:
             user = UserProfile.objects.get(id = author).user
-            context['author'] = user.first_name.capitalize() + ' ' + user.last_name.capitalize()
+            context['author'] = user
         context['tags'] = self.request.GET.get("tags", '')
         return context
 
