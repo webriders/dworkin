@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from datetime import datetime
 
 from techblog.forms import ArticleForm
-from techblog import models
 from techblog.models import Article, UserProfile
 
 
@@ -14,19 +13,27 @@ class ArticleList(ListView):
     template_name = 'articles/article_list.html'
 
     def get_queryset(self):
+        filters = {}
+        filters['is_public'] = True
+
         author = self.request.GET.get("author", None)
-        if not author:
-            return models.Article.objects.filter(is_public=True).order_by('-date')
-        else:
-            return models.Article.objects.filter(is_public=True, author=author).order_by('-date')
+        if author:
+            filters['author'] = author
+
+        tags = self.request.GET.get("tags", None)
+        if tags:
+            filters['tags__name__in'] = tags.split(',')
+
+        return Article.objects.filter(**filters).distinct().order_by('-date')
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
-        author_id = self.request.GET.get("author", None)
-        if author_id:
-            user = UserProfile.objects.get(id = author_id).user
+        author = self.request.GET.get("author", None)
+        if author:
+            user = UserProfile.objects.get(id = author).user
             context['author'] = user.first_name.capitalize() + ' ' + user.last_name.capitalize()
+        context['tags'] = self.request.GET.get("tags", '')
         return context
 
 def add_or_edit_article(request, article_id=None):
@@ -69,5 +76,5 @@ def add_or_edit_article(request, article_id=None):
 
 def view_article(request, article_id=None, params={}, *args, **kwargs):
     params['page'] = 'view_article'
-    articles = models.Article.objects.filter(is_public=True).order_by('-date')
+    articles = Article.objects.filter(is_public=True).order_by('-date')
     return object_detail(request, articles, article_id, template_name='articles/view_article.html', extra_context=params)

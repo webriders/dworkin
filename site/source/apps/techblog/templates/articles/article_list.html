@@ -15,12 +15,16 @@
                 <h1>Все статьи</h1>
             {% endif %}
 
+            {% if tags %}
+                <h1>Теги: {{ tags }}.</h1>
+            {% endif %}
+
             {% for article in article_list %}
                 {% include 'articles/article_item.html' %}
             {% endfor %}
             
         {% else %}
-            Автор не написал ни одной статьи.
+            Не найдено ни одной статьи.
         {% endif %}
     </div>
 {% endblock content %}

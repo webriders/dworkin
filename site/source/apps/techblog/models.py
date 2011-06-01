@@ -28,7 +28,7 @@ class Article(models.Model):
 
     short = models.TextField(u'Начало')
     description = models.TextField(u'Под катом', blank=True)
-    #tags = TaggableManager()
+    tags = TaggableManager(blank=True,)
 
     def save(self, *args, **kwargs):
         self.short = html_parser(self.short_raw)

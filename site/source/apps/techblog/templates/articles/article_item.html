@@ -40,4 +40,9 @@
             <a href="/users/{{ user.username }}/">{{ user.username }}</a>
         </div>
     {% endwith %}
+
+    {% for tag in article.tags.all %}
+        <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
+    {% endfor %}
+
 </div>

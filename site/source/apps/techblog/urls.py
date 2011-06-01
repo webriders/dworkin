@@ -15,7 +15,7 @@ urlpatterns = patterns('techblog.views',
     (r'^users/(?P<user_name>\w+)/creative/$', 'user_creative'),
     (r'^users/(?P<user_name>\w+)/marked/$', 'marked_by_user'),
 
-    (r'^tags/$', 'tag_cloud'),
+    (r'^tags/$', views.TagsList.as_view()),
 
     (r'^api/parse_html/$', 'parse_html'),
 )
