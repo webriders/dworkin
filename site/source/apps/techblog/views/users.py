@@ -25,7 +25,8 @@ class UserProfileDetail(DetailView):
     def get_object(self, queryset=None):
         user_name = self.kwargs.get('user_name') or self.request.user.username
         if user_name:
-            return UserProfile.objects.all().get(user__username=user_name)
+            user_profile = UserProfile.objects.all().filter(user__username=user_name)
+            user_profile = user_profile and user_profile[0]
         else:
             return None
 

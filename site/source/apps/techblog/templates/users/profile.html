@@ -22,9 +22,9 @@
                 <p><a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a></p>
             {% endif %}
 
-            <p>Зарегистрирован: {{ user.date_joined }} </p>
+            <p>Зарегистрирован: {{ p_user.date_joined }} </p>
 
-            <p>Последняя активность: {{ user.last_login }} </p>
+            <p>Последняя активность: {{ p_user.last_login }} </p>
 
             {% if edit_allowed %}
                 <p><a href="/profile/edit/">РЕДАКТТРОВАТЬ</a></p>
@@ -33,8 +33,12 @@
         {% endwith %}
 
     {% else %}
-        <p> Вы не залогинены! </p>
-        <p><a href="/accounts/login/"> Login </a></p>
+        {% if user.is_authenticated %}
+            Профиль не найден!
+        {% else %}
+            <p> Вы не залогинены! </p>
+            <p><a href="/accounts/login/"> Login </a></p>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
