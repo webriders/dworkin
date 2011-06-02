@@ -29,10 +29,15 @@ class ArticleList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
-        author = self.request.GET.get("author", None)
-        if author:
-            user = UserProfile.objects.get(id = author).user
-            context['author'] = user
+
+        author_id = self.request.GET.get("author", None)
+        if author_id:
+            context['author'] = UserProfile.objects.get(id = author_id).user
+
+        user = self.request.user
+        if user.is_authenticated() and str(user.id) == author_id:
+            context['edit_allowed'] = True
+
         context['tags'] = self.request.GET.get("tags", '')
         return context
 
