@@ -4,6 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from markitup.widgets import MarkItUpWidget
+from taggit.forms import TagWidget
 from techblog.models import Article, UserProfile
 
 class ArticleForm(forms.ModelForm):
@@ -11,10 +12,11 @@ class ArticleForm(forms.ModelForm):
     #description = forms.TextField()
     class Meta(object):
         model = Article
-        fields = ('title', 'short_raw', 'description_raw')
+        fields = ('title', 'short_raw', 'description_raw', 'tags')
         widgets = {
             'short_raw': MarkItUpWidget(),
-            'description_raw': MarkItUpWidget()
+            'description_raw': MarkItUpWidget(),
+            'tags' : TagWidget(),
         }
 
 
