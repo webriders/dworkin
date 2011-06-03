@@ -98,7 +98,7 @@
 
 .article-item .article-block {
     overflow: hidden;
-    background-color: #45443c;
+    background-color: #FFFFFF;
 }
 
 .article-block .min-height {
@@ -109,17 +109,20 @@
 
 .article-block .article-content {
     overflow: hidden;
-    padding: 4px 8px 8px;
+    padding: 20px 40px 30px;
 }
 
 .article-block .article-content h2.article-title {
-    color: #ffffff;
-    font-size: 24px;
-    text-shadow: 1px 1px 0 black;
-    margin-bottom: 8px;
+    /*color: #ffffff;*/
+    color: #2173FC;
+    font-size: 26px;
+    /*text-shadow: 0 1px 0 #FFFFFF;*/
+    margin-bottom: 20px;
 }
 
-.article-block .article-content h2.article-title a { color: #2173fc; }
+.article-block .article-content h2.article-title a {
+    color: #2173FC;
+}
 
 .article-block .article-short {
     position: relative;

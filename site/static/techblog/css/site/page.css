@@ -19,6 +19,9 @@ body {
 
 /* Main Content Block */
 .page-container {
+    margin: 0 auto;
+    min-width: 1003px;
+    max-width: 1150px;
     padding: 0 40px;
     position: relative;
 }
