@@ -41,8 +41,16 @@
         </div>
     {% endwith %}
 
-    {% for tag in article.tags.all %}
-        <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
-    {% endfor %}
+    <div>
+        {% for tag in article.tags.all %}
+            <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
+        {% endfor %}
+    </div>
+
+
+    {% if edit_allowed %}
+        <br><br>
+        <div><a href="/articles/{{ article.id }}/edit/"> РЕДАКТИРОВАТЬ </a></div>
+    {% endif %}
 
 </div>

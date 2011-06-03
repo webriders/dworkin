@@ -29,10 +29,15 @@ class ArticleList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
-        author = self.request.GET.get("author", None)
-        if author:
-            user = UserProfile.objects.get(id = author).user
-            context['author'] = user
+
+        author_id = self.request.GET.get("author", None)
+        if author_id:
+            context['author'] = UserProfile.objects.get(id = author_id).user
+
+        user = self.request.user
+        if user.is_authenticated() and str(user.id) == author_id:
+            context['edit_allowed'] = True
+
         context['tags'] = self.request.GET.get("tags", '')
         return context
 
@@ -67,6 +72,11 @@ def add_or_edit_article(request, article_id=None):
                 else:
                     article.is_public = False
                 article.save()
+                
+                tags = form.cleaned_data['tags']
+                for tag in tags:
+                   article.tags.add(tag)
+
                 return redirect('view_article', article.id)
         else:
             form = ArticleForm(instance=article) # An unbound form
@@ -77,4 +87,7 @@ def add_or_edit_article(request, article_id=None):
 def view_article(request, article_id=None, params={}, *args, **kwargs):
     params['page'] = 'view_article'
     articles = Article.objects.filter(is_public=True).order_by('-date')
+    article = articles.filter(id=article_id)
+    author = article and article[0].author
+    params['edit_allowed'] = author == request.user
     return object_detail(request, articles, article_id, template_name='articles/view_article.html', extra_context=params)
