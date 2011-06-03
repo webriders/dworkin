@@ -2,28 +2,44 @@
 
 {% load user_avatar %}
 
+{% block css %}
+    <link rel="stylesheet" href="/static/techblog/css/big_forms.css" />
+{% endblock css %}
+
 {% block content %}
 
     {% if is_authenticated %}
 
-         <h1>Редактирование профиля</h1>
+         <h1 class="big-form-title">Редактирование профиля</h1>
 
-         <form enctype="multipart/form-data" method="post">
-            {% for field in UserForm %}
-                <p> <b>{{ field.label }}</b> {{ field }} </p>
-                {% if field.errors %}
-                    <p style="color:red;"> {{ field.errors }} </p>
-                {% endif %}
-            {% endfor %}
-
-            {% for field in UserProfileForm %}
-                <p> <b>{{ field.label }}</b> {{ field }} </p>
-                {% if field.errors %}
-                    <p style="color:red;"> {{ field.errors }} </p>
-                {% endif %}
-            {% endfor %}
-
-            <input type="submit" value="Save" />
+         <form enctype="multipart/form-data" method="post" class="big-form">
+            <dl>
+                {% for field in UserForm %}
+                    <dt>{{ field.label_tag }}</dt>
+                    <dd>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="hint">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="myerrors">{{ field.errors }}</div>
+                        {% endif %}
+                    </dd>
+                {% endfor %}
+                {% for field in UserProfileForm %}
+                    <dt>{{ field.label_tag }}</dt>
+                    <dd>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="hint">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="myerrors">{{ field.errors }}</div>
+                        {% endif %}
+                    </dd>
+                {% endfor %}
+            </dl>
+            <input type="submit" class="submit-form" value="Сохранить" />
         </form>
 
     {% else %}

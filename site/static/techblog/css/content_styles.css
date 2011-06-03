@@ -77,24 +77,25 @@ img {
 }
 
 .rich-content h1, .rich-content h2, .rich-content h3, .rich-content h4, .rich-content h5, .rich-content h6 {
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: 20px;
+    /*font-weight: bold;*/
+    margin-top: 20px;
 }
 
 .rich-content h1 {
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .rich-content h2 {
-    font-size: 20px;
+    font-size: 23px;
 }
 
 .rich-content h3 {
-    font-size: 18px;
+    font-size: 19px;
 }
 
 .rich-content h4 {
-	font-size: 16px;
+	font-size: 17px;
 }
 
 .rich-content h5 {
@@ -128,7 +129,7 @@ img {
 
 .rich-content pre {
     padding: 10px;
-    background: #555;
+    background: #FAFAFA;
     border: 1px dashed #777;
 	font-family: Courier New,monospace;
     margin-bottom: 10px;
