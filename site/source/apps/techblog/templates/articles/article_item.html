@@ -9,6 +9,12 @@
             {{ article.formatted_date|safe }}
         </div>
     </div>
+    {% if request.user == article.author %}
+        <div class="item-command">
+            <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
+        </div>
+    {% endif %}
+
 
     <div class="article-block">
         <div class="min-height"></div>
@@ -70,11 +76,5 @@
             <a href="/users/{{ user.username }}/">{{ user.username }}</a>
         </div>
     {% endwith %}
-
-
-    {% if edit_allowed %}
-        <br><br>
-        <div><a href="/articles/{{ article.id }}/edit/"> РЕДАКТИРОВАТЬ </a></div>
-    {% endif %}
 
 </div>
