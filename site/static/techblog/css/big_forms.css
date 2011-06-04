@@ -25,6 +25,7 @@
 }
 
 .big-form dd input,
+.big-form dd select,
 .big-form dd textarea {
     width: 400px;
     height: 30px;
@@ -40,6 +41,24 @@
     -webkit-border-radius: 6px;
     background: white
 }
+
+.big-form dd select {
+    width: 412px;
+    height: 40px;
+}
+
+.big-form dd input[type="file"] {
+}
+
+.big-form dd img {
+    float: left;
+    border: 1px solid white;
+}
+
+.big-form dd .change-avatar {
+    float: left;
+}
+
 
 .big-form dd textarea {
     height: 400px;

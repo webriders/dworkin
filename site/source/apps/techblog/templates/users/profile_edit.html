@@ -27,16 +27,31 @@
                     </dd>
                 {% endfor %}
                 {% for field in UserProfileForm %}
-                    <dt>{{ field.label_tag }}</dt>
-                    <dd>
-                        {{ field }}
-                        {% if field.help_text %}
-                            <div class="hint">{{ field.help_text }}</div>
-                        {% endif %}
-                        {% if field.errors %}
-                            <div class="myerrors">{{ field.errors }}</div>
-                        {% endif %}
-                    </dd>
+                    {% if field.name == 'avatar' %}
+                        <dt>{{ field.label_tag }}</dt>
+                        <dd>
+                            <img src="/media/{{ field.value }}" width="200"/>
+                            <div class="change-avatar">
+                                <input id="avatar-clear_id" type="checkbox" name="avatar-clear">
+                                <label for="avatar-clear_id">Очистить</label>
+                                <br>
+                                Изменить:
+                                <input id="id_avatar" type="file" name="avatar">
+                            </div>
+                        </dd>
+                    {% else %}
+                        <dt>{{ field.label_tag }}</dt>
+                        <dd>
+
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="hint">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="myerrors">{{ field.errors }}</div>
+                            {% endif %}
+                        </dd>
+                    {% endif %}
                 {% endfor %}
             </dl>
             <input type="submit" class="submit-form" value="Сохранить" />
