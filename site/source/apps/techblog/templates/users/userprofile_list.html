@@ -1,5 +1,12 @@
 {% extends 'abstract/base.html' %}
 
+{% block title %} Авторы / PROGRESSORS {% endblock %}
+
+{% block meta_keywords %}
+    <meta name="title" content="Авторы / PROGRESSORS"/>
+    {% include "include/common_meta_tags.html" %}
+{% endblock %}
+
 {% block content %}
     {% for profile in user_profiles %}
         <div>

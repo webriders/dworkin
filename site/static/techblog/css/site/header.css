@@ -48,8 +48,8 @@
 
 .site-header .page-subtitle {
     font: 14px Tahoma,sans-serif;
-    color: white;
-    text-shadow: 1px 1px 0 black;
+    color: lightgray;
+    text-shadow: 0px 0px 10px white;
     text-align: center;
 }
 

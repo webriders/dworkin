@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from datetime import datetime
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields.files import ImageField
@@ -41,6 +42,10 @@ class Article(models.Model):
 
     def formatted_date(self):
         return formatted_date(self.date)
+
+    def get_absolute_url(self):
+        return reverse('view_article', args=(self.id,))
+
 
 class UserProfile(models.Model):
     """

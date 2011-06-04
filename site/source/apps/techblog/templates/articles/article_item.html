@@ -13,19 +13,49 @@
     <div class="article-block">
         <div class="min-height"></div>
         <div class="article-content">
-            <h2 class="article-title">
-                {% if article.description and article_mode != 'description' %}
-                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
-                {% else %}
-                    {{ article.title }}
-                {% endif %}
-            </h2>
+            {% if article.description and article_mode != 'description' %}
+                <h2 class="article-title"> <a href="/articles/{{ article.id }}/">{{ article.title }}</a> </h2>
+            {% else %}
+                <h1 class="article-title">{{ article.title }}</h1>
+            {% endif %}
+            <div class="article-info">
+                {% with article.tags.all as article_tags %}
+                    {% if article_tags %}
+                        <div class="article-tags">
+                            {% for tag in article_tags %}
+                                <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                <div class="article-likes">
+                    {% include "articles/social_connections.html" %}
+                </div>
+            </div>
+            <div class="clear"></div> <!-- IE6 fix -->
+
             <div class="article-short rich-content">
                 {{ article.short|safe }}
             </div>
             {% if article_mode == 'description' and article.description %}
                 <div class="article-uncut rich-content">
                     {{ article.description|safe }}
+                </div>
+            {% endif %}
+            {% if article_mode == 'description' %}
+                <div class="article-info">
+                    {% with article.tags.all as article_tags %}
+                        {% if article_tags %}
+                            <div class="article-tags">
+                                {% for tag in article_tags %}
+                                    <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                    <div class="article-likes">
+                        {% include "articles/social_connections.html" %}
+                    </div>
                 </div>
             {% endif %}
         </div>
@@ -40,12 +70,6 @@
             <a href="/users/{{ user.username }}/">{{ user.username }}</a>
         </div>
     {% endwith %}
-
-    <div>
-        {% for tag in article.tags.all %}
-            <a href="/?tags={{ tag }}">{{ tag }}</a> {% if forloop.last %}{% else %}, {% endif %}
-        {% endfor %}
-    </div>
 
 
     {% if edit_allowed %}

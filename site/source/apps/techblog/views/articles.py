@@ -85,7 +85,8 @@ def add_or_edit_article(request, article_id=None):
 
 
 def view_article(request, article_id=None, params={}, *args, **kwargs):
-    params['page'] = 'view_article'
+    params['page'] = 'articles_page'
+    params['sub_page'] = 'view_article'
     articles = Article.objects.filter(is_public=True).order_by('-date')
     article = articles.filter(id=article_id)
     author = article and article[0].author

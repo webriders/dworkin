@@ -1,15 +1,28 @@
 {% extends 'abstract/base.html' %}
 
+{% block title %}Прогрессивный web-dev живёт здесь / Статьи / PROGRESSORS {% endblock %}
+
+{% block meta_keywords %}
+    <meta name="title" content="Прогрессивный web-dev живёт здесь / Статьи / PROGRESSORS"/>
+    {% include "include/common_meta_tags.html" %}
+{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="/static/techblog/css/pages/articles.css" />
     <link rel="stylesheet" href="/static/pygments/css/default.css" />
 {#    <link rel="stylesheet" href="/static/pygments/css/highlight_native.css" />#}
 {% endblock css %}
 
+{% block script %}
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js"></script>
+{% endblock %}
+
+
 {% block content %}
     <div class="article-list">
         {% if article_list %}
-
             {% if author %}
                 {% ifequal author user %}
                     <h1>Ваши статьи.</h1>

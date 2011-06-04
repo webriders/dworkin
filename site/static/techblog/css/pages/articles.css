@@ -113,16 +113,25 @@
 }
 
 .article-block .article-content h2.article-title {
-    /*color: #ffffff;*/
     color: #2173FC;
     font-size: 26px;
-    /*text-shadow: 0 1px 0 #FFFFFF;*/
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .article-block .article-content h2.article-title a {
     color: #2173FC;
 }
+
+.article-block .article-content h1.article-title {
+    color: #2173FC;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.article-block .article-content h1.article-title a {
+    color: #2173FC;
+}
+
 
 .article-block .article-short {
     position: relative;
@@ -137,3 +146,52 @@
     padding-top: 10px;
     position: relative;
 }
+
+.article-info {
+    /*overflow: hidden;*/
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #fcf0e2;
+    border-top: 1px solid #fcf0e2;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.article-info .article-tags {
+    float: left;
+    margin-top: 2px;
+    margin-right: 20px;
+}
+
+.article-info .article-tags a {
+    padding: 2px 6px 3px 6px;
+    /*background: orange;*/
+    background: #008AB8; 
+    color: white;
+    border-radius: 3px;
+    /*font-weight: bold;*/
+    text-decoration: none;
+}
+
+.article-info .article-tags a:hover {
+    text-shadow: 0px 0px 1px white;
+}
+
+.article-info .article-likes {
+    float: right;
+}
+
+.article-info .article-likes .social-connection {
+    float: right;
+}
+
+.article-info .article-likes .linkedin {
+    margin-left: 0px;
+}
+
+.article-info .article-likes .facebook {
+    margin-left: 15px;
+}
+

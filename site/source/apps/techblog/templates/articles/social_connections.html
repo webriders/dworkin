@@ -1,0 +1,20 @@
+
+<div class="social-connection facebook">
+    <fb:like href="http://{{ request.get_host }}{{ article.get_absolute_url }}"
+             layout="button_count"
+             show_faces="false" width="75"
+             height="100" action="like"></fb:like>
+</div>
+
+<div class="social-connection linkedin">
+    <script type="in/share" data-url="http://{{ request.get_host }}{{ article.get_absolute_url }}" data-counter="right"></script>
+</div>
+
+<div class="social-connection twitter">
+    <a href="http://twitter.com/share" class="twitter-share-button"
+       data-text="http://{{ request.get_host }}{{ article.get_absolute_url }} #progressors" data-count="horizontal"
+       data-url="http://{{ request.get_host }}{{ article.get_absolute_url }}">
+        Tweet
+    </a>
+</div>
+

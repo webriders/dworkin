@@ -1,5 +1,24 @@
 {% extends 'abstract/base.html' %}
 
+{% block title %} {{ object.title }} / Статьи / PROGRESSORS {% endblock %}
+
+
+{% block meta_keywords %}
+    {% with object as article %}
+        <meta name="title" content="{{ article.title }}"/>
+        <meta name="description" content="{{ article.short|striptags|safe|truncatewords:40 }}"/>
+        <meta name="author" content="{{ article.author.get_full_name }}"/>
+
+
+        <meta property="og:title" content="{{ article.title }}"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:url" content="http://{{ request.get_host }}{{ article.get_absolute_url }}/"/>
+        <meta property="og:description" content="{{ article.short|striptags|safe|truncatewords:40 }}"/>
+        {% include "include/facebook_common_og_tags.html" %}
+    {% endwith %}
+{% endblock %}
+
+
 {% block css %}
     <link rel="stylesheet" href="/static/techblog/css/pages/articles.css" />
     <link rel="stylesheet" href="/static/pygments/css/default.css" />
@@ -8,6 +27,13 @@
 {#    <link rel="stylesheet" href="/static/pygments/css/colorful.css" />#}
 {#    <link rel="stylesheet" href="/static/pygments/css/highlight_native.css" />#}
 {% endblock css %}
+
+{% block script %}
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js"></script>
+{% endblock %}
+
 
 {% block content %}
     <div class="article-details">

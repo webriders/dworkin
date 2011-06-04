@@ -1,6 +1,6 @@
 .main-menu {
     text-align: center;
-    padding: 4px 0 10px;
+    padding: 10px 0 10px;
 }
 
 .main-menu a {
@@ -10,4 +10,15 @@
     font-size: 24px;
     font-family: /*FuroreRegular,*/Tahoma,sans-serif;
     text-shadow: 1px 1px 0 black;
+}
+
+.main-menu .selected {
+    background: orange;
+    color: white;
+    text-shadow: none;
+    padding: 2px 10px 5px 10px;
+    border: 2px solid white;
+    box-shadow: 0px 0px 5px 1px white;
+    border-radius: 10px 10px 10px 10px;
+    text-decoration: none;
 }
