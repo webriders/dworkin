@@ -24,7 +24,8 @@
     margin-bottom: 10px;
 }
 
-.big-form dd input,
+.big-form dd input[type="text"],
+.big-form dd input[type="password"],
 .big-form dd select,
 .big-form dd textarea {
     width: 400px;
@@ -53,10 +54,25 @@
 .big-form dd img {
     float: left;
     border: 1px solid white;
+    margin-left: 5px;
 }
 
 .big-form dd .change-avatar {
     float: left;
+    width: 200px;
+    margin-left: 27px;
+    margin-bottom: 10px;
+}
+
+.big-form dd .change-avatar input[type="file"],
+.big-form dd .change-avatar input[type="checkbox"],
+.big-form dd .change-avatar label {
+    float: left;
+}
+
+.big-form dd .change-avatar label {
+    margin-right: 10px;
+    display: block;
 }
 
 

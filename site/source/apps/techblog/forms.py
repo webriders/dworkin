@@ -56,5 +56,5 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta(object):
         model = UserProfile
-        fields = ('gender', 'birth_date', 'avatar',)
+        fields = ('avatar', 'gender', 'birth_date', )
          # TODO: add editing for field 'use_gravatar'

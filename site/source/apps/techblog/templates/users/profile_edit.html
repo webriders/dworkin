@@ -30,14 +30,16 @@
                     {% if field.name == 'avatar' %}
                         <dt>{{ field.label_tag }}</dt>
                         <dd>
-                            <img src="/media/{{ field.value }}" width="200"/>
+                            <img src="/media/{{ field.value }}" width="150"/>
                             <div class="change-avatar">
+                                <label for="avatar-clear_id">Очистить:</label>
                                 <input id="avatar-clear_id" type="checkbox" name="avatar-clear">
-                                <label for="avatar-clear_id">Очистить</label>
-                                <br>
-                                Изменить:
+                                <br/>
+                                <br/>
+                                <label for="id_avatar">Изменить:</label>
                                 <input id="id_avatar" type="file" name="avatar">
                             </div>
+                            <div class="clear"></div>
                         </dd>
                     {% else %}
                         <dt>{{ field.label_tag }}</dt>
