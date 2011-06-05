@@ -136,17 +136,23 @@
 
 .article-block .article-content h2.article-title {
     color: #2173FC;
-    font-size: 26px;
+    font-size: 42px;
     margin-bottom: 10px;
 }
 
 .article-block .article-content h2.article-title a {
     color: #2173FC;
+    text-decoration: none;
 }
+
+.article-block .article-content h2.article-title a:hover {
+    text-decoration: underline;
+}
+
 
 .article-block .article-content h1.article-title {
     color: #2173FC;
-    font-size: 26px;
+    font-size: 42px;
     margin-bottom: 10px;
 }
 
