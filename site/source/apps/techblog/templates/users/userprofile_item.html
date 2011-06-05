@@ -1,30 +1,42 @@
 {% load user_avatar %}
 
-<div>
+<div class="profile">
     {% with profile.user as p_user %}
-        {% user_avatar p_user 64 %}
-        <h1>{{ p_user.first_name|capfirst }} {{ p_user.last_name|capfirst }} </h1>
+        <a href="/users/{{ p_user.username }}/">{% user_avatar p_user 100 %}</a>
+        <h2>
+            <a href="/users/{{ p_user.username }}/">
+            {% if p_user.first_name %}
+                {{ p_user.first_name|capfirst }} {{ p_user.last_name|capfirst }}
+            {% else %}
+                {{ p_user.username }}
+            {% endif %}
+            </a>
+        </h2>
 
-        {% if profile.gender %}
-            <p>Пол: {{ profile.get_gender_display }}</p>
-        {% endif %}
+{% comment %}
+        <div>
+            <h2>{{ p_user.first_name|capfirst }} {{ p_user.last_name|capfirst }} </h2>
+            {% if profile.gender %}
+                <p>Пол: {{ profile.get_gender_display }}</p>
+            {% endif %}
 
-        {% if profile.birth_date %}
-            <p>Дата рождения: {{ profile.birth_date }}</p>
-        {% endif %}
+            {% if profile.birth_date %}
+                <p>Дата рождения: {{ profile.birth_date }}</p>
+            {% endif %}
 
-        {% if profile.get_articles_count %}
-            <p> <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a> </p>
-        {% endif %}
+            {% if profile.get_articles_count %}
+                <p> <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a> </p>
+            {% endif %}
 
-        {% ifequal p_user user %}
-            <p> <a href="/profile/">Это Ваш профиль</a> </p>
-        {% endifequal %}
+            {% ifequal p_user user %}
+                <p> <a href="/profile/">Это Ваш профиль</a> </p>
+            {% endifequal %}
 
-        {% ifnotequal p_user user %}
-            <p> <a href="/users/{{ p_user.username }}/">Профиль пользователя</a> </p>
-        {% endifnotequal %}
-
+            {% ifnotequal p_user user %}
+                <p> <a href="/users/{{ p_user.username }}/">Профиль пользователя</a> </p>
+            {% endifnotequal %}
+        </div>
+{% endcomment %}
     {% endwith %}
 </div>
 

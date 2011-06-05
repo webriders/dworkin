@@ -35,7 +35,8 @@ class UserProfileDetail(DetailView):
         user = self.request.user
         user_name = self.kwargs.get('user_name') or self.request.user.username
         context = super(UserProfileDetail, self).get_context_data(**kwargs)
-        context['page'] = 'user_profile'
+        context['page'] = 'users_page'
+        context['sub_page'] = 'user_profile'
         context['edit_allowed'] = user.is_authenticated() and user.username == user_name
         return context
 

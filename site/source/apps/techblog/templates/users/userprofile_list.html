@@ -7,10 +7,18 @@
     {% include "include/common_meta_tags.html" %}
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="/static/techblog/css/pages/users.css" />
+{#    <link rel="stylesheet" href="/static/pygments/css/default.css" />#}
+{% endblock css %}
+
+{% block script %}
+{% endblock %}
+
 {% block content %}
-    {% for profile in user_profiles %}
-        <div>
-            {% include 'users/userprofile_item.html' %}
-        </div>
-    {% endfor %}
+    <div class="profiles">
+        {% for profile in user_profiles %}
+                {% include 'users/userprofile_item.html' %}
+        {% endfor %}
+    </div>
 {% endblock %}
