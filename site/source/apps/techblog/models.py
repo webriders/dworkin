@@ -4,6 +4,7 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Count
 from django.db.models.fields.files import ImageField
 from django.db.models.signals import post_save
 from taggit.managers import TaggableManager
@@ -11,6 +12,28 @@ from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
 from django.conf import settings
 
+class Category(models.Model):
+    class Meta:
+        verbose_name = u'Категория'
+        verbose_name_plural = u'Категории'
+        ordering = ('title',)
+
+    title = models.CharField(max_length=64, verbose_name=u'Заголовок')
+    slug = models.SlugField(max_length=64, verbose_name=u'Текстовая ссылка на статью в броузере', help_text=u'только анг.буквы, пример time_management_for_the_masses', default="")
+
+    def __unicode__(self):
+        return self.title
+
+#    def show_article_count(self):
+#        return create_linked_models_html(self.blogarticle_set.all(), "blog", 'blogarticle')
+#    show_article_count.short_description = u'Число статей по категории'
+#    show_article_count.allow_tags = True
+
+    @staticmethod
+    def get_categories_with_count():
+        categories = Category.objects.all()
+        categories = categories.annotate(count=Count('garticle__id')).filter(count__gt=0).order_by('-count')
+        return categories
 
 class Article(models.Model):
     class Meta:
@@ -31,6 +54,8 @@ class Article(models.Model):
     short = models.TextField(u'Начало')
     description = models.TextField(u'Под катом', blank=True)
     tags = TaggableManager(blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True)
+
 
     def save(self, *args, **kwargs):
         self.short = html_parser(self.short_raw)
