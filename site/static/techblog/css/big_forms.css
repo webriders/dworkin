@@ -156,11 +156,12 @@
     background: white;
 }
 
-.large-form dd textarea {
-    padding: 6px;
+.large-form dd select {
+    width: 101%;
 }
 
 .large-form dd textarea {
+    padding: 6px;
     height: 400px;
 }
 
@@ -193,7 +194,10 @@
     margin-bottom: 20px;
 }
 
-.large-form dd input:focus, .large-form dd textarea:focus {
+.large-form dd input:focus,
+.large-form dd textarea:focus,
+.large-form dd select:focus
+{
     border-color: #ff9900;
     box-shadow: 0 0 10px #ff9900;
     -moz-box-shadow: 0 0 10px #ff9900;
