@@ -47,6 +47,8 @@ class UserProfileEdit(TemplateView):
     def get(self, request, *args, **kwargs):
         user =  request.user
         context = {}
+        context['page'] = 'users_page'
+        context['sub_page'] = 'user_profile'
 
         if user.is_authenticated():
             user_profile = UserProfile.objects.get(user=user)

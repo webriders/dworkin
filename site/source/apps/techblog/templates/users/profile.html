@@ -2,43 +2,79 @@
 
 {% load user_avatar %}
 
+
+{% block title %} {{ profile.user.get_full_name }} / Авторы / PROGRESSORS {% endblock %}
+
+{% block meta_keywords %}
+    <meta name="title" content="Авторы / PROGRESSORS"/>
+    {% include "include/common_meta_tags.html" %}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/techblog/css/pages/users.css" />
+{#    <link rel="stylesheet" href="/static/pygments/css/default.css" />#}
+{% endblock css %}
+
+{% block script %}
+{% endblock %}
+
+
 {% block content %}
+    <div class="profile-details">
+        {% if profile %}
+            {% with profile.user as p_user %}
+                <div class="title-block">
+                    <h1><span>Профиль пользователя:</span> {{ user.get_full_name }} </h1>
+                </div>
 
-    {% if profile %}
-        {% with profile.user as p_user %}
-            <h1>Профиль пользователя {{ user.first_name|capfirst }} {{ user.last_name|capfirst }} </h1>
+                <div class="avatar-block">
+                    {% user_avatar p_user 300 %}
+                </div>
 
-            {% user_avatar p_user 128 %}
+                <div class="information-block">
+                    <div class="profile-controls">
+                        {% if  profile.get_articles_count %}
+                            <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a>
+                        {% endif %}
 
-            {% if profile.gender %}
-                <p>Пол: {{ profile.get_gender_display }}</p>
-            {% endif %}
+                        {% if edit_allowed %}
+                            <a href="/profile/edit/">Редактировать</a>
+                        {% endif %}
+                    </div>
+                    <div class="clear"></div>
 
-            {% if profile.birth_date %}
-                <p>Дата рождения: {{ profile.birth_date }}</p>
-            {% endif %}
+                    <div class="user-info">
+                        {% if p_user.username %}
+                            <p><span>Nickname:</span> {{ p_user.username }}</p>
+                        {% endif %}
 
-            {% if  profile.get_articles_count %}
-                <p><a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a></p>
-            {% endif %}
+                        {% if p_user.get_full_name %}
+                            <p><span>Имя:</span> {{ p_user.get_full_name }}</p>
+                        {% endif %}
 
-            <p>Зарегистрирован: {{ p_user.date_joined }} </p>
+                        {% if profile.gender %}
+                            <p><span>Пол:</span> {{ profile.get_gender_display }}</p>
+                        {% endif %}
 
-            <p>Последняя активность: {{ p_user.last_login }} </p>
+                        {% if profile.birth_date %}
+                            <p><span>Дата рождения:</span> {{ profile.birth_date }}</p>
+                        {% endif %}
+                    </div>
 
-            {% if edit_allowed %}
-                <p><a href="/profile/edit/">РЕДАКТТРОВАТЬ</a></p>
-            {% endif %}
-
-        {% endwith %}
-
-    {% else %}
-        {% if user.is_authenticated %}
-            Профиль не найден!
+                    <div class="user-dates">
+                        <p>Зарегистрирован: {{ p_user.date_joined }} </p>
+                        <p>Последняя активность: {{ p_user.last_login }} </p>
+                    </div>
+                </div>
+            {% endwith %}
         {% else %}
-            <p> Вы не залогинены! </p>
-            <p><a href="/accounts/login/"> Login </a></p>
+            {% if user.is_authenticated %}
+                Профиль не найден!
+            {% else %}
+                <p> Вы не залогинены! </p>
+                <p><a href="/accounts/login/"> Login </a></p>
+            {% endif %}
         {% endif %}
-    {% endif %}
 
+    </div>
 {% endblock %}

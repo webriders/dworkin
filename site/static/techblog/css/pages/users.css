@@ -1,30 +1,30 @@
-.profiles {
-    overflow: hidden;
-    text-align: center;
-    margin-top: 20px;
+/* -------------------------- PROFILE LIST ------------------------------ */
 
+.profiles {
+    float: left;
+    text-align: center;
+    padding-top: 20px;
 }
 
-.profile {
+.profiles .profile {
     margin: 0px 20px 0px 0px;
     width: 100px;
     float: left;
     padding: 10px;
 }
 
-.profile img {
+.profiles .profile img {
     float: left;
     border-radius: 5px;
     border: 1px solid black;
     box-shadow: 0px 0px 10px 1px white;
 }
 
-.profile img:hover {
+.profiles .profile img:hover {
     box-shadow: 0px 0px 10px 5px orange;
 }
 
-
-.profile h2 a {
+.profiles .profile h2 a {
     color: #FF9C00;
     font-size: 18px;
     margin: 10px 0 10px 0;
@@ -35,7 +35,7 @@
     text-align: center;
 }
 
-.profile h2 a:hover {
+.profiles .profile h2 a:hover {
     color: #FF9C00;
     font-size: 18px;
     margin: 10px 0 10px 0;
@@ -44,26 +44,105 @@
     text-decoration: underline;
 }
 
+/* -------------------------- PROFILE DETAILS ------------------------------ */
 
-/*
 
-.profile div {
-    width: 200px;
-    float: left;
-    margin-left: 20px;
+.profile-details  {
+    overflow: hidden;
+    /*margin-top: 20px;*/
+    width: 700px;
+    margin: 0 auto 40px;
 }
 
-.profile div h2 {
+.profile-details .title-block h1 {
     color: #FF9C00;
     font-size: 32px;
-    margin: 0 0 20px 0;
+    margin: 30px 0;
     text-shadow: 1px 1px 0 black;
+    text-align: center;
+    width: 100%;
+}
+
+.profile-details .title-block h1 span {
+    color: gray;
 }
 
 
-.profile div p {
+.profile-details .avatar-block {
+    float: left;
+    padding: 10px;
+}
 
+.profile-details .avatar-block img {
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 10px 1px white;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.profile-details .information-block {
+    float: left;
+    margin-left: 20px;
+    width: 350px;
+    margin-top: 10px;
+}
+
+.profile-details .information-block .user-info {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.profile-details .information-block .user-info  p {
+    color: #00A8E0;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+    padding: 2px;
+}
+
+.profile-details .information-block .user-info p span {
+    color: gray;
+}
+
+.profile-details .information-block .user-dates  {
+    margin-top: 20px;
+}
+
+.profile-details .information-block .user-dates p {
+    color: white;
+    font-size: 14px;
+}
+
+.profile-details .information-block .profile-controls {
+    float: left;
+    margin-bottom: 10px;
 }
 
 
-*/
+.profile-details .information-block .profile-controls a {
+    background: none repeat scroll 0 0 white;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 1px 1px 3px white;
+    min-width: 32px;
+    padding: 10px;
+    text-align: center;
+    color: orange;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0 0 2px #EEEEEE;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
+.profile-details .information-block .profile-controls a:hover {
+    box-shadow: 1px 1px 5px orange;
+    text-decoration: underline;
+}
+
+
