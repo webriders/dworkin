@@ -57,20 +57,32 @@
     <div class="control-panel">
         {% if request.user.is_authenticated %}
             <h3>Моё</h3>
-            
+            <ul class="categories">
+                <li class="{% if own_articles %}selected{% endif %}">
+                    <div class="button"></div>
+                    <a href="?own=articles">Статьи ({{ category.count }})</a>
+                </li>
+                <li class="{% if own_drafts %}selected{% endif %}">
+                    <div class="button"></div>
+                    <a href="?own=drafts">Черновики ({{ category.count }})</a>
+                </li>
+            </ul>
         {% endif %}
 
         <h3>Категории</h3>
         <ul class="categories">
             {% for category in categories %}
-                <li><div class="button"></div><a href="#">{{ category.title }} ({{ category.count }})</a></li>
+                <li class="{% if category.selected %}selected{% endif %} {% if category.disabled %}disabled{% endif %}">
+                    <div class="button"></div>
+                    <a href="?category={{ category.slug }}">{{ category.title }} ({{ category.count }})</a>
+                </li>
             {% endfor %}
         </ul>
 
         <h3>Теги</h3>
         <div class="tag-cloud">
             {% for tag in tag_cloud %}
-                <a href="?tags={{ tag.slug }}" class="{% if forloop.first %}selected{% endif %} {% if forloop.last %}disabled{% endif %}">
+                <a href="?tags={{ tag.slug }}" class="{% if tag.selected %}selected{% endif %} {% if tag.disabled %}disabled{% endif %}">
                     {{ tag.name }} ({{ tag.count }})
                 </a>
             {% endfor %}

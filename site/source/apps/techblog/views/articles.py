@@ -7,6 +7,7 @@ from datetime import datetime
 
 from techblog.forms import ArticleForm
 from techblog.models import Article, UserProfile, Category
+from techblog.service.articles import ArticleService
 from techblog.service.tags import TagService
 
 
@@ -15,21 +16,24 @@ class ArticleList(ListView):
     template_name = 'articles/article_list.html'
 
     def get_queryset(self):
-        filters = {}
-        filters['is_public'] = True
+        self.article_service = ArticleService()
+        articles = self.article_service.filter_articles(self.request)
 
-        author = self.request.GET.get("author", None)
-        if author:
-            filters['author'] = author
-
-        tags = self.request.GET.get("tags", None)
-        if tags:
-            filters['tags__name__in'] = tags.split(',') 
-
-        articles =  Article.objects.filter(**filters).distinct().order_by('-date')
+#        filters = {}
+#        filters['is_public'] = True
+#
+#        author = self.request.GET.get("author", None)
+#        if author:
+#            filters['author'] = author
+#
+#        tags = self.request.GET.get("tags", None)
+#        if tags:
+#            filters['tags__name__in'] = tags.split(',')
+#
+#        articles =  Article.objects.filter(**filters).distinct().order_by('-date')
         if articles:
 
-            self.paginator = Paginator( Article.objects.filter(**filters).distinct().order_by('-date'), 3)
+            self.paginator = Paginator(articles, 3)
 
             page_num = self.request.GET.get('page', 1)
             try:
@@ -47,8 +51,11 @@ class ArticleList(ListView):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
 
-        context["categories"] = Category.get_categories_with_count()
-        context["tag_cloud"] = TagService.get_tag_cloud()
+        context.update(self.article_service.get_control_panel_context(self.object_list.object_list))
+
+
+#        context["categories"] = Category.get_categories_with_count()
+#        context["tag_cloud"] = TagService.get_tag_cloud()
 
         author_id = self.request.GET.get("author", None)
         if author_id:
@@ -58,7 +65,7 @@ class ArticleList(ListView):
         if user.is_authenticated() and str(user.id) == author_id:
             context['edit_allowed'] = True
 
-        context['tags'] = self.request.GET.get("tags", '')
+#        context['tags'] = self.request.GET.get("tags", '')
 
         if self.object_list:
             try:

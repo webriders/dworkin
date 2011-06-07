@@ -19,7 +19,7 @@ class CustomIndexDashboard(Dashboard):
             deletable=False,
             draggable=False,
             collapsible=True,
-            include_list=('techblog',)
+            include_list=('techblog', 'taggit')
         ))
         self.children.append(ModelList(
             title = u'Авторы и Группы',
