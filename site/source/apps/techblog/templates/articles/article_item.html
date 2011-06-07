@@ -20,9 +20,23 @@
         <div class="min-height"></div>
         <div class="article-content">
             {% if article.description and article_mode != 'description' %}
-                <h2 class="article-title"> <a href="/articles/{{ article.id }}/">{{ article.title }}</a> </h2>
+                <h2 class="article-title">
+                    {% if article.category %}
+                        <span class="category" >
+                            <a href="#">{{ article.category.title }}</a> →
+                        </span>
+                    {% endif %}
+                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
+                </h2>
             {% else %}
-                <h1 class="article-title">{{ article.title }}</h1>
+                <h1 class="article-title">
+                    {% if article.category %}
+                        <span class="category" >
+                            <a href="#">{{ article.category.title }}</a> →
+                        </span>
+                    {% endif %}
+                    {{ article.title }}
+                </h1>
             {% endif %}
             <div class="article-info">
                 {% with article.tags.all as article_tags %}

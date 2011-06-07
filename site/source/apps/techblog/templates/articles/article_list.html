@@ -45,4 +45,27 @@
             Не найдено ни одной статьи.
         {% endif %}
     </div>
+    <div class="control-panel">
+        {% if request.user.is_authenticated %}
+            <h3>Моё</h3>
+            
+        {% endif %}
+
+        <h3>Категории</h3>
+        <ul class="categories">
+            {% for category in categories %}
+                <li><div class="button"></div><a href="#">{{ category.title }} ({{ category.count }})</a></li>
+            {% endfor %}
+        </ul>
+
+        <h3>Теги</h3>
+        <div class="tag-cloud">
+            {% for tag in tag_cloud %}
+                <a href="?tags={{ tag.slug }}" class="{% if forloop.first %}selected{% endif %} {% if forloop.last %}disabled{% endif %}">
+                    {{ tag.name }} ({{ tag.count }})
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="clear"></div>
 {% endblock content %}

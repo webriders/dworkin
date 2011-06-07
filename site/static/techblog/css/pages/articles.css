@@ -1,5 +1,7 @@
 .article-list {
     padding-top: 40px;
+    width: 80%;
+    float: left;
 }
 
 .article-item {
@@ -140,8 +142,12 @@
     margin-bottom: 10px;
 }
 
+.article-block .article-content .article-title .category,
+.article-block .article-content .article-title .category a {
+    color: #c3c4c6;
+}
+
 .article-block .article-content h2.article-title a {
-    color: #2173FC;
     text-decoration: none;
 }
 
@@ -195,11 +201,9 @@
 
 .article-info .article-tags a {
     padding: 2px 6px 3px 6px;
-    /*background: orange;*/
-    background: #008AB8; 
+    background: #008AB8;
     color: white;
     border-radius: 3px;
-    /*font-weight: bold;*/
     text-decoration: none;
 }
 
@@ -221,5 +225,100 @@
 
 .article-info .article-likes .facebook {
     margin-left: 15px;
+}
+
+/*------------------------------------- Control panel --------------------------------*/
+
+.control-panel {
+    float: left;
+    width: 15%;
+    padding-top: 40px;
+    margin-left: 20px;
+}
+
+.control-panel h3 {
+    color: gray;
+    font-size: 32px;
+    text-shadow: 1px 1px 0 black;
+    margin-bottom: 15px;
+}
+
+.control-panel .categories{
+    margin-bottom: 20px;
+    float: left;
+}
+
+.control-panel .categories li {
+    /*padding: 2px 6px 3px 6px;*/
+    /*margin-bottom: px;*/
+    /*border: 2px solid gray;*/
+    padding: 5px;
+    /*background: #008AB8;*/
+    /*color: white;*/
+    /*border-radius: 3px;*/
+    /*text-decoration: none;*/
+    /*margin-bottom: 10px;*/
+    /*margin-right: 10px;*/
+    /*display: block;*/
+    /*float: left;*/
+    /*border: 2px solid gray;*/
+}
+
+.control-panel .categories li .button {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background: white;
+    border: 2px solid gray;
+    float: left;
+    margin-right: 10px;
+}
+
+.control-panel .categories li a {
+    color: #FF9C00;
+    float: left;
+    font-size: 18px;
+    margin: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 black;
+    /**/
+    /*font-size: 18px;*/
+    /*color: white;*/
+    /*text-decoration: none;*/
+    /*text-shadow: 1px 1px 1px #808080;*/
+    /*color: orange;*/
+}
+
+
+.control-panel .tag-cloud a {
+    padding: 2px 6px 3px 6px;
+    background: #008AB8;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    display: block;
+    float: left;
+    border: 2px solid gray;
+}
+
+.control-panel .tag-cloud a:hover {
+    box-shadow: 0px 0px 2px 2px orange;
+}
+
+.control-panel .tag-cloud a.selected {
+    padding: 4px 8px 5px 8px;
+    background: white;
+    color: #008AB8;
+    font-weight: bold;
+    box-shadow: 0px 0px 2px 2px orange;
+}
+
+.control-panel .tag-cloud a.disabled {
+    background: #383737;
+    color: gray;
+    border: 2px solid black;
 }
 

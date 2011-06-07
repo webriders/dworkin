@@ -32,7 +32,7 @@ class Category(models.Model):
     @staticmethod
     def get_categories_with_count():
         categories = Category.objects.all()
-        categories = categories.annotate(count=Count('garticle__id')).filter(count__gt=0).order_by('-count')
+        categories = categories.annotate(count=Count('article__id')).filter(count__gt=0).order_by('-count')
         return categories
 
 class Article(models.Model):

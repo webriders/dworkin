@@ -5,7 +5,8 @@ from django.shortcuts import redirect
 from datetime import datetime
 
 from techblog.forms import ArticleForm
-from techblog.models import Article, UserProfile
+from techblog.models import Article, UserProfile, Category
+from techblog.service.tags import TagService
 
 
 class ArticleList(ListView):
@@ -29,6 +30,9 @@ class ArticleList(ListView):
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
+
+        context["categories"] = Category.get_categories_with_count()
+        context["tag_cloud"] = TagService.get_tag_cloud()
 
         author_id = self.request.GET.get("author", None)
         if author_id:
