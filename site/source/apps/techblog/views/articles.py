@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
@@ -24,7 +25,17 @@ class ArticleList(ListView):
         if tags:
             filters['tags__name__in'] = tags.split(',')
 
-        return Article.objects.filter(**filters).distinct().order_by('-date')
+        self.paginator = Paginator( Article.objects.filter(**filters).distinct().order_by('-date'), 3)
+
+        page_num = self.request.GET.get('page', 1)
+        try:
+            page = self.paginator.page(page_num)
+        except PageNotAnInteger:
+            page = self.paginator.page(1)
+        except EmptyPage:
+            page = self.paginator.page(self.paginator.num_pages)
+
+        return page
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
@@ -39,6 +50,20 @@ class ArticleList(ListView):
             context['edit_allowed'] = True
 
         context['tags'] = self.request.GET.get("tags", '')
+
+        try:
+            page_num = int(self.request.GET.get("page", ''))
+        except ValueError:
+            page_num = 1
+
+        context['page_num'] = page_num
+        current_page = self.paginator.page(page_num)
+
+        if current_page.has_next():
+            preview_page = self.paginator.page(page_num + 1)
+            context['next_page'] = page_num + 1
+            context['preview_articles'] = list(preview_page.object_list)
+
         return context
 
 def add_or_edit_article(request, article_id=None):

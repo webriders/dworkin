@@ -37,10 +37,19 @@
                 <h1>Теги: {{ tags }}.</h1>
             {% endif %}
 
-            {% for article in article_list %}
+            {% for article in article_list.object_list %}
                 {% include 'articles/article_item.html' %}
             {% endfor %}
-            
+
+
+            {% for article in preview_articles %}
+               <div> <a href="/articles/{{ article.id }}/"> {{ article }} </a> </div>
+            {% endfor %}
+
+            <br/><br/>
+            <a href="/?page={{ next_page }}"> Предыдущие статьи </a>
+
+
         {% else %}
             Не найдено ни одной статьи.
         {% endif %}
