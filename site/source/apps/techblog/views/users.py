@@ -8,7 +8,7 @@ from techblog.forms import UserProfileForm, UserForm
 
 
 class UserProfilesList(ListView):
-    model = UserProfile
+    queryset = UserProfile.objects.all().filter(visible=True)
     context_object_name = 'user_profiles'
     template_name = 'users/userprofile_list.html'
 
@@ -25,7 +25,7 @@ class UserProfileDetail(DetailView):
     def get_object(self, queryset=None):
         user_name = self.kwargs.get('user_name') or self.request.user.username
         if user_name:
-            user_profile = UserProfile.objects.all().filter(user__username=user_name)
+            user_profile = UserProfile.objects.all().filter(user__username=user_name, visible=True)
             user_profile = user_profile and user_profile[0]
             return user_profile
         else:

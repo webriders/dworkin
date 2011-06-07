@@ -23,7 +23,7 @@ class ArticleList(ListView):
 
         tags = self.request.GET.get("tags", None)
         if tags:
-            filters['tags__name__in'] = tags.split(',')
+            filters['tags__name__in'] = tags.split(',') 
 
         self.paginator = Paginator( Article.objects.filter(**filters).distinct().order_by('-date'), 3)
 
