@@ -92,7 +92,8 @@ class UserProfile(models.Model):
     birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
     avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
-
+    visible = models.BooleanField(u'Показывать на странице с авторами', default=True)
+    
     def get_articles_count(self):
         query = Article.objects.filter(author=self).count()
         return query

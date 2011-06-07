@@ -23,7 +23,7 @@ class ArticleForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     oldpassword = forms.CharField( widget=forms.PasswordInput, label='Страрый пароль', required=False )
     password1 = forms.CharField( widget=forms.PasswordInput, label=u'Новый пароль', required=False )
-    password2 = forms.CharField( widget=forms.PasswordInput, label=u'Повтор пароля', required=False )
+    password2 = forms.CharField( widget=forms.PasswordInput, label=u'Пароля (верификация)', required=False )
 
     class Meta(object):
         model = User
