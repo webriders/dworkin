@@ -24,7 +24,7 @@
         {% if profile %}
             {% with profile.user as p_user %}
                 <div class="title-block">
-                    <h1><span>Профиль пользователя:</span> {{ user.get_full_name }} </h1>
+                    <h1><span>Профиль пользователя:</span> {{ p_user.get_full_name }} </h1>
                 </div>
 
                 <div class="avatar-block">
