@@ -1,8 +1,8 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list_detail import object_list, object_detail
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.simple import direct_to_template
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from datetime import datetime
 
 from techblog.forms import ArticleForm
@@ -128,18 +128,31 @@ def add_or_edit_article(request, article_id=None):
                     return redirect('/?own=articles')
                 else:
                     return redirect('/?own=drafts')
-
         else:
             form = ArticleForm(instance=article) # An unbound form
         params['form'] = form
     return direct_to_template(request, 'articles/add_or_edit_article.html', params)
 
 
-def view_article(request, article_id=None, params={}, *args, **kwargs):
-    params['page'] = 'articles_page'
-    params['sub_page'] = 'view_article'
-    articles = Article.objects.filter(is_public=True).order_by('-date')
-    article = articles.filter(id=article_id)
-    author = article and article[0].author
-    params['edit_allowed'] = author == request.user
-    return object_detail(request, articles, article_id, template_name='articles/view_article.html', extra_context=params)
+class ArticleDetail(DetailView):
+    template_name = 'articles/view_article.html'
+
+    def get_object(self, queryset=None):
+        article = get_object_or_404(Article, id=self.kwargs.get('article_id'))# Article.objects.filter(  ).order_by('-date')
+
+        self.edit_allowed = article.author == self.request.user
+        if self.edit_allowed:
+            return article
+        else:
+            return None
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetail, self).get_context_data(**kwargs)
+
+        context['page'] = 'articles_page'
+        context['sub_page'] = 'view_article'
+        
+        if not self.edit_allowed:
+            context['edit_not_allowed'] = True
+
+        return context

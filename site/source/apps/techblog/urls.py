@@ -5,7 +5,7 @@ from techblog import views
 urlpatterns = patterns('techblog.views',
     (r'^(?:articles/)?$', views.ArticleList.as_view()),
     (r'^articles/add/$', 'add_or_edit_article'),
-    url(r'^articles/(\d+)/$', 'view_article', name='view_article'),
+    url(r'^articles/(?P<article_id>\d+)/$', views.ArticleDetail.as_view(), name='view_article'),
     (r'^articles/(\d+)/edit/$', 'add_or_edit_article'),
 
     (r'^users/$', views.UserProfilesList.as_view()),
