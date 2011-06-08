@@ -35,7 +35,7 @@
                             <a href="#">{{ article.category.title }}</a> →
                         </span>
                     {% endif %}
-                    {{ article.title }}
+                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
                 </h1>
             {% endif %}
             <div class="article-info">
