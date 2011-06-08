@@ -17,7 +17,7 @@ class ArticleList(ListView):
 
     def get_queryset(self):
         self.article_service = ArticleService()
-        articles = self.article_service.filter_articles(self.request)
+        articles = self.article_service.filter_articles(self.request).order_by('-date')
 
 #        filters = {}
 #        filters['is_public'] = True
@@ -52,6 +52,11 @@ class ArticleList(ListView):
         context['page'] = 'articles_page'
 
         context.update(self.article_service.get_control_panel_context(self.object_list.object_list))
+
+        if context.has_key('own_articles'):
+            context['own'] = 'articles'
+        elif context.has_key('own_drafts'):
+            context['own'] = 'drafts'
 
 
 #        context["categories"] = Category.get_categories_with_count()
@@ -119,7 +124,11 @@ def add_or_edit_article(request, article_id=None):
                 for tag in tags:
                    article.tags.add(tag)
 
-                return redirect('view_article', article.id)
+                if article.is_public:
+                    return redirect('/?own=articles')
+                else:
+                    return redirect('/?own=drafts')
+
         else:
             form = ArticleForm(instance=article) # An unbound form
         params['form'] = form

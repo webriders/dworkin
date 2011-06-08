@@ -47,7 +47,8 @@
             {% endfor %}
 
             <br/><br/>
-            <a href="/?page={{ next_page }}"> Предыдущие статьи </a>
+            <a href="/{% if own %}?own={{ own }}&page={{ next_page }}{% else %}?page={{ next_page }}{% endif %}"> Предыдущие статьи </a>
+
 
 
         {% else %}

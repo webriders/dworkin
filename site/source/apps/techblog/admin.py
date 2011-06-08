@@ -5,8 +5,10 @@ from techblog.models import Article, UserProfile, Category
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'is_public')
+    list_display = ('title', 'author', 'is_public', 'date')
     list_editable = ('is_public',)
+    list_filter = ('author', 'is_public',)
+    date_hierarchy = 'date'
 
 admin.site.register(Article, ArticleAdmin)
 
