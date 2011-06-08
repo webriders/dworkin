@@ -53,31 +53,30 @@ class TagFilter(FilterItem):
         return query.filter(tags__slug__in=self.value)
 
     def get_context_data(self, filtered_items):
-        ids = []
-        for item in filtered_items:
-            ids.append(item.id)
+        ids = [item.id for item in filtered_items]
 
         selected_tag_slugs = []
         if self.value:
             selected_tags = TagService.get_by_slugs(self.value)
-            selected_tag_slugs = [tag.slug ]
-            for t in selected_tags:
-                selected_tag_slugs.append(t.slug)
+            selected_tag_slugs = [tag.slug for tag in selected_tags]
 
         all_tags = TagService.get_tag_cloud()
-        filtered_tags = TagService.get_filtered_tag_cloud(ids)
-        filtered_ids = []
-        for tag in filtered_tags:
-            filtered_ids.append(tag.id)
+        filtered_tags = list(TagService.get_filtered_tag_cloud(ids))
+        filtered_tags = dict(zip([tag.id for tag in filtered_tags], filtered_tags))
+        print str(filtered_tags)
 
         # mark selected
         for tag in all_tags:
             # tag is selected
             if selected_tag_slugs and (tag.slug in selected_tag_slugs):
                 tag.selected = True
-            # tag is disabled
-            if tag.id not in filtered_ids:
+                print str(filtered_tags[tag.id].name) + str(filtered_tags[tag.id].count)
+
+            if tag.id in filtered_tags.keys():
+                tag.count = filtered_tags[tag.id].count
+            else:
                 tag.disabled = True
+                tag.count = 0
 
         context = {"tag_cloud": all_tags}
         return context

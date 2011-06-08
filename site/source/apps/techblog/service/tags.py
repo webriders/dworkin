@@ -13,6 +13,7 @@ class TagService(object):
     def get_filtered_tag_cloud(article_ids):
         tags = Tag.objects.filter(taggit_taggeditem_items__object_id__in=article_ids)
         tags = tags.annotate(count=Count("taggit_taggeditem_items__id")).filter(count__gt=0).order_by('name')
+        print tags.query
         return tags
 
 

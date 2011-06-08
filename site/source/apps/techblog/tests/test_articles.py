@@ -17,7 +17,7 @@ class TestArticleService(TestCase):
 #
         tag_filter = TagFilter(is_multivalue=True)
         tag_filter.value = ['south']
-        query = Article.objects.all()
+        query = Article.objects.filter(is_public=True)
         query = tag_filter.filter(query)
         self.assertEqual(len(query), 2)
 
@@ -30,5 +30,20 @@ class TestArticleService(TestCase):
                 self.assertEqual(tag.count, 2)
                 self.assertTrue(tag.selected)
                 self.assertFalse(hasattr(tag, 'disabled'))
+
+        print str(context)
+
+    def test_tag_filter_decreased_count(self):
+        tag_filter = TagFilter(is_multivalue=True)
+        tag_filter.value = ['refactoring']
+        query = Article.objects.filter(is_public=True)
+        query = tag_filter.filter(query)
+        print query.query
+        print str([a.id for a in query])
+        context = tag_filter.get_context_data(query)
+
+        for tag in context['tag_cloud']:
+            if tag.slug == "south":
+                self.assertEqual(tag.count, 1)
 
         print str(context)
