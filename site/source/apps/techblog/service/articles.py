@@ -57,11 +57,15 @@ class TagFilter(FilterItem):
         for item in filtered_items:
             ids.append(item.id)
 
-        selected_tags = []
+        selected_tag_slugs = []
         if self.value:
             selected_tags = TagService.get_by_slugs(self.value)
+            selected_tag_slugs = [tag.slug ]
+            for t in selected_tags:
+                selected_tag_slugs.append(t.slug)
+
         all_tags = TagService.get_tag_cloud()
-        filtered_tags = TagService.get_tag_cloud(ids)
+        filtered_tags = TagService.get_filtered_tag_cloud(ids)
         filtered_ids = []
         for tag in filtered_tags:
             filtered_ids.append(tag.id)
@@ -69,7 +73,7 @@ class TagFilter(FilterItem):
         # mark selected
         for tag in all_tags:
             # tag is selected
-            if tag.id in selected_tags:
+            if selected_tag_slugs and (tag.slug in selected_tag_slugs):
                 tag.selected = True
             # tag is disabled
             if tag.id not in filtered_ids:
