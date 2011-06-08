@@ -52,7 +52,8 @@ class ArticleList(ListView):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
 
-        context.update(self.article_service.get_control_panel_context(self.object_list.object_list))
+        if self.object_list:
+            context.update(self.article_service.get_control_panel_context(self.object_list.object_list))
 
         if context.has_key('own_articles'):
             context['own'] = 'articles'
