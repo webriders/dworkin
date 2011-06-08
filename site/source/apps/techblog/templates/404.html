@@ -1,0 +1,33 @@
+{% extends 'abstract/base.html' %}
+
+{% block title %} 404 / PROGRESSORS {% endblock %}
+
+
+{% block css %}
+    {#    <link rel="stylesheet" href="/static/pygments/css/default.css" />#}
+{% endblock css %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+    <div>
+
+        <div>
+            <h1>404</h1>
+            <h4>Запрашиваемая вами страница - не найдена.</h4>
+            <p>
+
+                Вы можете перейти:
+                <ul>
+                    <li><a href="/">На Главную</a></li>
+                    <li><a href="/users/">К списку авторов</a></li>
+                    <li><a href="/tags/">К списку тегов</a></li>
+                </ul>
+
+                <p>С уважением, администрация сайта Progressors.</p>
+            </p>
+        </div>
+
+    </div>
+{% endblock %}

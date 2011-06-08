@@ -38,9 +38,15 @@
 {% block content %}
     <div class="article-details">
         {% with 'description' as article_mode %}
-            {% with object as article %}
-                {% include 'articles/article_item.html' %}
-            {% endwith %}
+            {% if edit_not_allowed %}
+                {% if edit_not_allowed %}
+                     Автор переместил статью в черновик!
+                 {% endif %}
+            {% else %}
+                {% with object as article %}
+                    {% include 'articles/article_item.html' %}
+                {% endwith %}
+            {% endif %}
         {% endwith %}
     </div>
 {% endblock content %}
