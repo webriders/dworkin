@@ -1,4 +1,5 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.views.generic.base import TemplateView
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
@@ -11,14 +12,12 @@ from techblog.service.articles import ArticleService
 from techblog.service.tags import TagService
 
 
-class ArticleList(ListView):
-    context_object_name = 'article_list'
+class ArticleList(TemplateView):
+#    context_object_name = 'article_list'
     template_name = 'articles/article_list.html'
 
-    def get_queryset(self):
-        self.article_service = ArticleService()
-        articles = self.article_service.filter_articles(self.request).order_by('-date')
-
+#    def get_queryset(self):
+#
 #        filters = {}
 #        filters['is_public'] = True
 #
@@ -31,27 +30,30 @@ class ArticleList(ListView):
 #            filters['tags__name__in'] = tags.split(',')
 #
 #        articles =  Article.objects.filter(**filters).distinct().order_by('-date')
-        if articles:
-
-            self.paginator = Paginator(articles, 3)
-
-            page_num = self.request.GET.get('page', 1)
-            try:
-                page = self.paginator.page(page_num)
-            except PageNotAnInteger:
-                page = self.paginator.page(1)
-            except EmptyPage:
-                page = self.paginator.page(self.paginator.num_pages)
-
-            return page
-        else:
-            return None
+#        if articles:
+#
+#            self.paginator = Paginator(articles, 3)
+#
+#            page_num = self.request.GET.get('page', 1)
+#            try:
+#                page = self.paginator.page(page_num)
+#            except PageNotAnInteger:
+#                page = self.paginator.page(1)
+#            except EmptyPage:
+#                page = self.paginator.page(self.paginator.num_pages)
+#
+#            return page
+#        else:
+#            return None
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
 
-        context.update(self.article_service.get_control_panel_context(self.object_list.object_list))
+        self.article_service = ArticleService()
+        articles = self.article_service.filter_articles(self.request).order_by('-date')
+
+        context.update(self.article_service.get_control_panel_context(articles))
 
         if context.has_key('own_articles'):
             context['own'] = 'articles'
@@ -62,29 +64,47 @@ class ArticleList(ListView):
 #        context["categories"] = Category.get_categories_with_count()
 #        context["tag_cloud"] = TagService.get_tag_cloud()
 
-        author_id = self.request.GET.get("author", None)
-        if author_id:
-            context['author'] = UserProfile.objects.get(id = author_id).user
-
-        user = self.request.user
-        if user.is_authenticated() and str(user.id) == author_id:
-            context['edit_allowed'] = True
+#        author_id = self.request.GET.get("author", None)
+#        if author_id:
+#            context['author'] = UserProfile.objects.get(id = author_id).user
+#
+#        user = self.request.user
+#        if user.is_authenticated() and str(user.id) == author_id:
+#            context['edit_allowed'] = True
 
 #        context['tags'] = self.request.GET.get("tags", '')
 
-        if self.object_list:
-            try:
-                page_num = int(self.request.GET.get("page", ''))
-            except ValueError:
-                page_num = 1
+        paginator = Paginator(list(articles), 3)
 
-            context['page_num'] = page_num
-            current_page = self.paginator.page(page_num)
+        try:
+            page_num = int(self.request.GET.get('page', '1'))
+        except ValueError:
+            page_num = 1
+        try:
+            current_page = paginator.page(page_num)
+        except (EmptyPage, InvalidPage):
+            current_page = paginator.page(paginator.num_pages)
+        context["article_list"] = list(current_page.object_list)
 
-            if current_page.has_next():
-                preview_page = self.paginator.page(page_num + 1)
-                context['next_page'] = page_num + 1
-                context['preview_articles'] = list(preview_page.object_list)
+        if current_page.has_next():
+            preview_page = paginator.page(page_num + 1)
+            context['next_page'] = page_num + 1
+            context['preview_articles'] = list(preview_page.object_list)
+
+
+#        if articles:
+#            try:
+#                page_num = int(self.request.GET.get("page", ''))
+#            except ValueError:
+#                page_num = 1
+#
+#            context['page_num'] = page_num
+#            current_page = self.paginator.page(page_num)
+#
+#            if current_page.has_next():
+#                preview_page = self.paginator.page(page_num + 1)
+#                context['next_page'] = page_num + 1
+#                context['preview_articles'] = list(preview_page.object_list)
 
         return context
 
