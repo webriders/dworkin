@@ -13,3 +13,5 @@ DEFAULT_AVATAR_URLS = {
     GENDER_MALE: '/static/techblog/img/common/users/male.png',
     GENDER_FEMALE: '/static/techblog/img/common/users/female.png',
 }
+
+ARTICLES_LIMIT = 10

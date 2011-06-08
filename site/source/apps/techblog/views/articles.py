@@ -9,6 +9,7 @@ from techblog.forms import ArticleForm
 from techblog.models import Article, UserProfile, Category
 from techblog.service.articles import ArticleService
 from techblog.service.tags import TagService
+from techblog.constants import ARTICLES_LIMIT
 
 
 class ArticleList(ListView):
@@ -33,7 +34,7 @@ class ArticleList(ListView):
 #        articles =  Article.objects.filter(**filters).distinct().order_by('-date')
         if articles:
 
-            self.paginator = Paginator(articles, 3)
+            self.paginator = Paginator(articles, ARTICLES_LIMIT)
 
             page_num = self.request.GET.get('page', 1)
             try:
