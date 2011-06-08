@@ -12,6 +12,12 @@
     {% if request.user == article.author %}
         <div class="item-command">
             <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
+            <br/>
+            {% if article.is_public %}
+                <a href="{{ article.get_absolute_url }}unpublish/" title="Опубликовать статью">Unpublish</a>
+            {% else %}
+                <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
+            {% endif %}
         </div>
     {% endif %}
 

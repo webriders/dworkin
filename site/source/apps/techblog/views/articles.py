@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list_detail import object_list, object_detail
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect, get_object_or_404
 from datetime import datetime
@@ -156,3 +156,19 @@ class ArticleDetail(DetailView):
             context['edit_not_allowed'] = True
 
         return context
+
+
+class ArticlePublisher(RedirectView):
+    def get_redirect_url(self, **kwargs):
+        article_id, action =  self.args
+        article = get_object_or_404(Article, id=article_id)
+        url = '/'
+        if article.author == self.request.user:
+            if action == 'publish':
+                article.is_public = True
+                url = '/?own=articles'
+            elif action == 'unpublish':
+                article.is_public = False
+                url = '/?own=drafts'
+            article.save()
+        return url

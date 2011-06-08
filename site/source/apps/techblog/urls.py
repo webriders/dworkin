@@ -7,6 +7,7 @@ urlpatterns = patterns('techblog.views',
     (r'^articles/add/$', 'add_or_edit_article'),
     url(r'^articles/(?P<article_id>\d+)/$', views.ArticleDetail.as_view(), name='view_article'),
     (r'^articles/(\d+)/edit/$', 'add_or_edit_article'),
+    (r'^articles/(\d+)/(publish|unpublish)/$', views.ArticlePublisher.as_view()),
 
     (r'^users/$', views.UserProfilesList.as_view()),
     (r'^users/(?P<user_name>\w+)/$', views.UserProfileDetail.as_view()),
