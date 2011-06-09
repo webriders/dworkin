@@ -140,10 +140,10 @@ class ArticleDetail(DetailView):
     template_name = 'articles/view_article.html'
 
     def get_object(self, queryset=None):
-        article = get_object_or_404(Article, id=self.kwargs.get('article_id'))# Article.objects.filter(  ).order_by('-date')
+        article = get_object_or_404(Article, id=(self.kwargs.get('article_id')))
 
-        self.edit_allowed = article.author == self.request.user
-        if self.edit_allowed:
+        self.is_public = article.is_public
+        if article.is_public:
             return article
         else:
             return None
@@ -153,9 +153,9 @@ class ArticleDetail(DetailView):
 
         context['page'] = 'articles_page'
         context['sub_page'] = 'view_article'
-        
-        if not self.edit_allowed:
-            context['edit_not_allowed'] = True
+        context['is_public'] = self.is_public
+        if self.object:
+            context['edit_allowed'] = self.object.author == self.request.user
 
         return context
 
