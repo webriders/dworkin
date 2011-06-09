@@ -24,11 +24,11 @@
     <div class="article-list">
         {% if article_list %}
             {% if author %}
-                {% ifequal author user %}
+                {% if author == user %}
                     <h1>Ваши статьи.</h1>
                 {% else %}
                     <h1>Статьи написаные пользователем {{  author.first_name|capfirst }} {{ user.last_name|capfirst }}.</h1>
-                {% endifequal %}
+                {% endif %}
             {% else %}
                 <h1>Все статьи</h1>
             {% endif %}

@@ -18,3 +18,4 @@ Installation:
    python ./manage.py syncdb
    python ./manage.py migrate
 5. Run server!
+6. Goto http://%Your_site%/admin/sites/site/ and change 'example.com' to %Your_site%.
