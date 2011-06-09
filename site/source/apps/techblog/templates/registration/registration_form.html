@@ -9,7 +9,11 @@
     <form method="post" class="big-form" autocomplete="off">
         <dl>
             {% for field in form %}
-                <dt>{{ field.label_tag }}</dt>
+                {% ifequal field.name 'username' %}
+                    <dt> Логин </dt>
+                {% else %}
+                    <dt>{{ field.label_tag }}</dt>
+                {% endifequal %}
                 <dd>
                     {{ field }}
                     {% if field.help_text %}
