@@ -28,9 +28,9 @@
                 <p> <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a> </p>
             {% endif %}
 
-            {% ifequal p_user user %}
+            {% if p_user == user %}
                 <p> <a href="/profile/">Это Ваш профиль</a> </p>
-            {% endifequal %}
+            {% endif %}
 
             {% ifnotequal p_user user %}
                 <p> <a href="/users/{{ p_user.username }}/">Профиль пользователя</a> </p>
