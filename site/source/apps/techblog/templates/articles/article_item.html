@@ -29,7 +29,7 @@
                 <h2 class="article-title">
                     {% if article.category %}
                         <span class="category" >
-                            <a href="#">{{ article.category.title }}</a> →
+                            <a href="?category={{ article.category.slug }}">{{ article.category.title }}</a> →
                         </span>
                     {% endif %}
                     <a href="/articles/{{ article.id }}/">{{ article.title }}</a>

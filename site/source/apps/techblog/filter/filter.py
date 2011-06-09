@@ -25,7 +25,7 @@ class FilterItem(object):
     def filter(self, query):
         pass
 
-    def get_context_data(self, filtered_items):
+    def get_context_data(self, filtered_ids):
         pass
 
 class Filter(object):
@@ -43,9 +43,9 @@ class Filter(object):
 
     def get_context_data(self, filtered_items):
         context = {}
+        filtered_ids = [item.id for item in filtered_items]
         for item in self.items:
-            item_context = item.get_context_data(filtered_items)
+            item_context = item.get_context_data(filtered_ids)
             if item_context:
                 context.update(item_context)
-        print "CONTEXT: " + str(context)
         return context
