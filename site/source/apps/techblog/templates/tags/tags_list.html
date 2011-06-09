@@ -14,14 +14,15 @@
 
 {% block content %}
     <div>
-        {% if tags_list %}
-
-            {% for tag in tags_list %}
-                {% if tag.tagged_count %}
-                    <div><a href="/?tags={{ tag }} ">{{ tag }} ({{ tag.tagged_count }})</a>  </div>
+        {% if categories %}
+            {% for category in categories %}
+                {% if not category.empty %}
+                    <h2><a href="/?category={{ category.slug }}&all_tags=1">{{ category.title }} ({{ category.count }})</a></h2>
+                    {% for tag in category.tags %}
+                        <a href="/?tags={{ tag }}&category={{ category.slug }}">{{ tag.name }} ({{ tag.count }})</a>
+                    {% endfor %}
                 {% endif %}
             {% endfor %}
-
         {% else %}
             Нет ни одного тега.
         {% endif %}

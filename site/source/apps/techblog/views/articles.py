@@ -22,6 +22,7 @@ class ArticleList(TemplateView):
         self.article_service = ArticleService()
         articles = self.article_service.filter_articles(self.request).order_by('-date')
         context.update(self.article_service.get_control_panel_context(articles))
+        print str(context)
 
         if context.has_key('own_articles'):
             context['own'] = 'articles'

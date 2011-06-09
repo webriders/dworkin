@@ -80,7 +80,7 @@ class TagFilter(FilterItem):
 class ArticleService(object):
 
     def __init__(self):
-        self.filter = Filter()
+        self.filter = Filter(store_in_session=True)
         self.filter.add_item(OwnerFilter())
         self.filter.add_item(CategoryFilter())
         self.filter.add_item(TagFilter(is_multivalue=True))
@@ -104,3 +104,7 @@ class ArticleService(object):
     @staticmethod
     def get_drafts_by_author(user, ids):
         return Article.objects.filter(author=user, is_public=False, id__in=ids)
+
+    @staticmethod
+    def get_article_ids_by_category(category):
+         return Article.objects.filter(category=category, is_public=True).only("id")

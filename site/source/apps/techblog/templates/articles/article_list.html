@@ -55,43 +55,53 @@
     </div>
     <div class="control-panel">
         {% if request.user.is_authenticated %}
-            {% if own_articles_count or own_drafts_count %}
-                <h3>Моё</h3>
-                <ul class="categories">
-                    {% if own_articles_count %}
-                        <li class="{% if own_articles %}selected{% endif %}">
-                            <div class="button"></div>
-                            <a href="?own=articles">Статьи ({{ own_articles_count }})</a>
-                        </li>
-                    {% endif %}
-                    {% if own_drafts_count %}
-                        <li class="{% if own_drafts %}selected{% endif %}">
-                            <div class="button"></div>
-                            <a href="?own=drafts">Черновики ({{ own_drafts_count }})</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            {% endif %}
+            <h3>Моё</h3>
+            <a href="?all_own=1">все</a>
+            <ul class="categories">
+                    <li class="{% if own_articles %}selected{% endif %} {% if not own_articles_count %}disabled{% endif %}">
+                        <div class="button"></div>
+                        <a href="?own=articles&all_category&all_tags=1">Статьи ({{ own_articles_count }})</a>
+                    </li>
+                    <li class="{% if own_drafts %}selected{% endif %} {% if not own_drafts_count %}disabled{% endif %}">
+                        <div class="button"></div>
+                        <a href="?own=drafts&all_category&all_tags=1">Черновики ({{ own_drafts_count }})</a>
+                    </li>
+            </ul>
         {% endif %}
 
         <h3>Категории</h3>
         <ul class="categories">
             {% for category in categories %}
-                <li class="{% if category.selected %}selected{% endif %} {% if category.disabled %}disabled{% endif %}">
-                    <div class="button"></div>
-                    <a href="?category={{ category.slug }}">{{ category.title }} ({{ category.count }})</a>
-                </li>
+                {% if category.disabled %}
+                    <li class="disabled">
+                        <div class="button"></div>
+                        <a href="?category={{ category.slug }}&all_tags=1">{{ category.title }} ({{ category.count }})</a>
+                    </li>
+                {% else %}
+                    <li class="{% if category.selected %}selected{% endif %}">
+                        <div class="button"></div>
+                        <a href="?category={{ category.slug }}">{{ category.title }} ({{ category.count }})</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
 
         <h3>Теги</h3>
         <div class="tag-cloud">
             {% for tag in tag_cloud %}
-                <a href="?tags={{ tag.slug }}" class="{% if tag.selected %}selected{% endif %} {% if tag.disabled %}disabled{% endif %}">
-                    {{ tag.name }} ({{ tag.count }})
-                </a>
+                {% if tag.disabled %}
+                    <a href="#" class="disabled">
+                        {{ tag.name }} ({{ tag.count }})
+                    </a>
+                {% else %}
+                    <a href="?tags={{ tag.slug }}" class="{% if tag.selected %}selected{% endif %}">
+                        {{ tag.name }} ({{ tag.count }})
+                    </a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
     <div class="clear"></div>
+    !!!!!!!!!={{ the_filter.print_state }}=!!!!!!!!
+    !!!!!!!!!+{{ the_filter }}+!!!!!!!!
 {% endblock content %}

@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from techblog.models import Article
 from techblog.service.articles import TagFilter, OwnerFilter, CategoryFilter
@@ -27,7 +26,6 @@ class TestTagFilter(TestCase):
                 self.assertTrue(tag.selected)
                 self.assertFalse(hasattr(tag, 'disabled'))
 
-        print str(context)
 
     def test_tag_filter_decreased_count(self):
         tag_filter = TagFilter(is_multivalue=True)
