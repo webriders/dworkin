@@ -10,14 +10,17 @@
         </div>
     </div>
     {% if request.user == article.author %}
-        <div class="item-command">
-            <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
-            <br/>
-            {% if article.is_public %}
-                <a href="{{ article.get_absolute_url }}unpublish/" title="Опубликовать статью">Unpublish</a>
-            {% else %}
-                <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
-            {% endif %}
+        <div class="commands">
+            <div class="item-command">
+                <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Править</a>
+            </div>
+            <div class="item-command">
+                {% if article.is_public %}
+                    <a href="{{ article.get_absolute_url }}unpublish/" title="Cкрыть статью">Скрыть</a>
+                {% else %}
+                    <a href="{{ article.get_absolute_url }}publish/" title="Показать статью">Показать</a>
+                {% endif %}
+            </div>
         </div>
     {% endif %}
 

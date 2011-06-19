@@ -58,20 +58,30 @@
 .article-item .item-date-block .formatted-date span.date-year { font-size: 12px; }
 .article-item .item-date-block .formatted-date span.date-time { font-size: 10px; }
 
+.article-item .commands {
+    position: absolute;
+    left: -30px;
+    top: 110px;
+}
 
 .article-item .item-command {
-    position: absolute;
-    left: -10px;
-    top: 110px;
+    /*position: absolute;*/
+    /*left: -10px;*/
+    /*top: 110px;*/
     background: white;
-    padding: 10px;
+    padding: 6px;
     border-radius: 6px 0px 0px 6px;
+    border: 1px solid #FCF0E2;
     min-width: 32px;
     text-align: center;
     margin-top: 10px;
-    /*border: 1px solid white;*/
     box-shadow: 1px 1px 3px white;
+    width: 70px;
 }
+.article-item .item-command:hover {
+    box-shadow: 1px 1px 5px orange;
+}
+
 .article-item .item-command a {
     color: orange;
     text-decoration: none;

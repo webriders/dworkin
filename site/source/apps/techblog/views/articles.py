@@ -119,6 +119,8 @@ class ArticleDetail(DetailView):
 
 
 class ArticlePublisher(RedirectView):
+    permanent = False
+
     def get_redirect_url(self, **kwargs):
         article_id, action =  self.args
         article = get_object_or_404(Article, id=article_id)
@@ -126,8 +128,10 @@ class ArticlePublisher(RedirectView):
         if article.author == self.request.user:
             if action == 'publish':
                 article.is_public = True
+                print "PUBLISH!!" + str(article_id)
                 url = '/?own=articles'
             elif action == 'unpublish':
+                print "HIDE!!" + str(article_id)
                 article.is_public = False
                 url = '/?own=drafts'
             article.save()
