@@ -12,24 +12,31 @@ from techblog.service.articles import ArticleService
 from techblog.constants import ARTICLES_LIMIT
 
 
-class ArticleList(TemplateView):
+class ArticlesControlPanel(object):
+    def init_articles(self):
+        self.article_service = ArticleService()
+        self.articles = self.article_service.filter_articles(self.request).order_by('-date')
+
+    def get_control_panel_context(self):
+        return self.article_service.get_control_panel_context(self.articles)
+
+
+class ArticleList(TemplateView, ArticlesControlPanel):
     template_name = 'articles/article_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(ArticleList, self).get_context_data(**kwargs)
         context['page'] = 'articles_page'
 
-        self.article_service = ArticleService()
-        articles = self.article_service.filter_articles(self.request).order_by('-date')
-        context.update(self.article_service.get_control_panel_context(articles))
-        print str(context)
+        self.init_articles()
+        context.update(self.get_control_panel_context())
 
         if context.has_key('own_articles'):
             context['own'] = 'articles'
         elif context.has_key('own_drafts'):
             context['own'] = 'drafts'
 
-        paginator = Paginator(list(articles), ARTICLES_LIMIT)
+        paginator = Paginator(list(self.articles), ARTICLES_LIMIT)
 
         try:
             page_num = int(self.request.GET.get('page', '1'))
@@ -94,7 +101,7 @@ def add_or_edit_article(request, article_id=None):
     return direct_to_template(request, 'articles/add_or_edit_article.html', params)
 
 
-class ArticleDetail(DetailView):
+class ArticleDetail(DetailView, ArticlesControlPanel):
     template_name = 'articles/view_article.html'
 
     def get_object(self, queryset=None):
@@ -108,7 +115,8 @@ class ArticleDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetail, self).get_context_data(**kwargs)
-
+        self.init_articles()
+        context.update(self.get_control_panel_context())
         context['page'] = 'articles_page'
         context['sub_page'] = 'view_article'
         context['is_public'] = self.is_public

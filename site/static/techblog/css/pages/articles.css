@@ -51,12 +51,31 @@
     background: #707070 url("../../img/pages/articles/bclock_1.png") left top no-repeat;
 }
 
-.article-item .item-date-block .formatted-date { text-align: center; padding-top: 2px; }
-.article-item .item-date-block .formatted-date span { display: block; }
-.article-item .item-date-block .formatted-date span.date-day { font-size: 24px; line-height: 18px; }
-.article-item .item-date-block .formatted-date span.date-month { font-size: 14px; }
-.article-item .item-date-block .formatted-date span.date-year { font-size: 12px; }
-.article-item .item-date-block .formatted-date span.date-time { font-size: 10px; }
+.article-item .item-date-block .formatted-date {
+    text-align: center;
+    padding-top: 2px;
+}
+
+.article-item .item-date-block .formatted-date span {
+    display: block;
+}
+
+.article-item .item-date-block .formatted-date span.date-day {
+    font-size: 24px;
+    line-height: 18px;
+}
+
+.article-item .item-date-block .formatted-date span.date-month {
+    font-size: 14px;
+}
+
+.article-item .item-date-block .formatted-date span.date-year {
+    font-size: 12px;
+}
+
+.article-item .item-date-block .formatted-date span.date-time {
+    font-size: 10px;
+}
 
 .article-item .commands {
     position: absolute;
@@ -65,30 +84,26 @@
 }
 
 .article-item .item-command {
-    /*position: absolute;*/
-    /*left: -10px;*/
-    /*top: 110px;*/
-    background: white;
+    background: #4E4D45;
     padding: 6px;
     border-radius: 6px 0px 0px 6px;
-    border: 1px solid #FCF0E2;
     min-width: 32px;
     text-align: center;
     margin-top: 10px;
-    box-shadow: 1px 1px 3px white;
-    width: 70px;
+    box-shadow: 1px 1px 3px lightgray;
+    width: 57px;
 }
+
 .article-item .item-command:hover {
     box-shadow: 1px 1px 5px orange;
 }
 
 .article-item .item-command a {
-    color: orange;
+    color: lightgray;
     text-decoration: none;
-    font-weight:bold;
-    text-shadow: 0px 0px 2px #EEEEEE;
+    font-size: 13px;
+    text-shadow: 1px 1px 1px #020202;
 }
-
 
 .article-item .item-author-block {
     position: absolute;
@@ -152,11 +167,6 @@
     margin-bottom: 10px;
 }
 
-.article-block .article-content .article-title .category,
-.article-block .article-content .article-title .category a {
-    color: #c3c4c6;
-}
-
 .article-block .article-content h2.article-title a {
     text-decoration: none;
 }
@@ -164,7 +174,6 @@
 .article-block .article-content h2.article-title a:hover {
     text-decoration: underline;
 }
-
 
 .article-block .article-content h1.article-title {
     color: #2173FC;
@@ -176,6 +185,10 @@
     color: #2173FC;
 }
 
+.article-block .article-content .article-title .category,
+.article-block .article-content .article-title .category a {
+    color: #c3c4c6;
+}
 
 .article-block .article-short {
     position: relative;
@@ -192,7 +205,6 @@
 }
 
 .article-info {
-    /*overflow: hidden;*/
     float: left;
     padding-top: 10px;
     padding-bottom: 7px;
@@ -202,6 +214,18 @@
     margin-bottom: 20px;
 }
 
+.article-info .article-category {
+    float: left;
+    margin-top: -3px;
+    margin-right: 10px;
+    color: gray;
+    font-size: 18px;
+}
+
+.article-info .article-category a {
+    color: #FF9C00;
+    font-size: 18px;
+}
 
 .article-info .article-tags {
     float: left;
@@ -244,7 +268,8 @@
     width: 185px;
     padding-top: 40px;
     margin-left: 45px;
-}  
+}
+
 .control-panel .filter {
     /*overflow: hidden;*/
 }
@@ -254,7 +279,7 @@
     font-size: 32px;
     text-shadow: 1px 1px 0 black;
     margin-bottom: 15px;
-    float:left;
+    float: left;
 }
 
 .control-panel .filter .all {
@@ -263,7 +288,7 @@
     margin-left: 10px;
 }
 
-.control-panel .categories{
+.control-panel .categories {
     margin-bottom: 20px;
     float: left;
 }
@@ -274,7 +299,6 @@
 
 .control-panel .categories li.selected {
 }
-
 
 .control-panel .categories li .button {
     margin-top: 6px;
@@ -299,8 +323,6 @@
     width: 20px;
     margin-left: -13px;
 }
-
-
 
 .control-panel .categories li a {
     color: #FF9C00;

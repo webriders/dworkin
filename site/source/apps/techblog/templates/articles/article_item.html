@@ -28,26 +28,26 @@
     <div class="article-block">
         <div class="min-height"></div>
         <div class="article-content">
-            {% if article.description and article_mode != 'description' %}
-                <h2 class="article-title">
-                    {% if article.category %}
-                        <span class="category" >
-                            <a href="?category={{ article.category.slug }}">{{ article.category.title }}</a> →
-                        </span>
-                    {% endif %}
-                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
-                </h2>
-            {% else %}
+            {% if sub_page == 'view_article' %}
                 <h1 class="article-title">
                     {% if article.category %}
                         <span class="category" >
-                            <a href="#">{{ article.category.title }}</a> →
+                            <a href="/articles/">Статьи</a> →
                         </span>
                     {% endif %}
-                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
+                    {{ article.title }}
                 </h1>
+            {% else %}
+                <h2 class="article-title">
+                    <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
+                </h2>
             {% endif %}
             <div class="article-info">
+                {% if article.category %}
+                    <div class="article-category">
+                       <a href="?category={{ article.category.slug }}" title="Категория: {{ article.category.title }}">{{ article.category.title }}</a> :
+                    </div>
+                {% endif %}
                 {% with article.tags.all as article_tags %}
                     {% if article_tags %}
                         <div class="article-tags">
