@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from techblog.filter.filter import Filter, FilterItem
 from techblog.models import Article
 from techblog.service.categories import CategoryService
@@ -45,6 +46,21 @@ class CategoryFilter(FilterItem):
         context = {"categories": all_categories}
         return context
 
+class AuthorFilter(FilterItem):
+    name="author"
+
+    def filter(self, query):
+        print "AUTHOR: " + str(self.value)
+        return query.filter(author__id=self.value)
+
+    def get_context_data(self, filtered_ids):
+        author = None
+        try:
+            author = User.objects.get(id=self.value)
+        except User.DoesNotExist, e:
+            pass
+        return {"selected_author":author}
+
 
 class TagFilter(FilterItem):
     name="tags"
@@ -84,6 +100,7 @@ class ArticleService(object):
         self.filter.add_item(OwnerFilter())
         self.filter.add_item(CategoryFilter())
         self.filter.add_item(TagFilter(is_multivalue=True))
+        self.filter.add_item(AuthorFilter())
 
     def filter_articles(self, request):
         query = Article.objects.all()

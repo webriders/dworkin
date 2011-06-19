@@ -262,6 +262,31 @@
 }
 
 /*------------------------------------- Control panel --------------------------------*/
+.article-list .preview-articles {
+    margin-left: 80px;
+    overflow: hidden;
+}
+
+.article-list .preview-articles h4 {
+    color: gray;
+    font-size: 32px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 black;
+    margin-top: 15px;
+}
+
+
+.article-list .preview-articles .short-link {
+    font-size: 14px;
+    color: lightgray;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: 20px;
+    text-shadow: 1px 1px 0 black;
+}
+
+
+/*------------------------------------- Control panel --------------------------------*/
 
 .control-panel {
     float: left;
@@ -337,6 +362,31 @@
 .control-panel .categories li.disabled a {
     color: gray;
 }
+
+.control-panel .author {
+    margin-left: 10px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.control-panel .author .author-photo {
+    float: left;
+    margin-right: 15px;
+}
+
+.control-panel .author .title {
+    float: left;
+    margin-top: 25px;
+    color: orange;
+}
+
+.control-panel .author img {
+    border: 1px solid gray;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 10px 1px white;
+    float: left;
+}
+
 
 .control-panel .tag-cloud {
     margin-left: 5px;

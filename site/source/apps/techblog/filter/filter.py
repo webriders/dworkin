@@ -45,6 +45,12 @@ class Filter(object):
         return context
 
     def load_from_request(self, request_data, session):
+        # clean all filters saved in session
+        if request_data.has_key("clear_all") and self.store_in_session:
+            for item in self.items:
+                if session.has_key(item.name):
+                    del session[item.name]
+
         for item in self.items:
             # load from request (first prio)
             if request_data.has_key(item.name):

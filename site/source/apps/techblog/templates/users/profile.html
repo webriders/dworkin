@@ -34,7 +34,7 @@
                 <div class="information-block">
                     <div class="profile-controls">
                         {% if  profile.get_articles_count %}
-                            <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a>
+                            <a href="/?author={{ p_user.id }}&clear_all=1">Статьи ({{ profile.get_articles_count }})</a>
                         {% endif %}
 
                         {% if edit_allowed %}

@@ -42,12 +42,16 @@
             {% endfor %}
 
 
-            {% for article in preview_articles %}
-               <div> <a href="/articles/{{ article.id }}/"> {{ article }} </a> </div>
-            {% endfor %}
+            <div class="preview-articles">
+                <h4>Статьи в запасе</h4>
+                {% for article in preview_articles %}
+                   <a class="short-link" href="/articles/{{ article.id }}/"> {{ article }} </a>
+                {% endfor %}
+                <h4>
+                    <a href="/?page={{ next_page }}">Смотреть лентой</a> →
+                </h4>
+            </div>
 
-            <br/><br/>
-            <a href="/{% if own %}?own={{ own }}&page={{ next_page }}{% else %}?page={{ next_page }}{% endif %}"> Предыдущие статьи </a>
 
         {% else %}
             Не найдено ни одной статьи.

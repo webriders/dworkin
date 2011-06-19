@@ -1,3 +1,5 @@
+{% load user_avatar %}
+
 <div class="control-panel">
     {% if request.user.is_authenticated %}
         <div class="filter">
@@ -14,6 +16,24 @@
                         <a href="/articles/?own=drafts&all_category&all_tags=1">Черновики ({{ own_drafts_count }})</a>
                     </li>
             </ul>
+        </div>
+        <div class="clear"></div>
+    {% endif %}
+
+    {% if selected_author %}
+        <div class="filter">
+            <h3>Автор</h3>
+            <a class="all" href="/articles/?all_author=1">все</a>
+            <div class="clear"></div>
+
+            {% with selected_author as user %}
+                <div class="author">
+                    <div class="author-photo">
+                        <a href="/users/{{ user.username }}/">{% user_avatar user 64 %}</a>
+                    </div>
+                    <a class="title" href="/users/{{ user.username }}/">{{ user.username }}</a>
+                </div>
+            {% endwith %}
         </div>
         <div class="clear"></div>
     {% endif %}
