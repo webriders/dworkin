@@ -8,19 +8,24 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="/static/techblog/css/pages/articles.css" />
+    <link rel="stylesheet" href="/static/techblog/css/pages/tags.css" />
     <link rel="stylesheet" href="/static/pygments/css/highlight_native.css" />
 {% endblock css %}
 
 {% block content %}
-    <div>
+    <div class="tags">
         {% if categories %}
             {% for category in categories %}
                 {% if not category.empty %}
                     <h2><a href="/?category={{ category.slug }}&all_tags=1">{{ category.title }} ({{ category.count }})</a></h2>
-                    {% for tag in category.tags %}
-                        <a href="/?tags={{ tag }}&category={{ category.slug }}">{{ tag.name }} ({{ tag.count }})</a>
-                    {% endfor %}
+
+                    <div class="tag-cloud">
+                        {% for tag in category.tags %}
+                            <a href="/?tags={{ tag }}&category={{ category.slug }}&all_own=1">
+                                {{ tag.name }} ({{ tag.count }})
+                            </a>
+                        {% endfor %}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% else %}

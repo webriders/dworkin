@@ -1,0 +1,54 @@
+/*.control-panel {*/
+    /*float: left;*/
+    /*width: 180px;*/
+    /*padding-top: 40px;*/
+    /*margin-left: 50px;*/
+/*}  */
+.tags {
+    margin: 20px auto 40px;
+    overflow: hidden;
+}
+.tags h2 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+
+.tags h2 a {
+    color: #FF9C00;
+    font-size: 22px;
+    text-decoration: none;
+}
+
+.tags h2 a:hover {
+    text-shadow: 0px 0px 3px #ff4500;
+    text-decoration: underline;
+}
+
+
+.tags .tag-cloud {
+    margin-bottom: 20px;
+    margin: 20px auto 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.tags .tag-cloud a {
+    padding: 4px 5px 5px 5px;
+    /*padding: 2px 6px 3px 6px;*/
+    background: #008AB8;
+    color: white;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    /*display: block;*/
+    border: 2px solid gray;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+}
+
+.tags .tag-cloud a:hover {
+    box-shadow: 0px 0px 2px 2px orange;
+}
