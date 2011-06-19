@@ -41,15 +41,16 @@
                 {% include 'articles/article_item.html' %}
             {% endfor %}
 
-
-            <div class="preview-articles">
-                <h4>Статьи в запасе</h4>
-                {% for article in preview_articles %}
-                   <a class="short-link" href="/articles/{{ article.id }}/"> {{ article }} </a>
-                {% endfor %}
-                <h4>
-                    <a href="/?page={{ next_page }}">Смотреть лентой</a> →
-                </h4>
+            {% if preview_articles %}
+                <div class="preview-articles">
+                    <h4>Статьи в запасе</h4>
+                    {% for article in preview_articles %}
+                       <a class="short-link" href="/articles/{{ article.id }}/"> {{ article }} </a>
+                    {% endfor %}
+                    <h4>
+                        <a href="/?page={{ next_page }}">Смотреть лентой</a> →
+                    </h4>
+                </div>
             </div>
 
 
