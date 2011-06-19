@@ -231,16 +231,26 @@
 
 .control-panel {
     float: left;
-    width: 180px;
+    width: 185px;
     padding-top: 40px;
-    margin-left: 50px;
+    margin-left: 45px;
 }  
+.control-panel .filter {
+    /*overflow: hidden;*/
+}
 
 .control-panel h3 {
     color: gray;
     font-size: 32px;
     text-shadow: 1px 1px 0 black;
     margin-bottom: 15px;
+    float:left;
+}
+
+.control-panel .filter .all {
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
 }
 
 .control-panel .categories{
@@ -275,6 +285,9 @@
 .control-panel .categories li.selected .button {
     background: orange;
     box-shadow: 0px 0px 2px 2px orange;
+    border: 2px solid white;
+    width: 20px;
+    margin-left: -13px;
 }
 
 
