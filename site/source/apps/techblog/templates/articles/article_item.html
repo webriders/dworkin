@@ -9,12 +9,12 @@
             {{ article.formatted_date|safe }}
         </div>
     </div>
-    {% if request.user == article.author %}
+    {% if request.user in article.authors.all %}
         <div class="item-command">
             <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
             <br/>
             {% if article.is_public %}
-                <a href="{{ article.get_absolute_url }}unpublish/" title="Опубликовать статью">Unpublish</a>
+                <a href="{{ article.get_absolute_url }}unpublish/" title="В черновики">To draft</a>
             {% else %}
                 <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
             {% endif %}
@@ -88,13 +88,14 @@
         <div class="clear"></div> <!-- IE6 fix -->
     </div>
 
-    {% with article.author as user %}
-        <div class="item-author-block">
+    {% for author in article.authors.all %}
+        <div class="" style="float: left; margin-right: 10px"> {# TODO: Move to css file #}
             <div class="item-author-photo">
-                <a href="/users/{{ user.username }}/">{% user_avatar user 32 %}</a>
+                <a href="/users/{{ author.username }}/">{% user_avatar author 32 %}</a>
             </div>
-            <a href="/users/{{ user.username }}/">{{ user.username }}</a>
+            <a href="/users/{{ author.username }}/">{{ author.username }}</a>
         </div>
-    {% endwith %}
+    {% endfor %}
+    &nbsp;
 
 </div>

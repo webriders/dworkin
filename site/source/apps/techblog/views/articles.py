@@ -101,7 +101,7 @@ def add_or_edit_article(request, article_id=None):
         if article_id:
             try:
                 article = Article.objects.get(id=article_id)
-                if article.author == request.user:
+                if request.user in article.authors.all():
                     params['page'] = 'edit_article'
                 else:
                     params['edit_allowed'] = False
@@ -113,23 +113,23 @@ def add_or_edit_article(request, article_id=None):
             if form.is_valid():
                 # Process the data in form.cleaned_data
                 article = form.save(commit=False)
-                article.author = request.user
+                article.author = request.user  #TODO: Deprecated
+
                 if 'is_public' in request.POST:
                     article.is_public = True
                     if not article.date:
                         article.date = datetime.now()
                 else:
                     article.is_public = False
+
                 article.save()
-                
+                article.authors.add(request.user)
+
                 tags = form.cleaned_data['tags']
                 for tag in tags:
                    article.tags.add(tag)
 
-                if article.is_public:
-                    return redirect('/?own=articles')
-                else:
-                    return redirect('/?own=drafts')
+                return redirect('/articles/%s/' % article.id)
         else:
             form = ArticleForm(instance=article) # An unbound form
         params['form'] = form
@@ -142,8 +142,8 @@ class ArticleDetail(DetailView):
     def get_object(self, queryset=None):
         article = get_object_or_404(Article, id=(self.kwargs.get('article_id')))
 
-        self.is_public = article.is_public
-        if article.is_public:
+        self.edit_allowed = self.request.user in article.authors.all()
+        if article.is_public or self.edit_allowed:
             return article
         else:
             return None
@@ -153,9 +153,9 @@ class ArticleDetail(DetailView):
 
         context['page'] = 'articles_page'
         context['sub_page'] = 'view_article'
-        context['is_public'] = self.is_public
+        context['edit_allowed'] =  self.edit_allowed
         if self.object:
-            context['edit_allowed'] = self.object.author == self.request.user
+            context['is_public'] = self.object.is_public
 
         return context
 
@@ -164,13 +164,13 @@ class ArticlePublisher(RedirectView):
     def get_redirect_url(self, **kwargs):
         article_id, action =  self.args
         article = get_object_or_404(Article, id=article_id)
-        url = '/'
-        if article.author == self.request.user:
+        url = '/articles/%s' % article.id
+        if self.request.user in article.authors.all():
             if action == 'publish':
                 article.is_public = True
-                url = '/?own=articles'
+                #url = '/?own=articles'
             elif action == 'unpublish':
                 article.is_public = False
-                url = '/?own=drafts'
+                #url = '/?own=drafts'
             article.save()
         return url

@@ -42,8 +42,8 @@
                 {% if article %}
                     {% include 'articles/article_item.html' %}
                 {% else %}
-                    {% if is_public == False %}
-                        Автор переместил статью в черновик!
+                    {% if not is_public %}
+                       Автор переместил статью в черновик!
                     {% endif %}
                 {% endif %}
             {% endwith %}
