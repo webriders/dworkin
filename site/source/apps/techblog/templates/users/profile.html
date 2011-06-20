@@ -59,6 +59,10 @@
                         {% if profile.birth_date %}
                             <p><span>Дата рождения:</span> {{ profile.birth_date }}</p>
                         {% endif %}
+
+                        {% if profile.about_me %}
+                            <p><span>Про себя:</span> {{ profile.about_me|linebreaks }}</p>
+                        {% endif %}
                     </div>
 
                     <div class="user-dates">
