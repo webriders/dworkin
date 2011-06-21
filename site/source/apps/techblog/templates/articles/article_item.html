@@ -9,18 +9,15 @@
             {{ article.formatted_date|safe }}
         </div>
     </div>
-    {% if request.user == article.author %}
-        <div class="commands">
-            <div class="item-command">
-                <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Править</a>
-            </div>
-            <div class="item-command">
-                {% if article.is_public %}
-                    <a href="{{ article.get_absolute_url }}unpublish/" title="Cкрыть статью">Скрыть</a>
-                {% else %}
-                    <a href="{{ article.get_absolute_url }}publish/" title="Показать статью">Показать</a>
-                {% endif %}
-            </div>
+    {% if request.user in article.authors.all %}
+        <div class="item-command">
+            <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
+            <br/>
+            {% if article.is_public %}
+                <a href="{{ article.get_absolute_url }}unpublish/" title="В черновики">To draft</a>
+            {% else %}
+                <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
+            {% endif %}
         </div>
     {% endif %}
 

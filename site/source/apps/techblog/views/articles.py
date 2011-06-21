@@ -1,5 +1,4 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
-from django.views.generic.base import TemplateView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic.simple import direct_to_template
@@ -136,10 +135,8 @@ class ArticlePublisher(RedirectView):
         if article.author == self.request.user:
             if action == 'publish':
                 article.is_public = True
-                print "PUBLISH!!" + str(article_id)
                 url = '/?own=articles'
             elif action == 'unpublish':
-                print "HIDE!!" + str(article_id)
                 article.is_public = False
                 url = '/?own=drafts'
             article.save()

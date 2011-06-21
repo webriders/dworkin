@@ -9,9 +9,9 @@ class OwnerFilter(FilterItem):
     def filter(self, query):
         if self.user and self.user.is_authenticated():
             if self.value == "articles":
-                query = query.filter(author__id=self.user.id)
+                query = query.filter(authors__in=[self.user.id])
             if self.value == "drafts" :
-                query = query.filter(author__id=self.user.id, is_public=False)
+                query = query.filter(authors__in=[self.user.id], is_public=False)
         return query
 
     def get_context_data(self, filtered_ids):

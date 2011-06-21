@@ -44,6 +44,7 @@ class Article(models.Model):
         return self.title
 
     author = models.ForeignKey(User, verbose_name=u'Автор', null=True)
+    authors = models.ManyToManyField(User, verbose_name=u'Авторы', null=True, related_name='authors')
     title = models.CharField(u'Заголовок статьи', max_length=1024)
     date = models.DateTimeField(u'Время публикации', default=datetime.now())
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
@@ -92,10 +93,11 @@ class UserProfile(models.Model):
     birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
     avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
+    about_me = models.TextField(u'Про себя', max_length=4096, blank=True, null=True)
     visible = models.BooleanField(u'Показывать на странице с авторами', default=True)
     
     def get_articles_count(self):
-        query = Article.objects.filter(author=self).count()
+        query = Article.objects.filter( authors__in=[self] ).count()
         return query
 
     def gravatar(self): pass
