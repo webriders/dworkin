@@ -1,4 +1,5 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.views.generic.base import TemplateView
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic.simple import direct_to_template
