@@ -89,7 +89,7 @@ class UserProfile(models.Model):
         (GENDER_MALE, u'Мужской'),
         (GENDER_FEMALE, u'Женский'),
     )
-    gender = models.CharField('Пол', max_length=16, choices=GENDERS, blank=True, null=True)
+    gender = models.CharField(u'Пол', max_length=16, choices=GENDERS, blank=True, null=True)
     birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
     avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
