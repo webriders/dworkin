@@ -1,0 +1,22 @@
+{% load threadedcomments_tags %}
+
+{% get_comment_form for article as form %}
+
+<form action="/comments/post/" method="post">
+    {% csrf_token %}
+
+    {{ form.comment }}
+
+    {% for field in form %}
+        {% if field.is_hidden and field.name != 'parent' %}
+            {{ field }}
+        {% endif %}
+    {% endfor %}
+
+    <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}"/>
+    <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#reply_to_{{ comment.id }}"/>
+
+    <p class="submit">
+        <input type="submit" name="post" class="submit-post" value="Комментировать"/>
+    </p>
+</form>
