@@ -97,4 +97,15 @@
         </div>
     {% endwith %}
 
+{% if sub_page == 'view_article' %}
+
+    {% include 'articles/comment_tree.html' %}
+    <br/>
+
+    {% if user.is_authenticated %}
+        {% include 'articles/comment_form.html' %}
+    {% endif %}
+
+{% endif %}
+
 </div>

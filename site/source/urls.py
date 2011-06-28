@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.urls')),
 	(r'^robots\.txt$', 'django.views.generic.simple.redirect_to', {'url': '%srobots.txt' % STATIC_URL[1:]}),
+    (r'^comments/', include('django.contrib.comments.urls')),
 	## Internal applications mappings
     (r'', include('techblog.urls')),
 )

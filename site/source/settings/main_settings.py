@@ -97,6 +97,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -117,9 +118,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    # Django 1.2+
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+    'django.core.context_processors.csrf'
 )
 
 INSTALLED_APPS = (
@@ -132,6 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.comments',
 
     # External apps
     'south',
@@ -139,9 +141,12 @@ INSTALLED_APPS = (
     'markitup',
     'haystack',
     'taggit',
+    'threadedcomments',
 
     # Internal apps
     'techblog',
 )
 
 INTERNAL_IPS = ('127.0.0.1', 'localhost', 'django.local')
+
+COMMENTS_APP = 'threadedcomments'
