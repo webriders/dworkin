@@ -7,3 +7,4 @@ django-haystack==1.2.0
 django-markitup==0.6.1
 django-registration==0.7
 django-taggit==0.9.3
+-e git+https://github.com/HonzaKral/django-threadedcomments.git#egg=django-threadedcomments

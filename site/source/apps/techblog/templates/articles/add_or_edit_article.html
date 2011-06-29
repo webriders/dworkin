@@ -16,6 +16,7 @@
             <h1 class="big-form-title">Статья</h1>
 
             <form method="post" class="large-form">
+                {% csrf_token %}
                 <dl>
                     {% for field in form %}
                         <dt>{{ field.label_tag }}</dt>

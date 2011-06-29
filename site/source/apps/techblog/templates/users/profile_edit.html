@@ -13,6 +13,7 @@
          <h1 class="big-form-title">Редактирование профиля</h1>
 
          <form enctype="multipart/form-data" method="post" class="big-form" autocomplete="off">
+            {% csrf_token %}
             <dl>
                 {% for field in UserForm %}
                     <dt>{{ field.label_tag }}</dt>

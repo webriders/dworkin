@@ -7,6 +7,7 @@
 {% block content %}
     <h1 class="big-form-title">Регистрация</h1>
     <form method="post" class="big-form" autocomplete="off">
+        {% csrf_token %}
         <dl>
             {% for field in form %}
                 {% if field.name == 'username' %}
