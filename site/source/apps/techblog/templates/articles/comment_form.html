@@ -20,3 +20,45 @@
         <input type="submit" name="post" class="submit-post" value="Комментировать"/>
     </p>
 </form>
+
+{% comment %}
+
+<h1 class="big-form-title">Комментировать</h1>
+<form action="/comments/post/" method="post" class="big-form">
+    {% csrf_token %}
+
+    {% for field in form %}
+        {% if field.name == 'comment' %}
+            <dt>{{ field.label_tag }}</dt>
+            <dd>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="hint">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="myerrors">{{ field.errors }}</div>
+                {% endif %}
+            </dd>
+        {% endif %}
+        {% if field.is_hidden and field.name != 'parent' %}
+            <dt>{{ field.label_tag }}</dt>
+            <dd>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="hint">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="myerrors">{{ field.errors }}</div>
+                {% endif %}
+            </dd>
+        {% endif %}
+    {% endfor %}
+
+    <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}"/>
+    <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#reply_to_{{ comment.id }}"/>
+
+    <p class="submit">
+        <input type="submit" name="post" class="submit-form" value="Комментировать"/>
+    </p>
+</form>
+{% endcomment %}
