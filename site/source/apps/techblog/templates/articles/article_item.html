@@ -10,14 +10,17 @@
         </div>
     </div>
     {% if request.user in article.authors.all %}
-        <div class="item-command">
-            <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
-            <br/>
-            {% if article.is_public %}
-                <a href="{{ article.get_absolute_url }}unpublish/" title="В черновики">To draft</a>
-            {% else %}
-                <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
-            {% endif %}
+        <div class="commands">
+            <div class="item-command">
+                <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
+            </div>
+            <div class="item-command">
+                {% if article.is_public %}
+                    <a href="{{ article.get_absolute_url }}unpublish/" title="В черновики">To draft</a>
+                {% else %}
+                    <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
+                {% endif %}
+            </div>
         </div>
     {% endif %}
 
@@ -63,7 +66,30 @@
             <div class="article-short rich-content">
                 {{ article.short|safe }}
             </div>
-            {% if article_mode == 'description' and article.description %}
+            {% if sub_page != 'view_article' %}
+                <div class="article-bottom-block">
+                    <div class="article-undercut">
+                        <a href="/articles/{{ article.id }}/#undercut">Читать далее</a>
+                    </div>
+                    <div class="item-authors">
+                        <div class="authors-title">
+                            Авторский коллектив:
+                        </div>
+                        {% for author in article.authors.all %}
+                            <div class="item-author-block">
+                                <div class="item-author-photo">
+                                    <a href="/users/{{ author.username }}/">{% user_avatar author 50 %}</a>
+                                </div>
+    {% comment %}
+                                <a class="item-author-title" href="/users/{{ author.username }}/">{{ author.username }}</a>
+    {% endcomment %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if sub_page == 'view_article' %}
+                <a name="undercut"></a>
                 <div class="article-uncut rich-content">
                     {{ article.description|safe }}
                 </div>
@@ -88,14 +114,16 @@
         <div class="clear"></div> <!-- IE6 fix -->
     </div>
 
-    {% with article.author as user %}
+{% comment %}    <div class="item-authors">
+    {% for author in article.authors.all %}
         <div class="item-author-block">
             <div class="item-author-photo">
-                <a href="/users/{{ user.username }}/">{% user_avatar user 32 %}</a>
+                <a href="/users/{{ author.username }}/">{% user_avatar author 50 %}</a>
             </div>
-            <a href="/users/{{ user.username }}/">{{ user.username }}</a>
+            <a class="item-author-title" href="/users/{{ author.username }}/">{{ author.username }}</a>
         </div>
-    {% endwith %}
+    {% endfor %}
+    </div>{% endcomment %}
 
 {% if sub_page == 'view_article' %}
 

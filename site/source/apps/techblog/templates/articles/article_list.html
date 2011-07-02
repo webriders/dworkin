@@ -23,20 +23,6 @@
 {% block content %}
     <div class="article-list">
         {% if article_list %}
-{% comment %}            {% if author %}
-                {% if author == user %}
-                    <h1>Ваши статьи.</h1>
-                {% else %}
-                    <h1>Статьи написаные пользователем {{  author.first_name|capfirst }} {{ user.last_name|capfirst }}.</h1>
-                {% endif %}
-            {% else %}
-                <h1>Все статьи</h1>
-            {% endif %}
-
-            {% if tags %}
-                <h1>Теги: {{ tags }}.</h1>
-            {% endif %}{% endcomment %}
-
             {% for article in article_list %}
                 {% include 'articles/article_item.html' %}
             {% endfor %}
