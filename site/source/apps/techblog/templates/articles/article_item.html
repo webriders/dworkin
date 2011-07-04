@@ -102,6 +102,8 @@
     {% include 'articles/comment_tree.html' %}
     <br/>
 
+    <a name="under_tree"></a>
+
     {% if user.is_authenticated %}
         {% include 'articles/comment_form.html' %}
     {% endif %}

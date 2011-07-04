@@ -13,8 +13,12 @@
         {% endif %}
     {% endfor %}
 
-    <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}"/>
-    <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#reply_to_{{ comment.id }}"/>
+    {% if comment %}
+        <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}"/>
+        <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#reply_to_{{ comment.id }}"/>
+    {% else %}
+        <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#under_tree"/>
+    {% endif %}
 
     <p class="submit">
         <input type="submit" name="post" class="submit-post" value="Комментировать"/>

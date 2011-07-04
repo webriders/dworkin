@@ -1,0 +1,11 @@
+{% extends "mail/base_mail.html" %}
+
+{% block mail_body %}
+    Пользователь '{{ comment.user }}' оставил
+    {% if comment.parent %}
+        ответ '{{ comment.parent.comment }}' на комментарий '{{ comment.comment }}' пользователя '{{ comment.parent.user }}'
+    {% else %}
+        комментарий '{{ comment.comment }}'
+    {% endif %}.
+
+{% endblock %}

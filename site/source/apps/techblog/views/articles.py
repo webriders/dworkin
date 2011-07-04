@@ -8,13 +8,15 @@ from datetime import datetime
 
 from techblog.forms import ArticleForm
 from techblog.models import Article, UserProfile, Category
-from techblog.service.articles import ArticleService
+from techblog.services.articles import ArticleService
+from techblog.logic.mail_service import MailService
 from techblog.constants import ARTICLES_LIMIT
 
 
 class ArticlesControlPanel(object):
+    article_service = ArticleService()
+
     def init_articles(self):
-        self.article_service = ArticleService()
         self.articles = self.article_service.filter_articles(self.request).order_by('-date')
 
     def get_control_panel_context(self):
@@ -56,6 +58,8 @@ class ArticleList(TemplateView, ArticlesControlPanel):
         return context
 
 def add_or_edit_article(request, article_id=None):
+    mail_service = MailService()
+
     params = {}
 
     if request.user.is_authenticated():
@@ -92,9 +96,10 @@ def add_or_edit_article(request, article_id=None):
                    article.tags.add(tag)
 
                 if article.is_public:
-                    return redirect('/?own=articles')
+                    mail_service.send_mail_on_article_publish(article, request.user)
                 else:
-                    return redirect('/?own=drafts')
+                    mail_service.send_mail_on_article_publish(article, request.user)
+                return redirect('/articles/%s/' % article.id)
         else:
             form = ArticleForm(instance=article) # An unbound form
         params['form'] = form
@@ -108,7 +113,7 @@ class ArticleDetail(DetailView, ArticlesControlPanel):
         article = get_object_or_404(Article, id=(self.kwargs.get('article_id')))
 
         self.is_public = article.is_public
-        if article.is_public:
+        if article.is_public or self.request.user in article.authors.all():
             return article
         else:
             return None
@@ -128,17 +133,15 @@ class ArticleDetail(DetailView, ArticlesControlPanel):
 
 class ArticlePublisher(RedirectView):
     permanent = False
+    article_service = ArticleService()
 
     def get_redirect_url(self, **kwargs):
         article_id, action =  self.args
         article = get_object_or_404(Article, id=article_id)
-        url = '/'
+        url = '/articles/%s/' % article_id
         if article.author == self.request.user:
             if action == 'publish':
-                article.is_public = True
-                url = '/?own=articles'
+                self.article_service.publish_article(article, self.request.user)
             elif action == 'unpublish':
-                article.is_public = False
-                url = '/?own=drafts'
-            article.save()
+                self.article_service.unpublish_article(article, self.request.user)
         return url

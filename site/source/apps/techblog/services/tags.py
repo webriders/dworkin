@@ -23,8 +23,8 @@ class TagService(object):
 
     @staticmethod
     def get_category_tag_cloud():
-        from techblog.service.articles import ArticleService
-        from techblog.service.categories import CategoryService
+        from techblog.services.articles import ArticleService
+        from techblog.services.categories import CategoryService
         cats = CategoryService.get_categories_with_count()
         for category in cats:
             article_ids = ArticleService.get_article_ids_by_category(category)

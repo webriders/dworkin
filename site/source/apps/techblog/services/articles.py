@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from techblog.filter.filter import Filter, FilterItem
+from techblog.logic.mail_service import MailService
 from techblog.models import Article
-from techblog.service.categories import CategoryService
-from techblog.service.tags import TagService
+from techblog.services.categories import CategoryService
+from techblog.services.tags import TagService
 
 class OwnerFilter(FilterItem):
     name="own"
@@ -94,6 +95,7 @@ class TagFilter(FilterItem):
         return context
 
 class ArticleService(object):
+    mail_service = MailService()
 
     def __init__(self):
         self.filter = Filter(store_in_session=True)
@@ -125,3 +127,14 @@ class ArticleService(object):
     @staticmethod
     def get_article_ids_by_category(category):
          return Article.objects.filter(category=category, is_public=True).only("id")
+
+    def publish_article(self, article, user=None):
+        article.is_public = True
+        article.save()
+        self.mail_service.send_mail_on_article_publish(article, user)
+
+    def unpublish_article(self, article, user=None):
+        article.is_public = False
+        article.save()
+        self.mail_service.send_mail_on_article_unpublish(article, user)
+

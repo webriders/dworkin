@@ -1,7 +1,7 @@
 Регистрация на сайте progressors.org.ua
 
 Для активации вашего аккаунта необходимо перейти по ссылке:
-http://{{ site }}/accounts/activate/{{ activation_key }}/
+{{ site }}/accounts/activate/{{ activation_key }}/
 
 Ссылка будет действительна в течение {{ expiration_days }} (день|дня|дней)
 

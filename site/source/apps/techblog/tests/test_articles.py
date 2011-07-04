@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 from techblog.models import Article
-from techblog.service.articles import TagFilter, OwnerFilter, CategoryFilter
+from techblog.services.articles import TagFilter, OwnerFilter, CategoryFilter
 
 class TestTagFilter(TestCase):
     fixtures = ['test_data.json',]
