@@ -61,7 +61,8 @@
                         {% endif %}
 
                         {% if profile.about_me %}
-                            <p><span>Про себя:</span> {{ profile.about_me|linebreaks }}</p>
+                            <p><span>Про себя:</span></p>
+                            <span class="about-me">{{ profile.about_me|linebreaks|urlize }}</span>
                         {% endif %}
                     </div>
 
