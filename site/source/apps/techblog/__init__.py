@@ -1,0 +1,6 @@
+from techblog import signal_listeners
+from registration.signals import user_activated
+from django.contrib.comments.signals import comment_was_posted
+
+user_activated.connect(signal_listeners.on_user_activate)
+comment_was_posted.connect(signal_listeners.on_article_comment)

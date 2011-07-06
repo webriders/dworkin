@@ -2,13 +2,14 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, TemplateView
 from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.list_detail import object_list, object_detail
 from techblog.models import UserProfile
 from techblog.forms import UserProfileForm, UserForm
 
 
 class UserProfilesList(ListView):
-    queryset = UserProfile.objects.all().filter(visible=True)
+    queryset = UserProfile.objects.all()#(visible=True)
     context_object_name = 'user_profiles'
     template_name = 'users/userprofile_list.html'
 
@@ -24,12 +25,8 @@ class UserProfileDetail(DetailView):
 
     def get_object(self, queryset=None):
         user_name = self.kwargs.get('user_name') or self.request.user.username
-        if user_name:
-            user_profile = UserProfile.objects.all().filter(user__username=user_name, visible=True)
-            user_profile = user_profile and user_profile[0]
-            return user_profile
-        else:
-            return None
+        user_profile = get_object_or_404(UserProfile, user__username=user_name, visible=True)
+        return user_profile
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -83,11 +80,6 @@ class UserProfileEdit(TemplateView):
 
         return self.render_to_response(context=context)
 
-
-def user_creative(request, user_name=None, params={}, *args, **kwargs):
-    params['page'] = 'user_creative'
-    return HttpResponse('user creative')
-    #return object_list(request, models.Article.objects.filter(is_staff=False, is_superuser=False), template_name='pages/user_list.html', extra_context=params)
 
 def marked_by_user(request, user_name=None, params={}, *args, **kwargs):
     params['page'] = 'marked_by_user'

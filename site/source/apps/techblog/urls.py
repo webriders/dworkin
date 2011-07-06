@@ -13,7 +13,6 @@ urlpatterns = patterns('techblog.views',
     (r'^users/(?P<user_name>\w+)/$', views.UserProfileDetail.as_view()),
     (r'^profile/$', views.UserProfileDetail.as_view()),
     (r'^profile/edit/$', views.UserProfileEdit.as_view()),
-    (r'^users/(?P<user_name>\w+)/creative/$', 'user_creative'),
     (r'^users/(?P<user_name>\w+)/marked/$', 'marked_by_user'),
 
     (r'^tags/$', views.TagsList.as_view()),

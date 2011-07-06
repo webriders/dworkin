@@ -4,43 +4,45 @@
 
 {% get_comment_list for article as comment_list %}
 
+<div class="article-comments-teee">
+    {% for comment in comment_list|fill_tree|annotate_tree %}
 
-{% for comment in comment_list|fill_tree|annotate_tree %}
+        {% ifchanged comment.parent_id %}{% else %}
+            </li>
+        {% endifchanged %}
 
-    {% ifchanged comment.parent_id %}{% else %}
-        </li>
-    {% endifchanged %}
+        {% if not comment.open and not comment.close %}
+            </li>
+        {% endif %}
 
-    {% if not comment.open and not comment.close %}
-        </li>
-    {% endif %}
+        {% if comment.open %}
+            <ul>
+        {% endif %}
 
-    {% if comment.open %}
-        <ul style="padding-left: 20px">
-    {% endif %}
+    <li{% if comment.last %} class="last"{% endif %}>
 
-<li{% if comment.last %} class="last"{% endif %}>
+        <div class="article-comment">
+            <a name="reply_to_{{ comment.id }}"></a>
 
-    <div>
-        <br/>
-        <a name="reply_to_{{ comment.id }}"></a>
-        
-        <div style="color: #228b22;">
-            {% user_avatar comment.user 16 %}
-            {{ comment.user.username }}
+            <div class="comment-author">
+                {% user_avatar comment.user 20 %}
+                <a href="/users/{{ comment.user.username }}/">{{ comment.user.username }}</a>
+            </div>
+            <div class="comment-date"> {{ comment.submit_date }} </div>
+            <div class="comment-body">{{ comment.comment|linebreaks|urlize }}</div>
+
+            {% if user.is_authenticated %}
+                <a class='showCommentLink' href="#comment_{{ comment.id }}"> Ответить </a>
+                <div class="comment-form" id="comment_{{ comment.id }}" style="display: none;">
+                    {% include 'articles/comment_form.html' %}
+                </div>
+            {% endif %}
         </div>
-        <div style="color: #daa520;"> {{ comment.submit_date }} </div>
-        <div>{{ comment.comment }}</div>
 
-        <a class='showCommentLink' href="#comment_{{ comment.id }}"> Ответить </a>
-        <div id="comment_{{ comment.id }}" style="display: none;">
-            {% include 'articles/comment_form.html' %}
-        </div>
-    </div>
+        {% for close in comment.close %}
+            </li>
+            </ul>
+        {% endfor %}
 
-    {% for close in comment.close %}
-        </li>
-        </ul>
     {% endfor %}
-
-{% endfor %}
+</div>

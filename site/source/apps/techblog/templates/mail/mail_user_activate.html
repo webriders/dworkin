@@ -1,0 +1,5 @@
+{% extends "mail/base_mail.html" %}
+
+{% block mail_body %}
+    Пользоветель <a href="{{ site_url }}/users/{{ user.username }}/">{{ user.username }}/</a> был активирован.
+{% endblock %}

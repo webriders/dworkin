@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 from django.views.generic import TemplateView
-from techblog.service.tags import TagService
+from techblog.services.tags import TagService
 
 class TagsList(TemplateView):
     template_name = 'tags/tags_list.html'

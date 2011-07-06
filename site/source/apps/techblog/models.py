@@ -102,12 +102,13 @@ class UserProfile(models.Model):
 
     def gravatar(self): pass
 
-def handle_user_creation_signal(sender, **kwargs):
+def handle_user_creation_signal(sender, instance, **kwargs):
     """
      Unfortunately, User's profile doesn't created automatically. Thus we need to handle User creation signal.
     """
-    if kwargs.get('created', False):
-        profile = UserProfile()
-        profile.user = kwargs.get('instance')
+    try:
+        profile = instance.get_profile()
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=instance)
         profile.save()
 post_save.connect(handle_user_creation_signal, sender=User)
