@@ -1,6 +1,6 @@
 # -*- encoding:utf-8 -*-
 
-from utils.mail_utils import mail_users
+from utils.mailutils import mail_users
 from django.contrib.sites.models import Site
 
 
