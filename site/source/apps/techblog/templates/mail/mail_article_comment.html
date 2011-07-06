@@ -1,11 +1,34 @@
 {% extends "mail/base_mail.html" %}
 
 {% block mail_body %}
-    Пользователь '{{ comment.user }}' оставил
+    Пользователь <a href="{{ site_url }}/users/{{ comment.user }}/">{{ comment.user }}</a> оставил(а)
+
     {% if comment.parent %}
-        ответ '{{ comment.parent.comment }}' на комментарий '{{ comment.comment }}' пользователя '{{ comment.parent.user }}'
+        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}">ответ</a>
+        <div>
+            <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
+                {{ comment.parent.comment|linebreaks|urlize }}
+            </div>
+        </div>
+
+        на <a href="{{ site_url }}/users/{{ comment.parent.object_pk }}/#comment_{{ comment.parent.id }}">комментарий</a>
+        пользователя <a href="{{ site_url }}/users/{{ comment.parent.user }}/">{{ comment.parent.user }}</a>
+
+        <div>
+            <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
+                {{ comment.comment|linebreaks|urlize }}
+            </div>
+        </div>
+
     {% else %}
-        комментарий '{{ comment.comment }}'
-    {% endif %}.
+
+        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}">комментарий</a>
+        <div>
+            <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
+                {{ comment.comment|linebreaks|urlize }}
+            </div>
+        </div>
+
+    {% endif %}
 
 {% endblock %}

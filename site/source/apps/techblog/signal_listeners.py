@@ -7,4 +7,4 @@ def on_user_activate(request, user, **kwargs):
 
 
 def on_article_comment(request, comment, **kwargs):
-    MailService.send_mail_on_article_comment(request, comment)
+    MailService.send_mail_on_article_comment(comment)

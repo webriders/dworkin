@@ -97,17 +97,18 @@
         </div>
     {% endwith %}
 
+</div>
+
 {% if sub_page == 'view_article' %}
 
     {% include 'articles/comment_tree.html' %}
-    <br/>
 
-    <a name="under_tree"></a>
+    <a name="last_comnent"></a>
 
-    {% if user.is_authenticated %}
-        {% include 'articles/comment_form.html' %}
-    {% endif %}
+    <div id="bottom-comment-form">
+        {% if user.is_authenticated %}
+            {% include 'articles/comment_form.html' %}
+        {% endif %}
+    </div>
 
 {% endif %}
-
-</div>

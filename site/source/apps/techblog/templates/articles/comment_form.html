@@ -2,7 +2,7 @@
 
 {% get_comment_form for article as form %}
 
-<form action="/comments/post/" method="post">
+<form class="comment-form" action="/comments/post/" method="post">
     {% csrf_token %}
 
     {{ form.comment }}
@@ -17,7 +17,7 @@
         <input type="hidden" name="parent" id="id_parent" value="{{ comment.id }}"/>
         <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#reply_to_{{ comment.id }}"/>
     {% else %}
-        <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#under_tree"/>
+        <input type="hidden" name="next" id="id_next" value="/articles/{{ article.id }}/#last_comnent"/>
     {% endif %}
 
     <p class="submit">

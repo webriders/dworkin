@@ -29,7 +29,7 @@ def mail_users(users, subject, template, params):
         msg = mail.EmailMessage(
                 subject= settings.EMAIL_SUBJECT_PREFIX + " [For admins] " + subject,
                 body=body,
-                to=["andrey.sokolov@webriders.com.ua"])
+                to=[a[1] for a in settings.MANAGERS])
         msg.content_subtype = "html"  # Main content is now text/html
         messages.append(msg)
 
