@@ -29,10 +29,12 @@
                 <a href="/users/{{ comment.user.username }}/">{{ comment.user.username }}</a>
             </div>
             <div class="comment-date"> {{ comment.submit_date }} </div>
-            <div class="comment-body">{{ comment.comment|linebreaks|urlize }}</div>
+            <div class="comment-body"> {{ comment.comment|urlize|linebreaks }} </div>
 
             {% if user.is_authenticated %}
-                <a class='showCommentLink' href="#comment_{{ comment.id }}"> Ответить </a>
+                <div class="replyLink">
+                    <a href="#comment_{{ comment.id }}"> Ответить </a>
+                </div>
                 <div class="comment-form" id="comment_{{ comment.id }}" style="display: none;">
                     {% include 'articles/comment_form.html' %}
                 </div>

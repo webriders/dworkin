@@ -36,8 +36,8 @@
     color: #ffffff;
 }
 
-.article-comment .showCommentLink {
-
+.article-comment .replyLink {
+    margin-top: 10px;
 }
 
 .comment-form textarea {
