@@ -6,9 +6,6 @@ Requirements:
 - pip
 - virtualenv
 
-
-
-
 Install requirements:
 - Python: http://www.python.org/download/
 - PIL:
