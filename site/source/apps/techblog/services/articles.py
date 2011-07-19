@@ -1,9 +1,14 @@
 from django.contrib.auth.models import User
+from markdown import markdown
+from docutils.core import publish_parts
+from textile import textile
+
 from techblog.filter.filter import Filter, FilterItem
 from techblog.logic.mail_service import MailService
 from techblog.models import Article
 from techblog.services.categories import CategoryService
 from techblog.services.tags import TagService
+from techblog.functions import html_parser
 
 class OwnerFilter(FilterItem):
     name="own"
@@ -138,3 +143,29 @@ class ArticleService(object):
         article.save()
         self.mail_service.send_mail_on_article_unpublish(article, user)
 
+    def render_markups(self, article):
+
+        class RenderedArticle(object):
+            def __init__(self, short, description):
+                self.short = short
+                self.description = description
+
+        short = article.short_raw
+        description = article.description_raw
+
+        if article.markup == article.MARKUP_MARKDOWN:
+            short = markdown(article.short_raw)
+            description = markdown(article.description_raw)
+
+        elif article.markup == article.MARKUP_RST:
+            short = publish_parts(source=article.short_raw, writer_name="html4css1")["fragment"]
+            description = publish_parts(source=article.description_raw, writer_name="html4css1")["fragment"]
+
+        elif article.markup == article.MARKUP_TEXTILE:
+            short = textile(article.short_raw)
+            description = textile(article.description_raw)
+
+        short = html_parser(short)
+        description = html_parser(description)
+
+        return RenderedArticle(short, description)

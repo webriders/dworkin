@@ -12,7 +12,7 @@ class ArticleForm(forms.ModelForm):
     #description = forms.TextField()
     class Meta(object):
         model = Article
-        fields = ('title', 'category', 'tags', 'short_raw', 'description_raw', )
+        fields = ('title', 'category', 'tags', 'markup', 'short_raw', 'description_raw', )
         widgets = {
             'short_raw': MarkItUpWidget(),
             'description_raw': MarkItUpWidget(),

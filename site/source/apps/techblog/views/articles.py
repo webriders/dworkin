@@ -90,6 +90,7 @@ def add_or_edit_article(request, article_id=None):
                 else:
                     article.is_public = False
                 article.save()
+                article.authors.add(request.user)
                 
                 tags = form.cleaned_data['tags']
                 for tag in tags:

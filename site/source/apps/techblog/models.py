@@ -48,19 +48,36 @@ class Article(models.Model):
     title = models.CharField(u'Заголовок статьи', max_length=1024)
     date = models.DateTimeField(u'Время публикации', default=datetime.now())
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
-    markup = models.CharField(u'Формат', max_length=16, default='html')
+
+    MARKUP_HTML = u'html'
+    MARKUP_MARKDOWN = u'markdown'
+    MARKUP_RST = u'rst'
+    MARKUP_TEXTILE = u'textile'
+    MARKUP_TYPE = (
+        (MARKUP_HTML, u'HTML'),
+        (MARKUP_MARKDOWN, u'Markdown'),
+        (MARKUP_RST, u'ReStructuredText'),
+        (MARKUP_TEXTILE, u'Textile'),
+    )
+    markup = models.CharField(u'Формат', max_length=16, default=MARKUP_HTML, choices=MARKUP_TYPE)
     short_raw = models.TextField(u'Начало')
     description_raw = models.TextField(u'Под катом', blank=True)
 
-    short = models.TextField(u'Начало')
-    description = models.TextField(u'Под катом', blank=True)
+    short = models.TextField(u'Начало (результат)')
+    description = models.TextField(u'Под катом (результат)', blank=True)
     tags = TaggableManager(blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
 
 
     def save(self, *args, **kwargs):
-        self.short = html_parser(self.short_raw)
-        self.description = html_parser(self.description_raw)
+
+        from techblog.services.articles import ArticleService
+        article_service = ArticleService()
+        rendered_article = article_service.render_markups(self)
+
+        self.short = rendered_article.short
+        self.description = rendered_article.description
+
         super(Article, self).save(*args, **kwargs) # Call the "real" save() method.
 
     def binary_date(self):
