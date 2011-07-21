@@ -3,21 +3,21 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from markitup.widgets import MarkItUpWidget
-from taggit.forms import TagWidget
 from techblog.models import Article, UserProfile
+from techblog.widgets import MultiMarkItUpWidget
 
 class ArticleForm(forms.ModelForm):
-    #short = forms.TextField()
-    #description = forms.TextField()
+
+    def __init__(self, *args, **kwargs):
+        super(ArticleForm, self).__init__(*args, **kwargs)
+
+        markup = kwargs['instance'].markup
+        self.fields['short_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
+        self.fields['description_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
+
     class Meta(object):
         model = Article
         fields = ('title', 'category', 'tags', 'markup', 'short_raw', 'description_raw', )
-        widgets = {
-            'short_raw': MarkItUpWidget(),
-            'description_raw': MarkItUpWidget(),
-            'tags' : TagWidget(),
-        }
 
 
 class UserForm(forms.ModelForm):
@@ -32,7 +32,6 @@ class UserForm(forms.ModelForm):
 
     def clean_oldpassword(self):
         cd = self.cleaned_data
-        #self.instance.set_password('1')
         if cd.get('oldpassword') and not self.instance.check_password(cd['oldpassword']):
             raise ValidationError(u'Неверный пароль.')
         return cd['oldpassword']
