@@ -15,6 +15,7 @@ var Markups = {
     //======================================
     html: {
         nameSpace: 'htmlMarkup',
+        previewParserPath: '/markitup/preview/html/',
         onShiftEnter:    {keepDefault:false, replaceWith:'<br />\n'},
         onCtrlEnter:    {keepDefault:false, openWith:'\n<p>', closeWith:'</p>\n'},
         onTab:            {keepDefault:false, openWith:'    '},
@@ -42,12 +43,12 @@ var Markups = {
             {separator:'---------------' },
             {name:'Убрать тэги', className:'clean', replaceWith:function(markitup) {
                 return markitup.selection.replace(/<(.*?)>/g, "")
-            } }
+            } },
 //            {name:'Просмотр', className:'preview', replaceWith:customPreview /* why not call:customPreview? Because I can't get the instance from there */ },
 //            {separator:'---------------' },
 //            {name:'Что это за редактор?', className:'help', call:showMarkItUpHelp }
-//            {separator:'---------------' }
-//            {name:'Preview', className:'preview', call:'preview'}
+            {separator:'---------------' },
+            {name:'Preview', className:'preview', call:'preview'}
         ]
     },
 
@@ -56,7 +57,7 @@ var Markups = {
     //======================================
     markdown: {
         nameSpace: 'markdownMarkup',
-        //previewParserPath: '/markitup/preview/',
+        previewParserPath: '/markitup/preview/markdown/',
         onShiftEnter: {keepDefault:false, openWith:'\n\n'},
         markupSet: [
             {name:'First Level Heading', key:'1', placeHolder:'Your title here...', closeWith:function(markItUp) {
@@ -82,9 +83,9 @@ var Markups = {
             {name:'Link', key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
             {separator:'---------------'},
             {name:'Quotes', openWith:'> '},
-            {name:'Code Block / Code', openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'}
-            //{separator:'---------------'}
-            //{name:'Preview', call:'preview', className:"preview"}
+            {name:'Code Block / Code', openWith:'(!(\t|!|`)!)', closeWith:'(!(`)!)'},
+            {separator:'---------------'},
+            {name:'Preview', call:'preview', className:"preview"}
         ]
     },
 
@@ -93,6 +94,7 @@ var Markups = {
     //======================================
     rst : {
         nameSpace: 'ReST',
+        previewParserPath: '/markitup/preview/rst/',
         onShiftEnter: {keepDefault:false, openWith:'\n\n'},
         onTab: {keepDefault:false, replaceWith:'    '},
         markupSet: [
@@ -126,8 +128,9 @@ var Markups = {
             {name:'Picture', key:'P', openWith:'.. image:: ', placeHolder:'Link Your Images Here...'},
             {name:'Link', key:"L", openWith:'`', closeWith:'`_ \n\n.. _`Link Name`: [![Url:!:http://]!]', placeHolder:'Link Name' },
             {name:'Quotes', openWith:'    '},
-            {name:'Code', openWith:'\n:: \n\n	 '}
-            //{name:'Preview', className:'preview', call:'preview'}
+            {name:'Code', openWith:'\n:: \n\n	 '},
+            {separator:'---------------' },
+            {name:'Preview', className:'preview', call:'preview'}
         ]
     },
 
@@ -136,6 +139,7 @@ var Markups = {
     //======================================
     textile : {
         nameSpace: 'textileMarkup',
+        previewParserPath: '/markitup/preview/textile/',
         onShiftEnter:        {keepDefault:false, replaceWith:'\n\n'},
         markupSet: [
             {name:'Heading 1', key:'1', openWith:'h1(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
@@ -157,9 +161,9 @@ var Markups = {
             {name:'Link', openWith:'"', closeWith:'([![Title]!])":[![Link:!:http://]!]', placeHolder:'Your text to link here...' },
             {separator:'---------------' },
             {name:'Quotes', openWith:'bq(!(([![Class]!])!)). '},
-            {name:'Code', openWith:'@', closeWith:'@'}
-            //{separator:'---------------' }
-            //{name:'Preview', className:'preview', call:'preview'}
+            {name:'Code', openWith:'@', closeWith:'@'},
+            {separator:'---------------' },
+            {name:'Preview', className:'preview', call:'preview'}
         ]
     },
 

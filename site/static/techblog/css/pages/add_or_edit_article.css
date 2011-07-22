@@ -3,7 +3,8 @@
 }
 
 #markItUpId_short_raw .markItUpPreviewFrame {
-    height: 150px;
+    height: 300px;
+    background: #fff;
 }
 
 #id_description_raw {
@@ -11,5 +12,6 @@
 }
 
 #markItUpId_description_raw .markItUpPreviewFrame {
-    height: 400px;
+    height: 450px;
+    background: #fff;
 }

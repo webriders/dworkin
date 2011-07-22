@@ -143,6 +143,22 @@ class ArticleService(object):
         article.save()
         self.mail_service.send_mail_on_article_unpublish(article, user)
 
+
+    @staticmethod
+    def render_markup(markup, raw_data):
+        data = raw_data
+
+        if markup == Article.MARKUP_MARKDOWN:
+            data = markdown(data)
+        elif markup == Article.MARKUP_RST:
+            data = publish_parts(source=data, writer_name="html4css1")["fragment"]
+        elif markup == Article.MARKUP_TEXTILE:
+            data = textile(data)
+        data = html_parser(data)
+
+        return data
+
+
     def render_markups(self, article):
 
         class RenderedArticle(object):
@@ -150,22 +166,8 @@ class ArticleService(object):
                 self.short = short
                 self.description = description
 
-        short = article.short_raw
-        description = article.description_raw
-
-        if article.markup == article.MARKUP_MARKDOWN:
-            short = markdown(article.short_raw)
-            description = markdown(article.description_raw)
-
-        elif article.markup == article.MARKUP_RST:
-            short = publish_parts(source=article.short_raw, writer_name="html4css1")["fragment"]
-            description = publish_parts(source=article.description_raw, writer_name="html4css1")["fragment"]
-
-        elif article.markup == article.MARKUP_TEXTILE:
-            short = textile(article.short_raw)
-            description = textile(article.description_raw)
-
-        short = html_parser(short)
-        description = html_parser(description)
+        markup = article.markup
+        short = self.render_markup(markup, article.short_raw)
+        description = self.render_markup(markup, article.description_raw)
 
         return RenderedArticle(short, description)
