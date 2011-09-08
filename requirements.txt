@@ -11,3 +11,4 @@ docutils==0.8
 textile==2.1.5
 -e git+https://github.com/HonzaKral/django-threadedcomments.git#egg=django-threadedcomments
 -e hg+https://bitbucket.org/ubernostrum/django-registration#egg=django-registration
+-e git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins

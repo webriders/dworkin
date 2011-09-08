@@ -1,0 +1,2 @@
+
+PROJECT_APPS = ('techblog',)
