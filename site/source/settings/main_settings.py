@@ -142,7 +142,6 @@ INSTALLED_APPS = (
     'haystack',
     'taggit',
     'threadedcomments',
-    'django_jenkins',
 
     # Internal apps
     'techblog',
