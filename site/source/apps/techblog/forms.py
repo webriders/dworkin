@@ -11,7 +11,12 @@ class ArticleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ArticleForm, self).__init__(*args, **kwargs)
 
-        markup = kwargs['instance'].markup
+        instance = kwargs.get('instance')
+        if instance:
+            markup = instance.markup
+        else:
+            markup = 'html'
+
         self.fields['short_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
         self.fields['description_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
 

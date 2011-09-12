@@ -114,7 +114,7 @@ class UserProfile(models.Model):
     visible = models.BooleanField(u'Показывать на странице с авторами', default=True)
     
     def get_articles_count(self):
-        query = Article.objects.filter( authors__in=[self] ).count()
+        query = Article.objects.filter( authors__in=[self.user] ).count()
         return query
 
     def gravatar(self): pass

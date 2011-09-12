@@ -18,7 +18,9 @@
 {% block content %}
     <div class="profiles">
         {% for profile in user_profiles %}
+            {% if profile.visible %}
                 {% include 'users/userprofile_item.html' %}
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
