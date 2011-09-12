@@ -326,6 +326,25 @@
 }
 
 
+/*------------------------------------- RSS --------------------------------*/
+.articles-rss {
+    float: left;
+    width: 185px;
+    padding-top: 40px;
+    margin-left: 45px;
+}
+
+.articles-rss-img {
+    float: left;
+    margin-right: 8px;
+    margin-top: 3px;
+}
+
+.articles-rss-link {
+    font-size: 15px;
+}
+
+
 /*------------------------------------- Control panel --------------------------------*/
 
 .control-panel {
@@ -463,4 +482,7 @@
     color: gray;
     border: 2px solid black;
 }
+
+
+
 

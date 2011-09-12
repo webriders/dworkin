@@ -41,6 +41,16 @@
             Не найдено ни одной статьи.
         {% endif %}
     </div>
+
+    <div class="articles-rss">
+        <div class="articles-rss-img">
+            <img width="18" height="18" src="/static/techblog/img/common/rss.png" alt="RSS"/>
+        </div>
+        <div class="articles-rss-link">
+            <a href="{% url rss %}">Подписаться</a>
+        </div>
+    </div>
+    
     {% include "articles/control_panel.html" %}
 {#    !!!!!!!!!={{ the_filter.print_state }}=!!!!!!!!#}
 {#    !!!!!!!!!+{{ the_filter }}+!!!!!!!!#}

@@ -11,7 +11,7 @@ class TextXmlFeedType(Rss201rev2Feed):
 class ArticlesFeed(Feed):
 
     title = u"Блог Progressors.org.ua"
-    link = "/atom/"
+    link = "/rss/"
     description = u"Новые статьи на Progressors.org.ua"
     feed_type = TextXmlFeedType
 

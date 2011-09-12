@@ -22,6 +22,6 @@ urlpatterns = patterns('techblog.views',
 
     (r'^api/parse_html/$', 'parse_html'),
 
-    (r'^atom/$', ArticlesFeed()),
+    url(r'^rss/$', ArticlesFeed(), name='rss'),
 
 )
