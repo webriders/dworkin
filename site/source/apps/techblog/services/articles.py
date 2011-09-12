@@ -9,6 +9,7 @@ from techblog.models import Article
 from techblog.services.categories import CategoryService
 from techblog.services.tags import TagService
 from techblog.functions import html_parser
+from techblog.constants import LATEST_FEED_COUNT
 
 class OwnerFilter(FilterItem):
     name="own"
@@ -124,6 +125,10 @@ class ArticleService(object):
     @staticmethod
     def get_articles_by_author(user, ids):
         return Article.objects.filter(author=user, is_public=True, id__in=ids)
+
+    @staticmethod
+    def get_feed_articles():
+        return Article.objects.filter(is_public=True)[:LATEST_FEED_COUNT]
 
     @staticmethod
     def get_drafts_by_author(user, ids):

@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.core.urlresolvers import reverse
 from techblog import views
+from techblog.feeds import ArticlesFeed
 
 urlpatterns = patterns('techblog.views',
     (r'^(?:articles/)?$', views.ArticleList.as_view()),
@@ -20,4 +21,7 @@ urlpatterns = patterns('techblog.views',
     (r'^tags/$', views.TagsList.as_view()),
 
     (r'^api/parse_html/$', 'parse_html'),
+
+    (r'^atom/$', ArticlesFeed()),
+
 )
