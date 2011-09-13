@@ -50,3 +50,14 @@
 .site-footer .bottom-menu ul li a:hover {
     border-bottom: none;
 }
+
+
+/* WebRiders Copyright */
+.footer-copyright {
+    float: right;
+    font-size: 14px;
+}
+
+.footer-copyright a {
+    color: white;
+}
