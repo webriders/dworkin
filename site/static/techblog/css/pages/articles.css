@@ -348,7 +348,7 @@
 /*------------------------------------- Control panel --------------------------------*/
 
 .control-panel {
-    float: left;
+    float: right;
     width: 185px;
     padding-top: 40px;
     margin-left: 45px;

@@ -9,5 +9,6 @@ django-taggit==0.9.3
 markdown==2.0.3
 docutils==0.8
 textile==2.1.5
+django-ttag==2.3
 -e git+https://github.com/HonzaKral/django-threadedcomments.git#egg=django-threadedcomments
 -e hg+https://bitbucket.org/ubernostrum/django-registration#egg=django-registration

@@ -72,6 +72,7 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
 
+        # TODO: Move to __init__
         from techblog.services.articles import ArticleService
         article_service = ArticleService()
         rendered_article = article_service.render_markups(self)
@@ -115,8 +116,8 @@ class UserProfile(models.Model):
     visible = models.BooleanField(u'Показывать на странице с авторами', default=True)
     
     def get_articles_count(self):
-        query = Article.objects.filter( authors__in=[self.user] ).count()
-        return query
+        count = Article.objects.filter( authors__in=[self.user], is_public=True).count()
+        return count
 
     def gravatar(self): pass
 

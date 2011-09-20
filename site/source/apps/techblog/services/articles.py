@@ -16,7 +16,7 @@ class OwnerFilter(FilterItem):
     def filter(self, query):
         if self.user and self.user.is_authenticated():
             if self.value == "articles":
-                query = query.filter(authors__in=[self.user.id])
+                query = query.filter(authors__in=[self.user.id], is_public=True)
             if self.value == "drafts" :
                 query = query.filter(authors__in=[self.user.id], is_public=False)
         return query
@@ -24,8 +24,8 @@ class OwnerFilter(FilterItem):
     def get_context_data(self, filtered_ids):
         context = {}
         if self.user and self.user.is_authenticated():
-            context["own_articles_count"] = ArticleService.get_articles_by_author(self.user, filtered_ids).count()
-            context["own_drafts_count"] = ArticleService.get_drafts_by_author(self.user, filtered_ids).count()
+            context["own_articles_count"] = ArticleService.get_articles_by_author(self.user).count()
+            context["own_drafts_count"] = ArticleService.get_drafts_by_author(self.user).count()
             if self.value == "articles":
                 context["own_articles"] = True
             if self.value == "drafts":
@@ -73,7 +73,9 @@ class TagFilter(FilterItem):
     name="tags"
 
     def filter(self, query):
-        return query.filter(tags__slug__in=self.value)
+        for tag in self.value:
+            query = query.filter(tags__slug__in=[tag])
+        return query
 
     def get_context_data(self, filtered_ids):
         selected_tag_slugs = []
@@ -104,7 +106,10 @@ class ArticleService(object):
     mail_service = MailService()
 
     def __init__(self):
-        self.filter = Filter(store_in_session=True)
+        pass
+
+    def init_filters(self):  #__init__(self):
+        self.filter = Filter()
         self.filter.add_item(OwnerFilter())
         self.filter.add_item(CategoryFilter())
         self.filter.add_item(TagFilter(is_multivalue=True))
@@ -114,6 +119,9 @@ class ArticleService(object):
         query = Article.objects.all()
         if request.GET.get("own") != "drafts":
             query = query.filter(is_public=True)
+
+        self.init_filters()
+
         query = self.filter.filter_query(request, query)
         return query
 
@@ -123,16 +131,22 @@ class ArticleService(object):
         return context
 
     @staticmethod
-    def get_articles_by_author(user, ids):
-        return Article.objects.filter(author=user, is_public=True, id__in=ids)
-
-    @staticmethod
     def get_feed_articles():
         return Article.objects.filter(is_public=True)[:LATEST_FEED_COUNT]
 
     @staticmethod
-    def get_drafts_by_author(user, ids):
-        return Article.objects.filter(author=user, is_public=False, id__in=ids)
+    def get_articles_by_author(user, ids=None):
+        query = Article.objects.filter(authors__in=[user], is_public=True)
+        if ids:
+            query = query.filter(id__in=ids)
+        return query
+
+    @staticmethod
+    def get_drafts_by_author(user, ids=None):
+        query = Article.objects.filter(authors__in=[user], is_public=False)
+        if ids:
+            query = query.filter(id__in=ids)
+        return query
 
     @staticmethod
     def get_article_ids_by_category(category):

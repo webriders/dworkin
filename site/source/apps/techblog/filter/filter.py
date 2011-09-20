@@ -1,3 +1,4 @@
+
 class FilterItem(object):
     name=""
 
@@ -15,23 +16,20 @@ class FilterItem(object):
 
 class Filter(object):
 
-    def __init__(self, store_in_session = False):
+    def __init__(self):
         self.items = []
-        self.store_in_session = store_in_session
 
     def add_item(self, item):
         self.items.append(item)
 
     def filter_query(self, request, query):
-        self.load_from_request(request.GET, request.session)
+        self.load_from_request(request.GET)
 
         for item in self.items:
             item.user = request.user
             if item.is_active:
                 query = item.filter(query)
 
-        if self.store_in_session:
-            self.save_to_session(request.session)
         return query
 
     def get_context_data(self, filtered_items):
@@ -44,46 +42,27 @@ class Filter(object):
         context["the_filter"] = self
         return context
 
-    def load_from_request(self, request_data, session):
-        # clean all filters saved in session
-        if request_data.has_key("clear_all") and self.store_in_session:
-            for item in self.items:
-                if session.has_key(item.name):
-                    del session[item.name]
-
+    def load_from_request(self, request_data):
         for item in self.items:
             # load from request (first prio)
             if request_data.has_key(item.name):
                 item.is_active = True
                 if item.is_multivalue:
-                    item.value = request_data.getlist(item.name)
+                    item.value = request_data.get(item.name).split(',')
                 else:
                     item.value = request_data.get(item.name)
-
-            # load from session (second prio)
-            elif self.store_in_session:
-                if session.has_key(item.name):
-                    item.is_active = True
-                    if item.is_multivalue:
-                        item.value = session.get(item.name)
-                    else:
-                        item.value = session.get(item.name)
 
             # reset filter (show all :) )
             if request_data.has_key("all_" + item.name):
                 item.is_active = False
                 item.value = None
-                if self.store_in_session and session.has_key(item.name):
-                    del session[item.name]
 
-
-    def save_to_session(self, session):
+    def get_params(self):
+        params = []
         for item in self.items:
-            if item.is_active:
-                session[item.name] = item.value
-            else:
-                if session.has_key(item.name):
-                    del session[item.name]
+            if item.value:
+                params.append( (item.name, item.value) )
+        return dict(params)
 
 
     def __unicode__(self):

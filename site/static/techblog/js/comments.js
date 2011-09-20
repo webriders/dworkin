@@ -1,6 +1,6 @@
 WR.util.namespace('WR.Dworkin');
 
-WR.Dworkin.feedback = {
+WR.Dworkin.comments = {
 
 
     init: function() {
@@ -9,7 +9,7 @@ WR.Dworkin.feedback = {
 
     initComments: function() {
 
-        $('a.showCommentLink').click(function(e) {
+        $('div.replyLink a').click(function(e) {
             var clickEvent = e;
             e.preventDefault();
             
@@ -26,5 +26,5 @@ WR.Dworkin.feedback = {
 };
 
 $(function() {
-    WR.Dworkin.feedback.init();
+    WR.Dworkin.comments.init();
 });
