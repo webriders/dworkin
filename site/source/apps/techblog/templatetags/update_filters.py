@@ -37,7 +37,6 @@ class UpdateFilters(ttag.Tag):
             if param.startswith('all_'):
                 par = param.replace('all_', '')
                 if par in params:
-                    print par
                     del params[par]
 
         return self.make_url_params(params)
