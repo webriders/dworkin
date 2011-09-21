@@ -18,7 +18,7 @@
 {% block content %}
     <div class="profiles">
         {% for profile in user_profiles %}
-            {% if profile.visible %}
+            {% if profile.user.is_active %}
                 {% include 'users/userprofile_item.html' %}
             {% endif %}
         {% endfor %}

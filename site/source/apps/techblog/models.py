@@ -113,7 +113,6 @@ class UserProfile(models.Model):
     avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
     use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
     about_me = models.TextField(u'Про себя', max_length=4096, blank=True, null=True)
-    visible = models.BooleanField(u'Показывать на странице с авторами', default=True)
     
     def get_articles_count(self):
         count = Article.objects.filter( authors__in=[self.user], is_public=True).count()

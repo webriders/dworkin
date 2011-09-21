@@ -32,6 +32,9 @@ class UserProfileInline(admin.StackedInline):
 
 class UserAdmin(admin.ModelAdmin):
     inlines = (UserProfileInline,)
+    list_display = ('username', 'get_full_name', 'date_joined', 'is_active',)
+    date_hierarchy = 'date_joined'
+    list_filter = ('is_active',)
 
 
 
