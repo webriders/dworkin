@@ -25,27 +25,40 @@ class UpdateFilters(ttag.Tag):
         filter_obj = data.get('filter_obj')
         params = filter_obj.get_params()
 
-        for param_name in ('page', 'category', 'own', 'all_own', 'all_category', 'all_author',):
+        for param_name in ('page', 'own', 'all_own', 'all_author',):
             param_value = data.get(param_name)
 
             if param_value:
                 params[param_name] = param_value
 
+        params = self.add_or_remove_category(data, params)
         params = self.add_or_remove_tag(data, params)
-        
-        for param in dict(params):
+
+        for param in params.copy():
             if param.startswith('all_'):
                 par = param.replace('all_', '')
                 if par in params:
                     del params[par]
+                if param in params:
+                    del params[param]
+        return self.make_url(params)
 
-        return self.make_url_params(params)
 
+    def add_or_remove_category(self, data, params):
+        old_category = params.get('category')
+        new_category =  data.get('category')
+
+        if new_category:
+            if old_category == new_category  or 'all_category' in data:
+                del params['category']
+            else:
+                params['category'] = new_category
+        return params
 
     def add_or_remove_tag(self, data, params):
         tags = params.get('tags')
 
-        if ('all_tags' in params or 'all_tags' in data) and tags:
+        if 'all_tags' in data and tags:
             del params['tags']
             return params
 
@@ -70,7 +83,7 @@ class UpdateFilters(ttag.Tag):
         return params
 
 
-    def make_url_params(self, params):
+    def make_url(self, params):
         params_str = '?'
 
         for key in params:

@@ -4,7 +4,7 @@
     {% if request.user.is_authenticated %}
         <div class="filter">
             <h3>Моё</h3>
-            <a class="all" href="?all_own=1">все</a>
+            <a class="all" href=".">все</a>
             <div class="clear"></div>
             <ul class="categories">
                     <li class="{% if own_articles %}selected{% endif %} {% if not own_articles_count %}disabled{% endif %}">
@@ -63,7 +63,7 @@
 
     <div class="filter">
         <h3>Теги</h3>
-        <a class="all" href="{% update_filters the_filter all_tags=1 %}">все</a>
+        <a class="all" href="/articles/{% update_filters the_filter all_tags=1 %}">все</a>
         <div class="clear"></div>
         <div class="tag-cloud">
             {% for tag in tag_cloud %}
