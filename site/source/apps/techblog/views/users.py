@@ -9,7 +9,7 @@ from techblog.forms import UserProfileForm, UserForm
 
 
 class UserProfilesList(ListView):
-    queryset = UserProfile.objects.all()#(visible=True)
+    queryset = UserProfile.objects.all()
     context_object_name = 'user_profiles'
     template_name = 'users/userprofile_list.html'
 
@@ -25,7 +25,7 @@ class UserProfileDetail(DetailView):
 
     def get_object(self, queryset=None):
         user_name = self.kwargs.get('user_name') or self.request.user.username
-        user_profile = get_object_or_404(UserProfile, user__username=user_name, visible=True)
+        user_profile = get_object_or_404(UserProfile, user__username=user_name, user__is_active=True)
         return user_profile
 
     def get_context_data(self, **kwargs):
