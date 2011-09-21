@@ -9,3 +9,10 @@ EMAIL_HOST_USER = "bot@inmind.org"
 EMAIL_HOST_PASSWORD = ""
 EMAIL_SUBJECT_PREFIX = "website (local) - "
 """
+
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
