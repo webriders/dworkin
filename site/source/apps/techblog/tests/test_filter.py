@@ -40,7 +40,7 @@ class TestFilter(TestCase):
         filter.load_from_request(request_data)
         self.assertEqual(filter.items[0].value, "django")
         self.assertTrue(filter.items[0].is_active)
-        self.assertTrue(filter.items[1].is_active)
+        self.assertFalse(filter.items[1].is_active)
 
     def _test_load_from_session_request_session(self):
         filter = self.create_test_filter()

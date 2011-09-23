@@ -7,7 +7,11 @@ class TestTagFilter(TestCase):
     fixtures = ['test_data.json',]
 
     def setUp(self):
-        pass
+        from django.contrib.contenttypes.models import ContentType
+        from taggit.models import TaggedItem
+
+        article_content_type = ContentType.objects.get(model='article')
+        TaggedItem.objects.update(content_type=article_content_type)
 
     def test_tag_filter_single_value(self):
         tag_filter = TagFilter(is_multivalue=True)
@@ -67,7 +71,7 @@ class TestOwnFilter(TestCase):
         context = filter.get_context_data([item.id for item in query])
         self.assertTrue(context.has_key('own_articles'))
         self.assertEqual(context['own_articles_count'], 6)
-        self.assertEqual(context['own_drafts_count'], 0)
+        self.assertEqual(context['own_drafts_count'], 1)
 
     def test_own_filter_drafts(self):
         filter = OwnerFilter()
@@ -75,11 +79,11 @@ class TestOwnFilter(TestCase):
         filter.user = User.objects.get(username="lexa")
         query = Article.objects.filter()
         query = filter.filter(query)
-        self.assertEqual(len(query), 1)
+        self.assertEqual(len(query), 1)   #
 
         context = filter.get_context_data([item.id for item in query])
         self.assertTrue(context.has_key('own_drafts'))
-        self.assertEqual(context['own_articles_count'], 0)
+        self.assertEqual(context['own_articles_count'], 6)
         self.assertEqual(context['own_drafts_count'], 1)
 
 
@@ -91,8 +95,6 @@ class TestCategoryFilter(TestCase):
         filter.value = "django"
         query = Article.objects.filter(is_public=True)
         query = filter.filter(query)
-        print query.query
-        print str(query)
         self.assertEqual(len(query), 2)
 
 
