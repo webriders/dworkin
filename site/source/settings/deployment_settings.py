@@ -1,3 +1,10 @@
+# -*- coding: UTF-8 -*-
+
+"""
+Part of settings.py that contains Deployment settings. Not standalone!
+"""
+
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
