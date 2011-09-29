@@ -1,11 +1,14 @@
+# -*- coding: UTF-8 -*-
+
 from django.contrib.auth.models import User
 from markdown import markdown
 from docutils.core import publish_parts
 from textile import textile
+from taggit.models import Tag
 
 from techblog.filter.filter import Filter, FilterItem
 from techblog.logic.mail_service import MailService
-from techblog.models import Article
+from techblog.models import Article, Category
 from techblog.services.categories import CategoryService
 from techblog.services.tags import TagService
 from techblog.functions import html_parser
@@ -108,7 +111,7 @@ class ArticleService(object):
     def __init__(self):
         pass
 
-    def init_filters(self):  #__init__(self):
+    def init_filters(self):
         self.filter = Filter()
         self.filter.add_item(OwnerFilter())
         self.filter.add_item(CategoryFilter())
@@ -117,17 +120,68 @@ class ArticleService(object):
 
     def filter_articles(self, request):
         query = Article.objects.all()
-        if request.GET.get("own") != "drafts":
+        own = request.GET.get("own")
+        if own == "articles":
             query = query.filter(is_public=True)
+        if own == "drafts":
+            query = query.filter(is_public=False)
 
         self.init_filters()
 
         query = self.filter.filter_query(request, query)
         return query
 
+    def get_current_filters(self):
+        params = self.filter.get_params()
+        current_filters = []
+
+        #-------------------------------------
+        own = params.get('own')
+        if own:
+            if own == 'articles':
+                own = u'Статьи'
+            elif own == 'drafts':
+                own = u'Черновики'
+
+            current_filters.append({
+                    'name': 'own',
+                    'value': own,
+                    'slug': None,
+                })
+
+        #-------------------------------------
+        category_slug = params.get('category')
+        if category_slug:
+
+            category = Category.objects.filter(slug=category_slug)
+            if category:
+                current_filters.append({
+                    'name': 'category',
+                    'value': category[0].title,
+                    'slug': category_slug,
+                })
+
+        #------------------------------------
+        tags = params.get('tags')
+        if tags:
+            for tag_slug in tags:
+
+                tag = Tag.objects.filter(slug=tag_slug)
+                if tag:
+                    current_filters.append({
+                        'name': 'tag',
+                        'value': tag[0].name,
+                        'slug': tag_slug
+                    })
+            del params['tags']
+
+        return current_filters
+
+
     def get_control_panel_context(self, filtered_items):
         context = self.filter.get_context_data(filtered_items)
         context["filter"] = filter
+        context['current_filters'] = self.get_current_filters()
         return context
 
     @staticmethod

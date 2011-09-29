@@ -1,6 +1,35 @@
 {% load user_avatar update_filters %}
 
 <div class="control-panel">
+
+    {% if current_filters %}
+        <div class="current-filters">
+            <h3>Выбранное</h3>
+            <a class="all" href=".">Сбросить все</a>
+
+            <div class="clear"></div>
+            <ul class="filters-list">
+                {% for curr_filter in current_filters %}
+
+                    <li class="remove-filter">
+                        <div class="remove-filter-img">
+                            <a href="/articles/{% remove_filter the_filter curr_filter.name curr_filter.value curr_filter.slug  %}">
+                                <img width="18" height="18" src="/static/techblog/img/common/cross-icon.png"/>
+                            </a>
+                        </div>
+                        <div class="remove-filter-link">
+                            <a href="/articles/{% remove_filter the_filter curr_filter.name curr_filter.value curr_filter.slug  %}">
+                                {{ curr_filter.value }}
+                            </a>
+                        </div>
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     {% if request.user.is_authenticated %}
         <div class="filter">
             <h3>Моё</h3>

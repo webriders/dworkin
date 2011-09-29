@@ -346,7 +346,6 @@
 
 
 /*------------------------------------- Control panel --------------------------------*/
-
 .control-panel {
     float: right;
     width: 185px;
@@ -370,6 +369,43 @@
     float: left;
     margin-top: 15px;
     margin-left: 10px;
+}
+
+.current-filters {
+    background: #787669;
+    padding: 15px;
+    margin-bottom: 25px;
+    width: 185px;
+    border-radius: 10px;
+}
+
+.current-filters h3 {
+    color: orange;
+    border-radius: 8px;
+}
+
+.current-filters a {
+    font-size: 15px;
+    color: #D7D78B;
+}
+
+.current-filters .clear {
+    margin-bottom: 15px;
+}
+
+.current-filters li.remove-filter {
+    width: 100%;
+    overflow: hidden;
+}
+
+.current-filters .remove-filter-img {
+    margin-right: 8px;
+    margin-top: 3px;
+    float: left;
+}
+
+.current-filters.remove-filter-img img {
+    vertical-align: middle;
 }
 
 .control-panel .categories {
