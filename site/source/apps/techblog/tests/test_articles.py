@@ -1,7 +1,75 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser, User
 from django.test import TestCase
 from techblog.models import Article
-from techblog.services.articles import TagFilter, OwnerFilter, CategoryFilter
+from techblog.services.articles import ArticleService, TagFilter, OwnerFilter, CategoryFilter
+
+
+class Request(object):
+    def __init__(self):
+        self.GET = {}
+        self.user = AnonymousUser()
+
+
+class TestArticleService(TestCase):
+    fixtures = ['test_data.json',]
+
+    def test_article_filters_for_anonymous(self):
+
+        article_service = ArticleService()
+
+        request = Request()
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 39)
+
+        request = Request()
+        request.GET['own'] = 'drafts'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 0)
+
+
+    def test_article_filters_for_authorized(self):
+
+        article_service = ArticleService()
+
+        user_lexa = User.objects.get(username='lexa')
+
+        request = Request()
+        request.user = user_lexa
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 39)
+
+        request = Request()
+        request.user = user_lexa
+        request.GET['own'] = 'articles'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 6)
+
+        request = Request()
+        request.user = user_lexa
+        request.GET['own'] = 'drafts'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 1)
+
+
+        user_kottenator = User.objects.get(username='kottenator')
+
+        request = Request()
+        request.user = user_kottenator
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 39)
+
+        request = Request()
+        request.user = user_kottenator
+        request.GET['own'] = 'articles'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 18)
+
+        request = Request()
+        request.user = user_kottenator
+        request.GET['own'] = 'drafts'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query), 0)
+
 
 class TestTagFilter(TestCase):
     fixtures = ['test_data.json',]

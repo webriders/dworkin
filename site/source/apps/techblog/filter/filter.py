@@ -2,9 +2,10 @@
 class FilterItem(object):
     name=""
 
-    def __init__(self, is_multivalue = False):
+    def __init__(self, is_multivalue=False, always_use=False):
         self.is_active = False
         self.is_multivalue = is_multivalue
+        self.always_use = always_use
         self.value = None
         self.user = None
 
@@ -44,6 +45,9 @@ class Filter(object):
 
     def load_from_request(self, request_data):
         for item in self.items:
+            if item.always_use:
+                item.is_active = True
+
             # load from request (first prio)
             if request_data.has_key(item.name):
                 item.is_active = True

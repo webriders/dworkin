@@ -16,12 +16,19 @@ from techblog.constants import LATEST_FEED_COUNT
 
 class OwnerFilter(FilterItem):
     name="own"
+
+    def __init__(self, is_multivalue=False, always_use=True):
+        super(OwnerFilter, self).__init__(is_multivalue, always_use)
+
     def filter(self, query):
-        if self.user and self.user.is_authenticated():
+        if self.value and self.user and self.user.is_authenticated:
             if self.value == "articles":
                 query = query.filter(authors__in=[self.user.id], is_public=True)
-            if self.value == "drafts" :
+            elif self.value == "drafts":
                 query = query.filter(authors__in=[self.user.id], is_public=False)
+        else:
+            query = query.filter(is_public=True)
+
         return query
 
     def get_context_data(self, filtered_ids):
@@ -120,14 +127,7 @@ class ArticleService(object):
 
     def filter_articles(self, request):
         query = Article.objects.all()
-        own = request.GET.get("own")
-        if own == "articles":
-            query = query.filter(is_public=True)
-        if own == "drafts":
-            query = query.filter(is_public=False)
-
         self.init_filters()
-
         query = self.filter.filter_query(request, query)
         return query
 

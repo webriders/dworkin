@@ -136,7 +136,6 @@ class RemoveFilters(AbstractFiltersTag):
         if filter_name == 'category' and 'category' in params:
             del params['category']
 
-        print filter_slug
         if filter_name == 'tag' and filter_slug in tags:
             tags = self.process_tag_in_tags(filter_slug, tags)
 
