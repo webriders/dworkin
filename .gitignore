@@ -1,8 +1,0 @@
-/*.idea/*
-/site/search_index/*
-/site/media/*
-/site/source/.ve/*
-/site/source/reports/*
-*.sqlite
-*.pyc
-*__cmd__.cmd
