@@ -209,7 +209,7 @@ class ArticleService(object):
     def publish_article(self, article, user=None):
         article.is_public = True
         article.save()
-        self.mail_service.send_mail_on_article_publish(article, user)
+        self.mail_service.send_mail_on_first_article_publish(article, user)
 
     def unpublish_article(self, article, user=None):
         article.is_public = False

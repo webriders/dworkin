@@ -20,31 +20,21 @@ class MailService(object):
 
 
     @staticmethod
-    def send_mail_on_article_publish(article, user):
-        mail_users(
-            [],
-            u"Пользователь %s опубликовал статью" % user,
-            "mail/mail_article_publish.html",
-            {
-                "site_url": Site.objects.get_current(),
-                "article": article,
-                "user": user,
-            }
-        )
+    def send_mail_on_first_article_publish(article, user):
+        if not article.notified_on_first_publish:
+            mail_users(
+                [],
+                u"Пользователь %s опубликовал статью" % user,
+                "mail/mail_article_publish.html",
+                {
+                    "site_url": Site.objects.get_current(),
+                    "article": article,
+                    "user": user,
+                }
+            )
 
-
-    @staticmethod
-    def send_mail_on_article_unpublish(article, user):
-        mail_users(
-            [],
-            u"Пользователь %s скрыл статью" % user,
-            "mail/mail_article_unpublish.html",
-            {
-                "site_url": Site.objects.get_current(),
-                "article": article,
-                "user": user,
-            }
-        )
+            article.notified_on_first_publish = True
+            article.save()
 
     @staticmethod
     def send_mail_on_article_comment(comment):

@@ -97,9 +97,7 @@ def add_or_edit_article(request, article_id=None):
                    article.tags.add(tag)
 
                 if article.is_public:
-                    mail_service.send_mail_on_article_publish(article, request.user)
-                else:
-                    mail_service.send_mail_on_article_publish(article, request.user)
+                    mail_service.send_mail_on_first_article_publish(article, request.user)
                 return redirect('/articles/%s/' % article.id)
         else:
             form = ArticleForm(instance=article) # An unbound form
@@ -143,6 +141,4 @@ class ArticlePublisher(RedirectView):
         if article.author == self.request.user:
             if action == 'publish':
                 self.article_service.publish_article(article, self.request.user)
-            elif action == 'unpublish':
-                self.article_service.unpublish_article(article, self.request.user)
         return url

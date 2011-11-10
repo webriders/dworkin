@@ -49,7 +49,8 @@ class Article(models.Model):
     title = models.CharField(u'Заголовок статьи', max_length=1024)
     date = models.DateTimeField(u'Время публикации', default=datetime.now())
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
-
+    notified_on_first_publish = models.BooleanField(default=False, editable=False)
+    
     MARKUP_HTML = u'html'
     MARKUP_MARKDOWN = u'markdown'
     MARKUP_RST = u'rst'
