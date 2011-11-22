@@ -13,17 +13,17 @@ from techblog.constants import GENDER_MALE, GENDER_FEMALE
 from django.conf import settings
 
 
-#class Language(models.Model):
-#    class Meta:
-#        verbose_name = u'Language'
-#        verbose_name_plural = u'Languages'
-#        ordering = ('title',)
-#
-#    title = models.CharField(max_length=25, verbose_name=u'Title')
-#    slug = models.SlugField(max_length=64, default="", unique=True, db_index=True, verbose_name=u'Slug')
-#
-#    def __unicode__(self):
-#        return self.title
+class Language(models.Model):
+    class Meta:
+        verbose_name = u'Language'
+        verbose_name_plural = u'Languages'
+        ordering = ('title',)
+
+    title = models.CharField(max_length=25, verbose_name=u'Title')
+    slug = models.SlugField(max_length=64, default="", unique=True, db_index=True, verbose_name=u'Slug')
+
+    def __unicode__(self):
+        return self.title
 
 
 class Category(models.Model):
@@ -66,9 +66,10 @@ class Article(models.Model):
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
     notified_on_first_publish = models.BooleanField(default=False, editable=False)
 
-#    parent = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Parent', help_text='The article, which directly is translated.')
-#    original = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Original', help_text='The original article.')
-    
+    lang = models.ForeignKey(Language, verbose_name=u'Language')
+    parent = models.ForeignKey('self',  related_name='parent_article', blank=True, null=True, verbose_name=u'Parent', help_text='The article, which directly is translated.')
+    original = models.ForeignKey('self', related_name='original_article', blank=True, null=True, verbose_name=u'Original', help_text='The original article.')
+
     MARKUP_HTML = u'html'
     MARKUP_MARKDOWN = u'markdown'
     MARKUP_RST = u'rst'

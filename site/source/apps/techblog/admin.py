@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from  django.contrib.admin.sites import NotRegistered
-from techblog.models import Article, UserProfile, Category
+from techblog.models import Article, UserProfile, Category, Language
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -18,6 +18,14 @@ class ArticleAdmin(admin.ModelAdmin):
     get_authors.short_description = u'Список авторов'
 
 admin.site.register(Article, ArticleAdmin)
+
+
+class LanguageAdmin(admin.ModelAdmin):
+    save_on_top = True
+    prepopulated_fields = {"slug": ("title",)}
+
+admin.site.register(Language, LanguageAdmin)
+
 
 class CategoryAdmin(admin.ModelAdmin):
     save_on_top = True
