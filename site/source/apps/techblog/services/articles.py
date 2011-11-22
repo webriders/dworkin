@@ -232,7 +232,8 @@ class ArticleService(object):
         return data
 
 
-    def render_markups(self, article):
+    @classmethod
+    def render_markups(cls, article):
 
         class RenderedArticle(object):
             def __init__(self, short, description):
@@ -240,7 +241,7 @@ class ArticleService(object):
                 self.description = description
 
         markup = article.markup
-        short = self.render_markup(markup, article.short_raw)
-        description = self.render_markup(markup, article.description_raw)
+        short = cls.render_markup(markup, article.short_raw)
+        description = cls.render_markup(markup, article.description_raw)
 
         return RenderedArticle(short, description)

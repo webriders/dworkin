@@ -12,6 +12,20 @@ from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
 from django.conf import settings
 
+
+#class Language(models.Model):
+#    class Meta:
+#        verbose_name = u'Language'
+#        verbose_name_plural = u'Languages'
+#        ordering = ('title',)
+#
+#    title = models.CharField(max_length=25, verbose_name=u'Title')
+#    slug = models.SlugField(max_length=64, default="", unique=True, db_index=True, verbose_name=u'Slug')
+#
+#    def __unicode__(self):
+#        return self.title
+
+
 class Category(models.Model):
     class Meta:
         verbose_name = u'Категория'
@@ -35,6 +49,7 @@ class Category(models.Model):
         categories = categories.annotate(count=Count('article__id')).filter(count__gt=0).order_by('-count')
         return categories
 
+
 class Article(models.Model):
     class Meta:
         verbose_name = u'статья'
@@ -50,6 +65,9 @@ class Article(models.Model):
     date = models.DateTimeField(u'Время публикации', default=datetime.now())
     is_public = models.BooleanField(u'Статья опубликована?', default=False)
     notified_on_first_publish = models.BooleanField(default=False, editable=False)
+
+#    parent = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Parent', help_text='The article, which directly is translated.')
+#    original = models.ForeignKey('self', blank=True, null=True, verbose_name=u'Original', help_text='The original article.')
     
     MARKUP_HTML = u'html'
     MARKUP_MARKDOWN = u'markdown'
@@ -73,10 +91,8 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
 
-        # TODO: Move to __init__
         from techblog.services.articles import ArticleService
-        article_service = ArticleService()
-        rendered_article = article_service.render_markups(self)
+        rendered_article = ArticleService.render_markups(self)
 
         self.short = rendered_article.short
         self.description = rendered_article.description
