@@ -1,13 +1,15 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from django.views.generic.base import TemplateView
 from django.views.generic.list_detail import object_list, object_detail
-from django.views.generic import ListView, DetailView, RedirectView
+from django.views.generic import ListView, DetailView, RedirectView, CreateView
 from django.views.generic.simple import direct_to_template
+from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.shortcuts import redirect, get_object_or_404
 from datetime import datetime
 
 from techblog.forms import ArticleForm
-from techblog.models import Article, UserProfile, Category
+from techblog.models import Article, UserProfile, Category, Language
 from techblog.services.articles import ArticleService
 from techblog.logic.mail_service import MailService
 from techblog.constants import ARTICLES_LIMIT
@@ -57,7 +59,32 @@ class ArticleList(TemplateView, ArticlesControlPanel):
 
         return context
 
-def add_or_edit_article(request, article_id=None):
+
+class TranslateArticle(CreateView):
+    template_name = 'articles/translate_article.html'
+    form_class = ArticleForm
+
+    def form_valid(self, form, *args, **kwargs):
+       form.instance.author = self.request.user
+       form.save()
+       form.instance.authors.add(self.request.user)
+
+       return redirect( reverse('view_article', args=(form.instance.id,)) )
+
+    def get_initial(self):
+        initial = super(TranslateArticle, self).get_initial().copy()
+        article_id = self.kwargs.get('article_id')
+
+        article = get_object_or_404(Article, id=article_id)
+        data = ArticleService.get_translation_data(article, self.request.user)
+
+        initial.update(data)
+        return initial
+
+translate_article = TranslateArticle.as_view()
+
+
+def add_or_edit_article(request, article_id=None, action=None):
     mail_service = MailService()
 
     params = {}
@@ -74,7 +101,7 @@ def add_or_edit_article(request, article_id=None):
                     params['page'] = 'edit_article'
                 else:
                     params['edit_allowed'] = False
-            except:
+            except Article.DoesNotExist:
                 pass
 
         if request.method == 'POST':
@@ -82,17 +109,18 @@ def add_or_edit_article(request, article_id=None):
             if form.is_valid():
                 # Process the data in form.cleaned_data
                 article = form.save(commit=False)
-                article.author = request.user
                 if 'is_public' in request.POST:
                     article.is_public = True
                     if not article.date:
                         article.date = datetime.now()
                 else:
                     article.is_public = False
+                article.author = request.user # Todo: remove this
                 article.save()
                 article.authors.add(request.user)
                 
                 tags = form.cleaned_data['tags']
+                article.tags.clear()
                 for tag in tags:
                    article.tags.add(tag)
 

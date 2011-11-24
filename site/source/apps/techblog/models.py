@@ -38,11 +38,6 @@ class Category(models.Model):
     def __unicode__(self):
         return self.title
 
-#    def show_article_count(self):
-#        return create_linked_models_html(self.blogarticle_set.all(), "blog", 'blogarticle')
-#    show_article_count.short_description = u'Число статей по категории'
-#    show_article_count.allow_tags = True
-
     @staticmethod
     def get_categories_with_count():
         categories = Category.objects.all()
@@ -56,10 +51,7 @@ class Article(models.Model):
         verbose_name_plural = u'Статьи'
         ordering = ('-date',)
 
-    def __unicode__(self):
-        return self.title
-
-    author = models.ForeignKey(User, verbose_name=u'Автор', null=True)
+    author = models.ForeignKey(User, verbose_name=u'Автор', null=True, blank=True)
     authors = models.ManyToManyField(User, verbose_name=u'Авторы', null=True, related_name='authors')
     title = models.CharField(u'Заголовок статьи', max_length=1024)
     date = models.DateTimeField(u'Время публикации', default=datetime.now())
@@ -89,6 +81,8 @@ class Article(models.Model):
     tags = TaggableManager(blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
 
+    def __unicode__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
 
@@ -99,6 +93,9 @@ class Article(models.Model):
         self.description = rendered_article.description
 
         super(Article, self).save(*args, **kwargs) # Call the "real" save() method.
+
+    def is_original(self):
+        return self.original is None
 
     def binary_date(self):
         return binary_date(self.date)

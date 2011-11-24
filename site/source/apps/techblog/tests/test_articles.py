@@ -31,6 +31,7 @@ class TestArticleService(TestCase):
 
         article_service = ArticleService()
 
+        #-------------------------------------------------------
         user_lexa = User.objects.get(username='lexa')
 
         request = Request()
@@ -50,7 +51,7 @@ class TestArticleService(TestCase):
         query = article_service.filter_articles(request)
         self.assertEqual(len(query), 1)
 
-
+        #-------------------------------------------------------
         user_kottenator = User.objects.get(username='kottenator')
 
         request = Request()
@@ -97,7 +98,6 @@ class TestTagFilter(TestCase):
                 self.assertEqual(tag.count, 2)
                 self.assertTrue(tag.selected)
                 self.assertFalse(hasattr(tag, 'disabled'))
-
 
     def test_tag_filter_decreased_count(self):
         tag_filter = TagFilter(is_multivalue=True)

@@ -1,0 +1,35 @@
+<form method="post" class="large-form">
+    {% csrf_token %}
+    <dl>
+        {% for field in form %}
+            {% if field.is_hidden %}
+                <dd>{{ field }}</dd>
+            {% else %}
+
+                <dt>{{ field.label_tag }}</dt>
+                <dd>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="hint">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="myerrors">{{ field.errors }}</div>
+                    {% endif %}
+                </dd>
+            {% endif %}
+        {% endfor %}
+    </dl>
+    <div class="form-actions">
+        <input type="submit" class="submit-form" name="is_public" value="Опубликовать"/>
+        <input type="submit" class="submit-form" name="is_draft" value="В черновики"/>
+    </div>
+</form>
+
+<script type="text/javascript">
+    // < ![CDATA[
+    (function () {
+        var u = document.getElementById('id_title');
+        if (u) u.focus();
+    })();
+    // ]]>
+</script>

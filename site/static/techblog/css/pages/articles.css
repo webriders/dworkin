@@ -128,6 +128,18 @@
     margin-bottom: 10px;
 }
 
+.article-block .article-content h2.article-lang {
+    color: #D6964E;
+    font-size: 18px;
+    float: left;
+    margin-right: 12px;
+    background: none repeat scroll 0 0 #DCDCDC;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
 .article-block .article-content h2.article-title a {
     text-decoration: none;
 }

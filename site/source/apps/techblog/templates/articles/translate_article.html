@@ -12,17 +12,10 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        {% if edit_allowed %}
-            <h1 class="big-form-title">Статья</h1>
+        <h1 class="big-form-title">Перевод</h1>
 
-            {% include 'articles/article_edit_form.html' %}
+        {% include 'articles/article_edit_form.html' %}
 
-        {% else %}
-            <h1 class="big-form-title">Хитрите?</h1>
-            <div class="big-form-text">
-                Вы пытаетесь редактировать чужую статью! У нас так нельзя!
-            </div>
-        {% endif %}
     {% else %}
         <h1 class="big-form-title">Авторизуйтесь</h1>
         <div class="big-form-text">

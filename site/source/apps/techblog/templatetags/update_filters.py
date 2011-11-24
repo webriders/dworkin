@@ -60,7 +60,7 @@ class UpdateFilters(AbstractFiltersTag):
     def output(self, data):
         params = self.get_current_params(data)
 
-        for param_name in ('page', 'own', 'all_own', 'all_author',):
+        for param_name in ('langs', 'page', 'own', 'all_own', 'all_author',):
             param_value = data.get(param_name)
 
             if param_value:

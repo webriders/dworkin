@@ -9,8 +9,10 @@
             {{ article.formatted_date|safe }}
         </div>
     </div>
-    {% if request.user in article.authors.all %}
-        <div class="commands">
+
+    {% if request.user.is_authenticated %}
+    <div class="commands">
+        {% if request.user in article.authors.all %}
             <div class="item-command">
                 <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
             </div>
@@ -21,13 +23,20 @@
                     <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
                 {% endif %}
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
+        <div class="item-command">
+            <a href="{{ article.get_absolute_url }}translate/" title="Translate">Translate</a>
+        </div>
+    </div>
+    {% endif %}
 
     <div class="article-block">
         <div class="min-height"></div>
         <div class="article-content">
+
+            <h2 class="article-lang"> {{ article.lang.slug }} </h2>
+
             {% if sub_page == 'view_article' %}
                 <h1 class="article-title">
                     {% if article.category %}
@@ -42,6 +51,9 @@
                     <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
                 </h2>
             {% endif %}
+
+
+
             <div class="article-info">
                 {% if article.category %}
                     <div class="article-category">

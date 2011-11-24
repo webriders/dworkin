@@ -20,9 +20,14 @@ class ArticleForm(forms.ModelForm):
         self.fields['short_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
         self.fields['description_raw'].widget = MultiMarkItUpWidget(markup_name=markup)
 
+        self.fields['parent'].widget = forms.HiddenInput()
+        self.fields['original'].widget = forms.HiddenInput()
+
     class Meta(object):
         model = Article
-        fields = ('title', 'category', 'tags', 'markup', 'short_raw', 'description_raw', )
+        fields = ('title', 'lang', 'category', 'tags', 'markup', 'short_raw', 'description_raw',
+                  'parent', 'original')
+
 
 
 class UserForm(forms.ModelForm):

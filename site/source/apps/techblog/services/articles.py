@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from copy import copy, deepcopy
 from django.contrib.auth.models import User
 from markdown import markdown
 from docutils.core import publish_parts
@@ -16,9 +17,6 @@ from techblog.constants import LATEST_FEED_COUNT
 
 class OwnerFilter(FilterItem):
     name="own"
-
-    def __init__(self, is_multivalue=False, always_use=True):
-        super(OwnerFilter, self).__init__(is_multivalue, always_use)
 
     def filter(self, query):
         if self.value and self.user and self.user.is_authenticated:
@@ -67,7 +65,6 @@ class AuthorFilter(FilterItem):
     name="author"
 
     def filter(self, query):
-        print "AUTHOR: " + str(self.value)
         return query.filter(author__id=self.value)
 
     def get_context_data(self, filtered_ids):
@@ -216,7 +213,6 @@ class ArticleService(object):
         article.save()
         self.mail_service.send_mail_on_article_unpublish(article, user)
 
-
     @staticmethod
     def render_markup(markup, raw_data):
         data = raw_data
@@ -231,7 +227,6 @@ class ArticleService(object):
 
         return data
 
-
     @classmethod
     def render_markups(cls, article):
 
@@ -245,3 +240,23 @@ class ArticleService(object):
         description = cls.render_markup(markup, article.description_raw)
 
         return RenderedArticle(short, description)
+
+    @classmethod
+    def get_translation_data(cls, article, user):
+        trans_article = {}
+
+        trans_article['title'] = article.title
+        trans_article['lang'] = article.lang
+        trans_article['category'] = article.category
+        trans_article['tags'] = ', '.join(tag.name for tag in article.tags.all())
+        trans_article['markup'] = article.markup
+        trans_article['short_raw'] = article.short_raw
+        trans_article['description_raw'] = article.description_raw
+
+        trans_article['parent'] = article
+        if article.is_original():
+            trans_article['original'] = article
+        else:
+            trans_article['original'] = article.original
+
+        return trans_article
