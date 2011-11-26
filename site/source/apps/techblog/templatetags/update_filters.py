@@ -15,20 +15,24 @@ class AbstractFiltersTag(ttag.Tag):
         params = filter_obj.get_params()
         return params
 
-    def process_tag_in_tags(self, tag, tags):
-        if tag:
-            if tags:
-                tags = set(tags)
+    @staticmethod
+    def toogle_item_in_items(item, items):
+        if item:
+            if items:
+                items = set(items)
 
-                if tag in tags:
-                   tags.remove(tag)
+                if item in items:
+                   items.remove(item)
                 else:
-                   tags.add(tag)
-            else:
-                tags = set((tag,))
-        return tags
+                   items.add(item)
 
-    def make_url(self, params):
+                items = list(items)
+            else:
+                items = [item]
+        return items
+
+    @staticmethod
+    def make_url(params):
         params_str = '?'
 
         for key in params:
@@ -40,20 +44,32 @@ class AbstractFiltersTag(ttag.Tag):
 
         return params_str[:-1]
 
+    @staticmethod
+    def update_list_in_params(params, list_name, list_value):
+        params = params.copy()
+        if list_value:
+           params[list_name] = ','.join(list_value)
+
+        elif list_name in params:
+           del params[list_name]
+
+        return params
+
 
 class UpdateFilters(AbstractFiltersTag):
     class Meta:
         name = "update_filters"
 
     page = ttag.IntegerArg(keyword=True, required=False)
-
     category = ttag.StringArg(keyword=True, required=False)
     tag = ttag.StringArg(keyword=True, required=False,)
     own = ttag.StringArg(keyword=True, required=False,)
+    lang = ttag.StringArg(keyword=True, required=False,)
 
     all_own = ttag.IntegerArg(keyword=True, required=False)
     all_category = ttag.IntegerArg(keyword=True, required=False)
     all_tags = ttag.IntegerArg(keyword=True, required=False)
+    all_langs = ttag.IntegerArg(keyword=True, required=False)
     all_author = ttag.IntegerArg(keyword=True, required=False)
 
 
@@ -68,6 +84,7 @@ class UpdateFilters(AbstractFiltersTag):
 
         params = self.add_or_remove_category(data, params)
         params = self.add_or_remove_tag(data, params)
+        params = self.add_or_remove_lang(data, params)
 
         for param in params.copy():
             if param.startswith('all_'):
@@ -102,13 +119,21 @@ class UpdateFilters(AbstractFiltersTag):
             return params
 
         tag = data.get('tag')
-        tags = self.process_tag_in_tags(tag, tags)
+        tags = self.toogle_item_in_items(tag, tags)
+        params = self.update_list_in_params(params, 'tags', tags)
 
-        if tags:
-            params['tags'] = ','.join(tags)
+        return params
 
-        elif 'tags' in params:
-            del params['tags']
+    def add_or_remove_lang(self, data, params):
+        langs = params.get('langs')
+
+        if 'all_langs' in data and langs:
+            del params['langs']
+            return params
+
+        lang = data.get('lang')
+        langs = self.toogle_item_in_items(lang, langs)
+        params = self.update_list_in_params(params, 'langs', langs)
 
         return params
 
@@ -126,27 +151,18 @@ class RemoveFilters(AbstractFiltersTag):
     def output(self, data):
         params = self.get_current_params(data)
 
-        tags = params.get('tags')
         filter_name = data.get('filter_name')
         filter_slug = data.get('filter_slug')
+        tags = params.get('tags')
 
-        if filter_name == 'own' and 'own' in params:
-            del params['own']
-
-        if filter_name == 'category' and 'category' in params:
-            del params['category']
+        for param_name in ('own', 'category', ):
+            if filter_name == param_name and param_name in params:
+                del params[param_name]
 
         if filter_name == 'tag' and filter_slug in tags:
-            tags = self.process_tag_in_tags(filter_slug, tags)
+            tags = self.toogle_item_in_items(filter_slug, tags)
 
-        #TODO: remove copypast
-        if tags:
-            params['tags'] = ','.join(tags)
-
-        elif 'tags' in params:
-            del params['tags']
-
-
+        params = self.update_list_in_params(params, 'tags', tags)
         return self.make_url(params)
 
 register.tag(RemoveFilters)

@@ -25,6 +25,10 @@ class Language(models.Model):
     def __unicode__(self):
         return self.title
 
+    @classmethod
+    def get_non_empty(cls):
+        return cls.objects.all().annotate(article_count = Count('article')).filter(article_count__gt=0)
+
 
 class Category(models.Model):
     class Meta:

@@ -9,11 +9,12 @@ from taggit.models import Tag
 
 from techblog.filter.filter import Filter, FilterItem
 from techblog.logic.mail_service import MailService
-from techblog.models import Article, Category
+from techblog.models import Article, Category, Language
 from techblog.services.categories import CategoryService
 from techblog.services.tags import TagService
 from techblog.functions import html_parser
 from techblog.constants import LATEST_FEED_COUNT
+
 
 class OwnerFilter(FilterItem):
     name="own"
@@ -40,6 +41,29 @@ class OwnerFilter(FilterItem):
                 context["own_drafts"] = True
         return context
 
+
+class LangFilter(FilterItem):
+    name="langs"
+
+    def filter(self, query):
+        if self.value == "all":
+            pass
+        else:
+            query = query.filter(lang__slug__in = self.value)
+        return query
+
+    def get_context_data(self, filtered_ids):
+        languages = Language.get_non_empty()
+
+        if self.value:
+            for lang in languages:
+                if lang.slug in self.value:
+                    lang.selected = True
+
+        context = {"languages": languages}
+        return context
+
+
 class CategoryFilter(FilterItem):
     name="category"
 
@@ -60,6 +84,7 @@ class CategoryFilter(FilterItem):
                 category.count = 0
         context = {"categories": all_categories}
         return context
+
 
 class AuthorFilter(FilterItem):
     name="author"
@@ -118,6 +143,7 @@ class ArticleService(object):
     def init_filters(self):
         self.filter = Filter()
         self.filter.add_item(OwnerFilter())
+        self.filter.add_item(LangFilter(is_multivalue=True))
         self.filter.add_item(CategoryFilter())
         self.filter.add_item(TagFilter(is_multivalue=True))
         self.filter.add_item(AuthorFilter())

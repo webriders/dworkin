@@ -1,7 +1,46 @@
-.article-list {
+
+.articles-block {
     padding-top: 40px;
     width: 80%;
     float: left;
+}
+
+
+.articles-block .articles-languages {
+    padding: 0 0 7 20px;
+    overflow: hidden;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    margin-left: 10px;
+    margin: 0 0 20px 40px;
+}
+
+.articles-block .articles-languages .language-link,
+.articles-block .articles-languages .all-languages-link
+{
+    padding: 5px;
+    float: left;
+    background: #F8DEAB;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.articles-block .articles-languages .active {
+    background: #adf770;
+}
+
+.articles-block .articles-languages .all-languages-link {
+    background: #cef7af;
+}
+
+
+.articles-block .articles-languages .language-link a {
+    text-decoration: none;
+}
+
+
+.articles-list {
+    width: 100%;
 }
 
 .article-item {
@@ -106,29 +145,29 @@
 }
 
 
-.article-item .article-block {
+.article-item .article-item-block {
     overflow: hidden;
     background-color: #FFFFFF;
 }
 
-.article-block .min-height {
+.article-item-block .min-height {
     float: left;
     width: 0;
     height: 130px;
 }
 
-.article-block .article-content {
+.article-item-block .article-content {
     overflow: hidden;
     padding: 20px 40px 30px;
 }
 
-.article-block .article-content h2.article-title {
+.article-item-block .article-content h2.article-title {
     color: #2173FC;
     font-size: 36px;
     margin-bottom: 10px;
 }
 
-.article-block .article-content h2.article-lang {
+.article-item-block .article-content h2.article-lang {
     color: #D6964E;
     font-size: 18px;
     float: left;
@@ -140,30 +179,30 @@
 }
 
 
-.article-block .article-content h2.article-title a {
+.article-item-block .article-content h2.article-title a {
     text-decoration: none;
 }
 
-.article-block .article-content h2.article-title a:hover {
+.article-item-block .article-content h2.article-title a:hover {
     text-decoration: underline;
 }
 
-.article-block .article-content h1.article-title {
+.article-item-block .article-content h1.article-title {
     color: #2173FC;
     font-size: 36px;
     margin-bottom: 10px;
 }
 
-.article-block .article-content h1.article-title a {
+.article-item-block .article-content h1.article-title a {
     color: #2173FC;
 }
 
-.article-block .article-content .article-title .category,
-.article-block .article-content .article-title .category a {
+.article-item-block .article-content .article-title .category,
+.article-item-block .article-content .article-title .category a {
     color: #c3c4c6;
 }
 
-.article-block .article-short {
+.article-item-block .article-short {
     position: relative;
 }
 
@@ -251,7 +290,7 @@
     padding-top: 40px;
 }
 
-.article-block .article-uncut {
+.article-item-block .article-uncut {
     padding-top: 10px;
     position: relative;
 }
@@ -314,12 +353,12 @@
 }
 
 /*------------------------------------- Control panel --------------------------------*/
-.article-list .preview-articles {
+.articles-block .preview-articles {
     margin-left: 80px;
     overflow: hidden;
 }
 
-.article-list .preview-articles h4 {
+.articles-block .preview-articles h4 {
     color: gray;
     font-size: 32px;
     margin-bottom: 15px;
@@ -328,7 +367,7 @@
 }
 
 
-.article-list .preview-articles .short-link {
+.articles-block .preview-articles .short-link {
     font-size: 14px;
     color: lightgray;
     margin-bottom: 15px;
