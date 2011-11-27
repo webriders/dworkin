@@ -85,7 +85,7 @@ class TestTagFilter(TestCase):
     def test_tag_filter_single_value(self):
         tag_filter = TagFilter(is_multivalue=True)
         tag_filter.value = ['south']
-        query = Article.objects.filter(is_public=True)
+        query = Article.get_published()
         query = tag_filter.filter(query)
         self.assertEqual(len(query), 2)
 
@@ -102,7 +102,7 @@ class TestTagFilter(TestCase):
     def test_tag_filter_decreased_count(self):
         tag_filter = TagFilter(is_multivalue=True)
         tag_filter.value = ['refactoring']
-        query = Article.objects.filter(is_public=True)
+        query = Article.get_published()
         query = tag_filter.filter(query)
         context = tag_filter.get_context_data([item.id for item in query])
 
@@ -117,7 +117,7 @@ class TestOwnFilter(TestCase):
     def test_own_filter_anonymous(self):
         filter = OwnerFilter()
         filter.value = 'articles'
-        query = Article.objects.filter(is_public=True)
+        query = Article.get_published()
         query = filter.filter(query)
         self.assertEqual(len(query), 39)
 
@@ -132,7 +132,7 @@ class TestOwnFilter(TestCase):
         filter = OwnerFilter()
         filter.value = 'articles'
         filter.user = User.objects.get(username="lexa")
-        query = Article.objects.filter(is_public=True)
+        query = Article.get_published()
         query = filter.filter(query)
         self.assertEqual(len(query), 6)
 
@@ -161,7 +161,7 @@ class TestCategoryFilter(TestCase):
     def test_filter(self):
         filter = CategoryFilter()
         filter.value = "django"
-        query = Article.objects.filter(is_public=True)
+        query = Article.get_published()
         query = filter.filter(query)
         self.assertEqual(len(query), 2)
 

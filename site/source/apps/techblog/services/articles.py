@@ -12,12 +12,16 @@ from techblog.logic.mail_service import MailService
 from techblog.models import Article, Category, Language
 from techblog.services.categories import CategoryService
 from techblog.services.tags import TagService
+from techblog.services.languages import LanguageService
 from techblog.functions import html_parser
 from techblog.constants import LATEST_FEED_COUNT
 
 
 class OwnerFilter(FilterItem):
     name="own"
+
+    def __init__(self, is_multivalue=False, always_use=False):
+        super(OwnerFilter, self).__init__(is_multivalue, always_use=True)
 
     def filter(self, query):
         if self.value and self.user and self.user.is_authenticated:
@@ -33,8 +37,15 @@ class OwnerFilter(FilterItem):
     def get_context_data(self, filtered_ids):
         context = {}
         if self.user and self.user.is_authenticated():
-            context["own_articles_count"] = ArticleService.get_articles_by_author(self.user).count()
-            context["own_drafts_count"] = ArticleService.get_drafts_by_author(self.user).count()
+            articles = ArticleService.get_articles_by_author(self.user)
+            drafts = ArticleService.get_drafts_by_author(self.user)
+
+#            if filtered_ids:
+#                articles = articles.filter(id__in = filtered_ids)
+#                drafts = drafts.filter(id__in = filtered_ids)
+            context["own_articles_count"] = articles.count()
+            context["own_drafts_count"] = drafts.count()
+
             if self.value == "articles":
                 context["own_articles"] = True
             if self.value == "drafts":
@@ -53,7 +64,7 @@ class LangFilter(FilterItem):
         return query
 
     def get_context_data(self, filtered_ids):
-        languages = Language.get_non_empty()
+        languages = LanguageService.get_languages_with_count()
 
         if self.value:
             for lang in languages:
@@ -137,9 +148,6 @@ class TagFilter(FilterItem):
 class ArticleService(object):
     mail_service = MailService()
 
-    def __init__(self):
-        pass
-
     def init_filters(self):
         self.filter = Filter()
         self.filter.add_item(OwnerFilter())
@@ -209,7 +217,7 @@ class ArticleService(object):
 
     @staticmethod
     def get_feed_articles():
-        return Article.objects.filter(is_public=True)[:LATEST_FEED_COUNT]
+        return Article.get_published()[:LATEST_FEED_COUNT]
 
     @staticmethod
     def get_articles_by_author(user, ids=None):
