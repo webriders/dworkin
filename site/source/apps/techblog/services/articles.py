@@ -279,7 +279,6 @@ class ArticleService(object):
         trans_article = {}
 
         trans_article['title'] = article.title
-        trans_article['lang'] = article.lang
         trans_article['category'] = article.category
         trans_article['tags'] = ', '.join(tag.name for tag in article.tags.all())
         trans_article['markup'] = article.markup
@@ -293,3 +292,9 @@ class ArticleService(object):
             trans_article['original'] = article.original
 
         return trans_article
+
+    @classmethod
+    def get_all_translations_ids(cls, article):
+        ids = [article.lang.id]
+        ids.extend(trans['lang__id'] for trans in article.get_translations().values('lang__id'))
+        return ids

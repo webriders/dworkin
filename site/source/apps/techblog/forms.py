@@ -4,7 +4,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from techblog.models import Article, UserProfile
-from techblog.widgets import MultiMarkItUpWidget
+from techblog.widgets import MultiMarkItUpWidget, SelectWithDisabled
+from techblog.services.articles import ArticleService
 
 class ArticleForm(forms.ModelForm):
 
@@ -28,6 +29,26 @@ class ArticleForm(forms.ModelForm):
         fields = ('title', 'lang', 'category', 'tags', 'markup', 'short_raw', 'description_raw',
                   'parent', 'original')
 
+
+class TranslateArticleForm(ArticleForm):
+
+    def __init__(self, *args, **kwargs):
+        super(TranslateArticleForm, self).__init__(*args, **kwargs)
+
+        initial = kwargs.get('initial')
+        original = initial.get('original')
+
+        self.fields['category'].widget.attrs['disabled'] = True
+        self.fields['tags'].widget.attrs['disabled'] = True
+
+        choices = []
+        ids = ArticleService.get_all_translations_ids(original)
+        for id, value in self.fields['lang'].widget.choices:
+            if id in ids:
+                value = {'label': value, 'disabled': True}
+            choices.append( (id, value) )
+
+        self.fields['lang'].widget = SelectWithDisabled(choices=choices)
 
 
 class UserForm(forms.ModelForm):

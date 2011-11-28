@@ -8,7 +8,7 @@ from django.db.models import Count
 from django.shortcuts import redirect, get_object_or_404
 from datetime import datetime
 
-from techblog.forms import ArticleForm
+from techblog.forms import ArticleForm, TranslateArticleForm
 from techblog.models import Article, UserProfile, Category, Language
 from techblog.services.articles import ArticleService
 from techblog.logic.mail_service import MailService
@@ -62,7 +62,7 @@ class ArticleList(TemplateView, ArticlesControlPanel):
 
 class TranslateArticle(CreateView):
     template_name = 'articles/translate_article.html'
-    form_class = ArticleForm
+    form_class = TranslateArticleForm
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user
