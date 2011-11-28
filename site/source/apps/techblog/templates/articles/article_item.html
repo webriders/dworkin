@@ -52,7 +52,11 @@
                 </h2>
             {% endif %}
 
-
+            {% if not article.is_original %}
+                <div class="type-translation">
+                    Translation for <a href="{% url view_article article_id=article.original.id  %}">{{ article.original.title }}</a>
+                </div>
+            {% endif %}
 
             <div class="article-info">
                 {% if article.category %}
@@ -131,21 +135,28 @@
             <div class="article-translations">
                 {% for translation in translations %}
                     <div class="translation-item {% if forloop.last %}last-item{% endif %}">
-                        <span class="translation-lang">{{ translation.lang.slug }}</span>
-                        <span class="translation-title">
-                            <a href="{% url view_article article_id=translation.id %}">
-                                {{ translation.title }}
-                            </a>
-                        </span>
-                        <span class="translation-date">{{ translation.date|date:"d M Y H:i" }}</span>
-                        {% if translation.is_original %}
-                            <span class="type-original">Original</span>
-                        {% else %}
-                            <span class="type-translation">Translation</span>
-                        {% endif %}
-                        <span class="translation-author">
-                            <a href="/users/{{ translation.author.username }}/">{% user_avatar translation.author 16 %}</a>
-                        </span>
+
+                        <div class="left-block">
+                            <span class="translation-lang">{{ translation.lang.slug }}</span>
+                            <span class="translation-title">
+                                <a href="{% url view_article article_id=translation.id %}">
+                                    {{ translation.title }}
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="right-block">
+                            <span class="translation-date">{{ translation.date|date:"d M Y H:i" }}</span>
+                            {% if translation.is_original %}
+                                <span class="type-original">Original</span>
+                            {% else %}
+                                <span class="type-translation">Translation</span>
+                            {% endif %}
+                            <span class="translation-author">
+                                  <a href="/users/{{ translation.author.username }}/">{% user_avatar translation.author 16 %}</a>
+                             </span>
+                        </div>
+
                     </div>
                 {% endfor %}
             </div>

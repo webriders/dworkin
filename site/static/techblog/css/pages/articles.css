@@ -9,10 +9,8 @@
 .articles-block .articles-languages {
     padding: 0 0 7 20px;
     overflow: hidden;
-    padding-bottom: 20px;
-    padding-left: 15px;
-    margin-left: 10px;
-    margin: 0 0 20px 40px;
+    margin-left: 40px;
+    margin-bottom: 30px;
 }
 
 .articles-block .articles-languages .language-link,
@@ -164,7 +162,7 @@
 .article-item-block .article-content h2.article-title {
     color: #2173FC;
     font-size: 36px;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
 }
 
 .article-item-block .article-content h2.article-lang {
@@ -197,10 +195,20 @@
     color: #2173FC;
 }
 
-.article-item-block .article-content .article-title .category,
-.article-item-block .article-content .article-title .category a {
+.article-item-block .article-content  h1.article-title .category,
+.article-item-block .article-content  h1.article-title .category a {
     color: #c3c4c6;
 }
+
+.article-item-block .article-content .type-original {
+    color: #008000;
+}
+
+.article-item-block .article-content .type-translation {
+    color: orange;
+    margin-bottom: 5px;
+}
+
 
 .article-item-block .article-short {
     position: relative;
@@ -293,39 +301,54 @@
 .article-translations .translation-item {
     background-color: #DDDDDD;
     padding: 3px;
-
+    height: 20px;
+    border-top: 2px dotted #6F6F6F;
 }
 
 
-.article-translations .translation-item span {
+.article-translations .translation-item .left-block {
+    display: inline;
+}
+
+.article-translations .translation-item .right-block {
+    display: inline;
+    float: right;
+}
+
+.article-translations .translation-item {
     color: #01317D;
 }
 
+.article-translations .translation-item .translation-lang {
+    color: #8C571B;
+}
 
 .article-translations .last-item {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.article-translations .translation-lang {
-
-}
 
 .article-translations .translation-title {
 
 }
 
-
 .article-translations .translation-date {
 
 }
 
-.article-translations .type-original {
+.article-translations .type-original,
+.article-translations .type-translation {
+    padding: 2px;
+    border-radius: 3px;
+}
 
+.article-translations .type-original {
+    background-color: #a4f5a8;
 }
 
 .article-translations .type-translation {
-
+    background-color: #f7d6ab;
 }
 
 .article-translations .translation-author {
