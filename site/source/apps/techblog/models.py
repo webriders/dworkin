@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models.aggregates import Count
 from django.db.models.fields.files import ImageField
 from django.db.models.signals import post_save
+from django.db.models import Q
 from taggit.managers import TaggableManager
 from techblog.functions import html_parser, binary_date, formatted_date
 from techblog.constants import GENDER_MALE, GENDER_FEMALE
@@ -87,6 +88,15 @@ class Article(models.Model):
     @classmethod
     def get_published(cls):
         return cls.objects.filter(is_public=True)
+
+    def get_translations(self):
+        query = self.get_published()
+        if self.is_original():
+            query = query.filter(original=self)
+        else:
+            query = query.filter(Q(original=self.original) | Q(id=self.original.id), ~Q(id=self.id))
+        query = query.select_related('author', 'lang')
+        return query
 
     def save(self, *args, **kwargs):
 

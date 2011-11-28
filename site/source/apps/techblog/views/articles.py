@@ -65,11 +65,20 @@ class TranslateArticle(CreateView):
     form_class = ArticleForm
 
     def form_valid(self, form, *args, **kwargs):
-       form.instance.author = self.request.user
-       form.save()
-       form.instance.authors.add(self.request.user)
+        form.instance.author = self.request.user
 
-       return redirect( reverse('view_article', args=(form.instance.id,)) )
+        if 'is_public' in self.request.POST:
+            form.instance.is_public = True
+        else:
+            form.instance.is_public = False
+
+        form.save()
+        form.instance.authors.add(self.request.user)
+
+        if form.instance.is_public:
+            MailService().send_mail_on_first_article_publish(form.instance, self.request.user)
+
+        return redirect( reverse('view_article', args=(form.instance.id,)) )
 
     def get_initial(self):
         initial = super(TranslateArticle, self).get_initial().copy()
@@ -169,4 +178,6 @@ class ArticlePublisher(RedirectView):
         if article.author == self.request.user:
             if action == 'publish':
                 self.article_service.publish_article(article, self.request.user)
+            elif action == 'unpublish':
+                self.article_service.unpublish_article(article, self.request.user)
         return url

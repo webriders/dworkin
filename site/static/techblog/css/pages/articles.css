@@ -285,6 +285,55 @@
 }
 
 
+/* Article translations */
+.article-translations {
+
+}
+
+.article-translations .translation-item {
+    background-color: #DDDDDD;
+    padding: 3px;
+
+}
+
+
+.article-translations .translation-item span {
+    color: #01317D;
+}
+
+
+.article-translations .last-item {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.article-translations .translation-lang {
+
+}
+
+.article-translations .translation-title {
+
+}
+
+
+.article-translations .translation-date {
+
+}
+
+.article-translations .type-original {
+
+}
+
+.article-translations .type-translation {
+
+}
+
+.article-translations .translation-author {
+
+}
+
+
+
 /* Details */
 .article-details {
     padding-top: 40px;

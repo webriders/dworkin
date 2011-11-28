@@ -41,18 +41,21 @@
 
 
 {% block content %}
-    <div class="article-list">
-        {% with 'description' as article_mode %}
-            {% with object as article %}
-                {% if article %}
-                    {% include 'articles/article_item.html' %}
-                {% else %}
-                    {% if not is_public %}
-                       Автор переместил статью в черновик!
-                    {% endif %}
-                {% endif %}
-            {% endwith %}
-        {% endwith %}
+    <div class="articles-block">
+        <div class="article-list">
+               {% with 'description' as article_mode %}
+                   {% with object as article %}
+                       {% if article %}
+                           {% include 'articles/article_item.html' %}
+                       {% else %}
+                           {% if not is_public %}
+                              Автор переместил статью в черновик!
+                           {% endif %}
+                       {% endif %}
+                   {% endwith %}
+               {% endwith %}
+           </div>
     </div>
+
     {% include "articles/control_panel.html" %}
 {% endblock content %}

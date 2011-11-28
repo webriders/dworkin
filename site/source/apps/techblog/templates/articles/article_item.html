@@ -126,16 +126,31 @@
         <div class="clear"></div> <!-- IE6 fix -->
     </div>
 
-{% comment %}    <div class="item-authors">
-    {% for author in article.authors.all %}
-        <div class="item-author-block">
-            <div class="item-author-photo">
-                <a href="/users/{{ author.username }}/">{% user_avatar author 50 %}</a>
+    {% with article.get_translations as translations %}
+        {% if translations %}
+            <div class="article-translations">
+                {% for translation in translations %}
+                    <div class="translation-item {% if forloop.last %}last-item{% endif %}">
+                        <span class="translation-lang">{{ translation.lang.slug }}</span>
+                        <span class="translation-title">
+                            <a href="{% url view_article article_id=translation.id %}">
+                                {{ translation.title }}
+                            </a>
+                        </span>
+                        <span class="translation-date">{{ translation.date|date:"d M Y H:i" }}</span>
+                        {% if translation.is_original %}
+                            <span class="type-original">Original</span>
+                        {% else %}
+                            <span class="type-translation">Translation</span>
+                        {% endif %}
+                        <span class="translation-author">
+                            <a href="/users/{{ translation.author.username }}/">{% user_avatar translation.author 16 %}</a>
+                        </span>
+                    </div>
+                {% endfor %}
             </div>
-            <a class="item-author-title" href="/users/{{ author.username }}/">{{ author.username }}</a>
-        </div>
-    {% endfor %}
-    </div>{% endcomment %}
+        {% endif %}
+    {% endwith %}
 
 </div>
 

@@ -245,7 +245,6 @@ class ArticleService(object):
     def unpublish_article(self, article, user=None):
         article.is_public = False
         article.save()
-        self.mail_service.send_mail_on_article_unpublish(article, user)
 
     @staticmethod
     def render_markup(markup, raw_data):
