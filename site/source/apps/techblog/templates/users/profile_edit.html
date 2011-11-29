@@ -10,7 +10,7 @@
 
     {% if is_authenticated %}
 
-         <h1 class="big-form-title">Редактирование профиля</h1>
+         <h1 class="big-form-title">Edit profile</h1>
 
          <form enctype="multipart/form-data" method="post" class="big-form" autocomplete="off">
             {% csrf_token %}
@@ -33,11 +33,11 @@
                         <dd>
                             <img src="/media/{{ field.value }}" width="150"/>
                             <div class="change-avatar">
-                                <label for="avatar-clear_id">Очистить:</label>
+                                <label for="avatar-clear_id">Clear:</label>
                                 <input id="avatar-clear_id" type="checkbox" name="avatar-clear">
                                 <br/>
                                 <br/>
-                                <label for="id_avatar">Изменить:</label>
+                                <label for="id_avatar">Change:</label>
                                 <input id="id_avatar" type="file" name="avatar">
                             </div>
                             <div class="clear"></div>
@@ -57,11 +57,11 @@
                     {% endif %}
                 {% endfor %}
             </dl>
-            <input type="submit" class="submit-form" value="Сохранить" />
+            <input type="submit" class="submit-form" value="Save" />
         </form>
 
     {% else %}
-        <p> Вы не залогинены! </p>
+        <p>You are not logged in!</p>
         <p> <a href="/accounts/login/"> Login </a> </p>
     {% endif %}
 

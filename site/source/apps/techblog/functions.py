@@ -46,7 +46,7 @@ def formatted_date(date):
     <span class="date-time">%s</span>
     """ % (
             date.day,
-            [u'Янв', u'Фев', u'Мар', u'Апр', u'Май', u'Июн', u'Июл', u'Авг', u'Сен', u'Окт', u'Ноя', u'Дек'][date.month - 1],
+            [u'Jan', u'Feb', u'Mar', u'Apr', u'May', u'Jun', u'Jul', u'Aug', u'Sep', u'Oct', u'Nov', u'Dec'][date.month - 1],
             date.year,
             date.time().strftime('%H:%M')
             )

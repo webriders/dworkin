@@ -3,10 +3,10 @@
 {% load user_avatar %}
 
 
-{% block title %} {{ profile.user.get_full_name }} / Авторы / PROGRESSORS {% endblock %}
+{% block title %} {{ profile.user.get_full_name }} / Authors / PROGRESSORS {% endblock %}
 
 {% block meta_keywords %}
-    <meta name="title" content="Авторы / PROGRESSORS"/>
+    <meta name="title" content="Authors / PROGRESSORS"/>
     {% include "include/common_meta_tags.html" %}
 {% endblock %}
 
@@ -24,7 +24,7 @@
         {% if profile %}
             {% with profile.user as p_user %}
                 <div class="title-block">
-                    <h1><span>Профиль пользователя:</span> {{ p_user.get_full_name }} </h1>
+                    <h1><span>User profile:</span> {{ p_user.get_full_name }} </h1>
                 </div>
 
                 <div class="avatar-block">
@@ -34,11 +34,11 @@
                 <div class="information-block">
                     <div class="profile-controls">
                         {% if  profile.get_articles_count %}
-                            <a href="/?author={{ p_user.id }}&clear_all=1">Статьи ({{ profile.get_articles_count }})</a>
+                            <a href="/?author={{ p_user.id }}&clear_all=1">Articles ({{ profile.get_articles_count }})</a>
                         {% endif %}
 
                         {% if edit_allowed %}
-                            <a href="/profile/edit/">Редактировать</a>
+                            <a href="/profile/edit/">Edit</a>
                         {% endif %}
                     </div>
                     <div class="clear"></div>
@@ -49,34 +49,34 @@
                         {% endif %}
 
                         {% if p_user.get_full_name %}
-                            <p><span>Имя:</span> {{ p_user.get_full_name }}</p>
+                            <p><span>Name:</span> {{ p_user.get_full_name }}</p>
                         {% endif %}
 
                         {% if profile.gender %}
-                            <p><span>Пол:</span> {{ profile.get_gender_display }}</p>
+                            <p><span>Gender:</span> {{ profile.get_gender_display }}</p>
                         {% endif %}
 
                         {% if profile.birth_date %}
-                            <p><span>Дата рождения:</span> {{ profile.birth_date }}</p>
+                            <p><span>Birthday:</span> {{ profile.birth_date }}</p>
                         {% endif %}
 
                         {% if profile.about_me %}
-                            <p><span>Про себя:</span></p>
+                            <p><span>About me:</span></p>
                             <span class="about-me">{{ profile.about_me|linebreaks|urlize }}</span>
                         {% endif %}
                     </div>
 
                     <div class="user-dates">
-                        <p>Зарегистрирован: {{ p_user.date_joined }} </p>
-                        <p>Последняя активность: {{ p_user.last_login }} </p>
+                        <p>Registered: {{ p_user.date_joined }} </p>
+                        <p>Last activity: {{ p_user.last_login }} </p>
                     </div>
                 </div>
             {% endwith %}
         {% else %}
             {% if not user.is_authenticated %}
-                Профиль не найден!
+                Profile not found!
             {% else %}
-                <p> Вы не залогинены! </p>
+                <p> You are not logged in! </p>
                 <p><a href="/accounts/login/"> Login </a></p>
             {% endif %}
         {% endif %}

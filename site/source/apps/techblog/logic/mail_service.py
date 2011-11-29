@@ -10,7 +10,7 @@ class MailService(object):
     def send_mail_on_user_activate(request, user):
         mail_users(
             [],
-            u"Пользователь %s активирован" % user,
+            u"User '%s' have been activated" % user,
             "mail/mail_user_activate.html",
             {
                 "site_url": Site.objects.get_current(),
@@ -24,7 +24,7 @@ class MailService(object):
         if not article.notified_on_first_publish:
             mail_users(
                 [],
-                u"Пользователь %s опубликовал статью" % user,
+                u"User '%s' published the article" % user,
                 "mail/mail_article_publish.html",
                 {
                     "site_url": Site.objects.get_current(),
@@ -40,7 +40,7 @@ class MailService(object):
     def send_mail_on_article_comment(comment):
             mail_users(
             [],
-            u"Новый комментарий от пользователя %s: " % comment.user,
+            u"New comment from user '%s': " % comment.user,
             "mail/mail_article_comment.html",
             {
                 "site_url": Site.objects.get_current(),

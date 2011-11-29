@@ -29,12 +29,12 @@ class Language(models.Model):
 
 class Category(models.Model):
     class Meta:
-        verbose_name = u'Категория'
-        verbose_name_plural = u'Категории'
+        verbose_name = u'Category'
+        verbose_name_plural = u'Categories'
         ordering = ('title',)
 
-    title = models.CharField(max_length=64, verbose_name=u'Заголовок')
-    slug = models.SlugField(max_length=64, verbose_name=u'Текстовая ссылка на статью в броузере', help_text=u'только анг.буквы, пример time_management_for_the_masses', default="")
+    title = models.CharField(max_length=64, verbose_name=u'Title')
+    slug = models.SlugField(max_length=64, verbose_name=u'Text link to the article in browser', help_text=u"only English letters, sample 'time_management_for_the_masses'", default="")
 
     def __unicode__(self):
         return self.title
@@ -48,15 +48,15 @@ class Category(models.Model):
 
 class Article(models.Model):
     class Meta:
-        verbose_name = u'статья'
-        verbose_name_plural = u'Статьи'
+        verbose_name = u'Article'
+        verbose_name_plural = u'Articles'
         ordering = ('-date',)
 
-    author = models.ForeignKey(User, verbose_name=u'Автор', null=True, blank=True)
-    authors = models.ManyToManyField(User, verbose_name=u'Авторы', null=True, related_name='authors')
-    title = models.CharField(u'Заголовок статьи', max_length=1024)
-    date = models.DateTimeField(u'Время публикации', default=datetime.now())
-    is_public = models.BooleanField(u'Статья опубликована?', default=False)
+    author = models.ForeignKey(User, verbose_name=u'Author', null=True, blank=True)
+    authors = models.ManyToManyField(User, verbose_name=u'Authors', null=True, related_name='authors')
+    title = models.CharField(u'Title', max_length=1024)
+    date = models.DateTimeField(u'Publication date', default=datetime.now())
+    is_public = models.BooleanField(u'Is published?', default=False)
     notified_on_first_publish = models.BooleanField(default=False, editable=False)
 
     lang = models.ForeignKey(Language, verbose_name=u'Language')
@@ -73,12 +73,12 @@ class Article(models.Model):
         (MARKUP_RST, u'ReStructuredText'),
         (MARKUP_TEXTILE, u'Textile'),
     )
-    markup = models.CharField(u'Формат', max_length=16, default=MARKUP_HTML, choices=MARKUP_TYPE)
-    short_raw = models.TextField(u'Начало')
-    description_raw = models.TextField(u'Под катом', blank=True)
+    markup = models.CharField(u'Format', max_length=16, default=MARKUP_HTML, choices=MARKUP_TYPE)
+    short_raw = models.TextField(u'Short')
+    description_raw = models.TextField(u'Undercut', blank=True)
 
-    short = models.TextField(u'Начало (результат)')
-    description = models.TextField(u'Под катом (результат)', blank=True)
+    short = models.TextField(u'Short (result)')
+    description = models.TextField(u'Undercut (result)', blank=True)
     tags = TaggableManager(blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
 
@@ -126,22 +126,22 @@ class UserProfile(models.Model):
      After profile is created you may access it from User instance: userobj.get_profile()
     """
     class Meta:
-        verbose_name = u'профиль'
-        verbose_name_plural = u'Профили пользователей'
+        verbose_name = u'User profile'
+        verbose_name_plural = u'User profiles'
 
     def __unicode__(self):
-        return u'Профиль пользователя %s' % self.user.username
+        return u"Profile of user: '%s'" % self.user.username
 
     user = models.ForeignKey(User, unique=True)
     GENDERS = (
-        (GENDER_MALE, u'Мужской'),
-        (GENDER_FEMALE, u'Женский'),
+        (GENDER_MALE, u'Male'),
+        (GENDER_FEMALE, u'Female'),
     )
-    gender = models.CharField(u'Пол', max_length=16, choices=GENDERS, blank=True, null=True)
-    birth_date = models.DateField(u'Дата рождения', blank=True, null=True)
-    avatar = ImageField(u'Фото', blank=True, null=True, upload_to='users/')
-    use_gravatar = models.BooleanField(u'Использовать Gravatar', default=False)
-    about_me = models.TextField(u'Про себя', max_length=4096, blank=True, null=True)
+    gender = models.CharField(u'Gender', max_length=16, choices=GENDERS, blank=True, null=True)
+    birth_date = models.DateField(u'Birthday', blank=True, null=True)
+    avatar = ImageField(u'Foto', blank=True, null=True, upload_to='users/')
+    use_gravatar = models.BooleanField(u'Use Gravatar', default=False)
+    about_me = models.TextField(u'About me', max_length=4096, blank=True, null=True)
     
     def get_articles_count(self):
         count = Article.objects.filter( authors__in=[self.user], is_public=True).count()

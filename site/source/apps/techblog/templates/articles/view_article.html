@@ -1,6 +1,6 @@
 {% extends 'abstract/base.html' %}
 
-{% block title %} {{ object.title }} / Статьи / PROGRESSORS {% endblock %}
+{% block title %} {{ object.title }} / Articles / PROGRESSORS {% endblock %}
 
 
 {% block meta_keywords %}
@@ -49,7 +49,7 @@
                            {% include 'articles/article_item.html' %}
                        {% else %}
                            {% if not is_public %}
-                              Автор переместил статью в черновик!
+                              Author have moved this article to draft!
                            {% endif %}
                        {% endif %}
                    {% endwith %}

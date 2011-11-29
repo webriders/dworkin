@@ -12,15 +12,14 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1 class="big-form-title">Перевод</h1>
+        <h1 class="big-form-title">Translation</h1>
 
         {% include 'articles/article_edit_form.html' %}
 
     {% else %}
-        <h1 class="big-form-title">Авторизуйтесь</h1>
+        <h1 class="big-form-title">Authorize</h1>
         <div class="big-form-text">
-            Вы не авторизованы и не можете работать со статьями. <a href="{% url auth_login %}">Войдите</a> и получите
-            эти права.
+            You are not logged in and can't work with the articles. <a href="{% url auth_login %}">Login</a> and get those rights.
         </div>
     {% endif %}
 {% endblock content %}

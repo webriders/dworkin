@@ -170,9 +170,9 @@ class ArticleService(object):
         own = params.get('own')
         if own:
             if own == 'articles':
-                own = u'Статьи'
+                own = u'Articles'
             elif own == 'drafts':
-                own = u'Черновики'
+                own = u'Drafts'
 
             current_filters.append({
                     'name': 'own',

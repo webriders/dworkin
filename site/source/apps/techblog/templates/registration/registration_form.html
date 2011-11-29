@@ -5,13 +5,13 @@
 {% endblock css %}
 
 {% block content %}
-    <h1 class="big-form-title">Регистрация</h1>
+    <h1 class="big-form-title">Registration</h1>
     <form method="post" class="big-form" autocomplete="off">
         {% csrf_token %}
         <dl>
             {% for field in form %}
                 {% if field.name == 'username' %}
-                    <dt> Логин </dt>
+                    <dt> Login </dt>
                 {% else %}
                     <dt>{{ field.label_tag }}</dt>
                 {% endif %}
@@ -26,7 +26,7 @@
                 </dd>
             {% endfor %}
         </dl>
-        <input type="submit" class="submit-form" value="Зарегистрироваться" />
+        <input type="submit" class="submit-form" value="Register" />
     </form>
 
     <script type="text/javascript">

@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{% block title %}Добро пожаловать на Your Site! {{ info.title }}{% endblock %}</title>
+	<title>{% block title %}Welcome to Progressors.org.ua! {{ info.title }}{% endblock %}</title>
 
 	<!--<meta name="google-site-verification" content="agxLQbFL58g6gUHVA0ugA5H4xkQkdGUYk-pQ2VUfkA4" />-->
     <meta http-equiv="Content-Style-Type" content="text/css"/>
@@ -14,7 +14,7 @@
 		<meta name="keywords" content=""/>
 	{% endblock %}
 
-	<link rel="alternate" type="application/atom+xml" title="Новые статьи на Progressors.org.ua" href="{% url rss %}" />
+	<link rel="alternate" type="application/atom+xml" title="New articles on Progressors.org.ua" href="{% url rss %}" />
 
 	<!-- Common CSS -->
 	<link href="/static/techblog/css/content_styles.css" rel="stylesheet" type="text/css" />
@@ -56,7 +56,7 @@
         <!-- Page Content Block -->
         <div class="page-container">
             {% block content %}
-                Пока на сайте пусто! <a href="/admin/">Перейти в Административную часть сайта</a>
+                At this time site is empty! <a href="/admin/">Go to the Administrative part of the site</a>
             {% endblock content %}
         </div>
 

@@ -14,13 +14,13 @@
     <div class="commands">
         {% if request.user in article.authors.all %}
             <div class="item-command">
-                <a href="{{ article.get_absolute_url }}edit/" title="Редактировать статью">Edit</a>
+                <a href="{{ article.get_absolute_url }}edit/" title="Edit article">Edit</a>
             </div>
             <div class="item-command">
                 {% if article.is_public %}
-                    <a href="{{ article.get_absolute_url }}unpublish/" title="В черновики">To draft</a>
+                    <a href="{{ article.get_absolute_url }}unpublish/" title="Move article to draft">To draft</a>
                 {% else %}
-                    <a href="{{ article.get_absolute_url }}publish/" title="Опубликовать статью">Publish</a>
+                    <a href="{{ article.get_absolute_url }}publish/" title="Publish article">Publish</a>
                 {% endif %}
             </div>
         {% endif %}
@@ -41,7 +41,7 @@
                 <h1 class="article-title">
                     {% if article.category %}
                         <span class="category" >
-                            <a href="/articles/">Статьи</a> →
+                            <a href="/articles/">Articles</a> &rarr;
                         </span>
                     {% endif %}
                     {{ article.title }}
@@ -61,7 +61,7 @@
             <div class="article-info">
                 {% if article.category %}
                     <div class="article-category">
-                       <a href="?category={{ article.category.slug }}" title="Категория: {{ article.category.title }}">{{ article.category.title }}</a> :
+                       <a href="?category={{ article.category.slug }}" title="Category: {{ article.category.title }}">{{ article.category.title }}</a> :
                     </div>
                 {% endif %}
                 {% with article.tags.all as article_tags %}
@@ -85,20 +85,17 @@
             {% if sub_page != 'view_article' %}
                 <div class="article-bottom-block">
                     <div class="article-undercut">
-                        <a href="/articles/{{ article.id }}/#undercut">Читать далее</a>
+                        <a href="/articles/{{ article.id }}/#undercut">Read more</a>
                     </div>
                     <div class="item-authors">
                         <div class="authors-title">
-                            Авторский коллектив:
+                            Authors:
                         </div>
                         {% for author in article.authors.all %}
                             <div class="item-author-block">
                                 <div class="item-author-photo">
                                     <a href="/users/{{ author.username }}/">{% user_avatar author 50 %}</a>
                                 </div>
-    {% comment %}
-                                <a class="item-author-title" href="/users/{{ author.username }}/">{{ author.username }}</a>
-    {% endcomment %}
                             </div>
                         {% endfor %}
                     </div>
@@ -166,6 +163,7 @@
 </div>
 
 {% if sub_page == 'view_article' %}
+    <h1 class="comments-title">Comments</h1>
 
     {% include 'articles/comment_tree.html' %}
 
@@ -174,7 +172,8 @@
     <div id="bottom-comment-form">
         {% if user.is_authenticated %}
             {% include 'articles/comment_form.html' %}
+        {% else %}
+            You are not logged in and can't write comments. <a href="{% url auth_login %}">Login</a> and get those rights.
         {% endif %}
     </div>
-
 {% endif %}

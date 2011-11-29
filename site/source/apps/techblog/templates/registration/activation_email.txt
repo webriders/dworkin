@@ -1,11 +1,11 @@
-Регистрация на сайте progressors.org.ua
+Register on the site {{ site }}
 
-Для активации вашего аккаунта необходимо перейти по ссылке:
+To activate your account, you must go to:
 {{ site }}/accounts/activate/{{ activation_key }}/
 
-Ссылка будет действительна в течение {{ expiration_days }} (день|дня|дней)
+The link will be valid for {{ expiration_days }} (day|days)
 
-Спасибо за внимание!
+Thank you!
 
 ----
-Администрация progressors.org.ua
+Administration {{ site }}

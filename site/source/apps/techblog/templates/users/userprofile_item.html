@@ -12,31 +12,6 @@
             {% endif %}
             </a>
         </h2>
-
-{% comment %}
-        <div>
-            <h2>{{ p_user.first_name|capfirst }} {{ p_user.last_name|capfirst }} </h2>
-            {% if profile.gender %}
-                <p>Пол: {{ profile.get_gender_display }}</p>
-            {% endif %}
-
-            {% if profile.birth_date %}
-                <p>Дата рождения: {{ profile.birth_date }}</p>
-            {% endif %}
-
-            {% if profile.get_articles_count %}
-                <p> <a href="/?author={{ profile.id }}">Статьи ({{ profile.get_articles_count }})</a> </p>
-            {% endif %}
-
-            {% if p_user == user %}
-                <p> <a href="/profile/">Это Ваш профиль</a> </p>
-            {% endif %}
-
-            {% ifnotequal p_user user %}
-                <p> <a href="/users/{{ p_user.username }}/">Профиль пользователя</a> </p>
-            {% endifnotequal %}
-        </div>
-{% endcomment %}
     {% endwith %}
 </div>
 

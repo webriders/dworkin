@@ -15,7 +15,7 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def get_authors(self, obj):
         return ', '.join(str(author) for author in obj.authors.all())
-    get_authors.short_description = u'Список авторов'
+    get_authors.short_description = u'Authors list'
 
 admin.site.register(Article, ArticleAdmin)
 

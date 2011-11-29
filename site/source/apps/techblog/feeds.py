@@ -10,9 +10,9 @@ class TextXmlFeedType(Rss201rev2Feed):
 
 class ArticlesFeed(Feed):
 
-    title = u"Блог Progressors.org.ua"
+    title = u"Blog Progressors.org.ua"
     link = "/rss/"
-    description = u"Новые статьи на Progressors.org.ua"
+    description = u"New articles on Progressors.org.ua"
     feed_type = TextXmlFeedType
 
     def items(self):

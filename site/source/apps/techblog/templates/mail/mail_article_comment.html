@@ -1,18 +1,18 @@
 {% extends "mail/base_mail.html" %}
 
 {% block mail_body %}
-    Пользователь <a href="{{ site_url }}/users/{{ comment.user }}/">{{ comment.user }}</a> оставил(а)
+    User <a href="{{ site_url }}/users/{{ comment.user }}/">{{ comment.user }}</a> post
 
     {% if comment.parent %}
-        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}">ответ</a>
+        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}"> an answer</a>
         <div>
             <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
                 {{ comment.parent.comment|linebreaks|urlize }}
             </div>
         </div>
 
-        на <a href="{{ site_url }}/users/{{ comment.parent.object_pk }}/#comment_{{ comment.parent.id }}">комментарий</a>
-        пользователя <a href="{{ site_url }}/users/{{ comment.parent.user }}/">{{ comment.parent.user }}</a>
+        to <a href="{{ site_url }}/users/{{ comment.parent.object_pk }}/#comment_{{ comment.parent.id }}"> comment</a>
+        of user <a href="{{ site_url }}/users/{{ comment.parent.user }}/">{{ comment.parent.user }}</a>
 
         <div>
             <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
@@ -22,7 +22,7 @@
 
     {% else %}
 
-        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}">комментарий</a>
+        <a href="{{ site_url }}/articles/{{ comment.object_pk }}/#comment_{{ comment.id }}"> comment</a>
         <div>
             <div style="border-left: 2px solid #6e0505; margin: 5px; padding-left: 5px">
                 {{ comment.comment|linebreaks|urlize }}

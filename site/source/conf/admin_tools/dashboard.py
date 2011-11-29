@@ -15,21 +15,21 @@ class CustomIndexDashboard(Dashboard):
         Dashboard.__init__(self, **kwargs)
         self.columns = 2
         self.children.append(ModelList(
-            title = u'Блог',
+            title = u'Blog',
             deletable=False,
             draggable=False,
             collapsible=True,
             include_list=('techblog', 'taggit', 'threadedcomments',)
         ))
         self.children.append(ModelList(
-            title = u'Авторы и Группы',
+            title = u'Authors and Groups',
             deletable=False,
             draggable=False,
             collapsible=True,
             include_list=('django.contrib.auth', 'techblog.models.UserProfile')
         ))
         self.children.append(modules.RecentActions(
-            title=u'Последние изменения',
+            title=u'Recent changes',
             draggable=False,
             deletable=False,
             collapsible=True
@@ -52,11 +52,12 @@ class CustomAppIndexDashboard(AppIndexDashboard):
             draggable=False,
             deletable=False,
             collapsible=False,
-            pre_content=mark_safe(u'Здесь вы редактируете всего лишь <b>часть вашего сайта: модуль %s</b>. Чтобы перейти к общей картине - <a href="%s">вернитесь на Главную</a>' % (_(self.app_title), reverse('admin:index'))),
+            pre_content=mark_safe( (u'Here you can edit only <b>part of your site: Module %s </b>. ' +
+                                    u'To see the hole picture - <a href="%s">back to Main</a>') % (_(self.app_title), reverse('admin:index'))),
         ))
         # append a recent actions module
         self.children.append(modules.RecentActions(
-            title=u'Последние изменения в этом модуле',
+            title=u'Recent changes in this module',
             draggable=False,
             deletable=False,
             collapsible=False,

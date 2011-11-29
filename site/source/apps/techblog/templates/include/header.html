@@ -1,26 +1,26 @@
 <div class="site-header">
     <h1 class="page-title"><a href="/">Progressors</a></h1>
-    <h2 class="page-subtitle">прогрессивный web-dev живёт здесь</h2>
+    <h2 class="page-subtitle">progressive web-dev lives here</h2>
 
     {% include 'include/menu.html' %}
 
     <div class="auth-block">
         {% if not request.user.is_authenticated %}
             <ul class="user-actions">
-                <li><a href="{% url registration_register %}">Регистрация</a></li>
-                <li><a href="{% url auth_login %}">Вход</a></li>
+                <li><a href="{% url registration_register %}">Registration</a></li>
+                <li><a href="{% url auth_login %}">Login</a></li>
             </ul>
         {% else %}
             <ul class="user-actions">
-                <li><a href="/articles/add/">Написать статью</a></li>
-                <li><a href="/profile/">Профиль</a></li>
-                <li><a href="/?own=articles">Креатив</a></li>
-                <li><a href="/?own=drafts">Черновики</a></li>
-                <!--<li><a href="/users/{{ request.user.username }}/marked/">Избранное</a></li>-->
+                <li><a href="/articles/add/">Write article</a></li>
+                <li><a href="/profile/">Profile</a></li>
+                <li><a href="/?own=articles">Creative</a></li>
+                <li><a href="/?own=drafts">Drafts</a></li>
+                {#<li><a href="/users/{{ request.user.username }}/marked/">Favorites</a></li>#}
             </ul>
             <ul class="user-actions">
-                <li>Здравствуй, <strong>{{ request.user.username }}</strong>!</li>
-                <li><a href="{% url auth_logout %}?next=/">Выход</a></li>
+                <li>Hello, <strong>{{ request.user.username }}</strong>!</li>
+                <li><a href="{% url auth_logout %}?next=/">Logout</a></li>
             </ul>
         {% endif %}
     </div>

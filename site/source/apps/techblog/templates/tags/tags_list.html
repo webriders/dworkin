@@ -1,9 +1,9 @@
 {% extends 'abstract/base.html' %}
 
-{% block title %} Теги / PROGRESSORS {% endblock %}
+{% block title %} Tags / PROGRESSORS {% endblock %}
 
 {% block meta_keywords %}
-    <meta name="title" content="Teги / PROGRESSORS"/>
+    <meta name="title" content="Tags / PROGRESSORS"/>
     {% include "include/common_meta_tags.html" %}
 {% endblock %}
 
@@ -29,7 +29,7 @@
                 {% endif %}
             {% endfor %}
         {% else %}
-            Нет ни одного тега.
+            There are no tags.
         {% endif %}
     </div>
 {% endblock content %}

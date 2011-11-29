@@ -52,9 +52,9 @@ class TranslateArticleForm(ArticleForm):
 
 
 class UserForm(forms.ModelForm):
-    oldpassword = forms.CharField( widget=forms.PasswordInput, label='Страрый пароль', required=False )
-    password1 = forms.CharField( widget=forms.PasswordInput, label=u'Новый пароль', required=False )
-    password2 = forms.CharField( widget=forms.PasswordInput, label=u'Пароля (верификация)', required=False )
+    oldpassword = forms.CharField( widget=forms.PasswordInput, label='Old password', required=False )
+    password1 = forms.CharField( widget=forms.PasswordInput, label=u'New password', required=False )
+    password2 = forms.CharField( widget=forms.PasswordInput, label=u'New password (verification)', required=False )
 
     class Meta(object):
         model = User
@@ -64,22 +64,22 @@ class UserForm(forms.ModelForm):
     def clean_oldpassword(self):
         cd = self.cleaned_data
         if cd.get('oldpassword') and not self.instance.check_password(cd['oldpassword']):
-            raise ValidationError(u'Неверный пароль.')
+            raise ValidationError(u'Invalid password.')
         return cd['oldpassword']
 
     def clean_password1(self):
         cd = self.cleaned_data
         if cd.get('oldpassword') != '' and cd.get('password1') == '':
-            raise ValidationError(u'Введите новый пароль')
+            raise ValidationError(u'Enter new password')
         return cd['password1']
 
 
     def clean_password2(self):
         cd = self.cleaned_data
         if cd.get('oldpassword') != '' and cd.get('password2') == '':
-            raise ValidationError(u'Введите новый пароль')
+            raise ValidationError(u'Enter new password')
         if cd.get('password1') and cd['password1'] != cd['password2']:
-            raise ValidationError(u'Пароли не совпадают')
+            raise ValidationError(u'Passwords does not match')
         return cd['password2']
 
 
@@ -87,4 +87,4 @@ class UserProfileForm(forms.ModelForm):
     class Meta(object):
         model = UserProfile
         fields = ('avatar', 'gender', 'birth_date', 'about_me', )
-         # TODO: add editing for field 'use_gravatar'
+        # TODO: add editing for field 'use_gravatar'

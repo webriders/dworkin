@@ -17,12 +17,12 @@ class CustomMenu(Menu):
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
         self.children.append(items.MenuItem(
-            title=u'Главная',
+            title=u'Main',
             url=reverse('admin:index')
         ))
-        self.children.append(items.Bookmarks(title=u'Закладки'))
+        self.children.append(items.Bookmarks(title=u'Bookmarks'))
         self.children.append(items.MenuItem(
-            title=u'Перейти к сайту',
+            title=u'Goto site',
             url='/'
         ))
 

@@ -1,1 +1,1 @@
-Активация на progressors.org.ua
+Activation on {{ site }}

@@ -5,13 +5,13 @@
 {% endblock css %}
 
 {% block content %}
-<h1 class="big-form-title">Вход</h1>
+<h1 class="big-form-title">Login</h1>
 
 {% if user.is_authenticated %}
 
     <div class="big-form-text">
-        Что такое, {{ user.username }}? Вы же уже авторизорваны.
-        Впрочем, всегда можно <a href="{% url auth_logout %}?next=/">выйти</a>.
+        What's up, {{ user.username }}? You're already logged in.
+        However, you can always <a href="{% url auth_logout %}?next=/">logout</a>.
     </div>
 
 {% else %}
@@ -36,7 +36,7 @@
                 </dd>
             {% endfor %}
         </dl>
-        <input type="submit" class="submit-form" value="Вход" />
+        <input type="submit" class="submit-form" value="Login" />
     </form>
 
     <script type="text/javascript">
@@ -48,8 +48,8 @@
 {% endif %}
 
 {% comment %}<ul>
-	<li><a href="{% url auth_password_reset %}">Забыли пароль?</a></li>
-	<li><a href="{% url registration_register %}">Регистрация</a></li>
+	<li><a href="{% url auth_password_reset %}">Remind password</a></li>
+	<li><a href="{% url registration_register %}">Registration</a></li>
 </ul>{% endcomment %}
 
 {% endblock %}

@@ -10,7 +10,7 @@ def create_linked_models_html(objects, app_name, model_name):
         <li> <a href="link for Feature editing"> Feature 1 </a></li>
         <li> <a href="link for Feature editing"> Feature 2 </a></li>
         <li> <a href="link for Feature editing"> Feature 3 </a></li>
-        <li> <a class="addlink" href="link to add new Feature">Добавить</a> </li>
+        <li> <a class="addlink" href="link to add new Feature">Add</a> </li>
     </ul>
     """
     rs = objects
@@ -19,7 +19,7 @@ def create_linked_models_html(objects, app_name, model_name):
         ret += u"""<li><a href="/admin/%s/%s/%d/">%s</a></li>""" % (app_name, model_name, obj.id, unicode(obj))
     return u"""<ul>%s
             <li>
-                <a class="addlink" href="/admin/%s/%s/add/">Добавить</a>
+                <a class="addlink" href="/admin/%s/%s/add/">Add</a>
             </li>
         </ul>""" % (ret, app_name, model_name)
 

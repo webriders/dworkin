@@ -2,10 +2,10 @@
 
 {% load update_filters %}
 
-{% block title %}Прогрессивный web-dev живёт здесь / Статьи / PROGRESSORS {% endblock %}
+{% block title %}Progressive web-dev lives here / Articles / PROGRESSORS{% endblock %}
 
 {% block meta_keywords %}
-    <meta name="title" content="Прогрессивный web-dev живёт здесь / Статьи / PROGRESSORS"/>
+    <meta name="title" content="Progressive web-dev lives here / Articles / PROGRESSORS"/>
     {% include "include/common_meta_tags.html" %}
 {% endblock %}
 
@@ -42,18 +42,18 @@
                     {% include 'articles/article_item.html' %}
                 {% endfor %}
             {% else %}
-                Не найдено ни одной статьи.
+                No articles found.
             {% endif %}
         </div>
 
         {% if preview_articles %}
             <div class="preview-articles">
-                <h4>Статьи в запасе</h4>
+                <h4>Articles in stock</h4>
                 {% for article in preview_articles %}
                     <a class="short-link" href="/articles/{{ article.id }}/"> {{ article.title }} </a>
                 {% endfor %}
                 <h4>
-                    <a href="/articles/{% update_filters the_filter page=next_page %}">Смотреть лентой</a> →
+                    <a href="/articles/{% update_filters the_filter page=next_page %}">Watch feed</a> &rarr;
                 </h4>
             </div>
         {% endif %}
@@ -66,7 +66,7 @@
             </a>
         </div>
         <div class="articles-rss-link">
-            <a href="{% url rss %}">Подписаться</a>
+            <a href="{% url rss %}">Subscribe</a>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 {% extends "mail/base_mail.html" %}
 
 {% block mail_body %}
-    Пользователь <a href="{{ site_url }}/users/{{ user.username }}/">{{ user.username }}</a>
-    опубликовал статью <a href="{{ site_url }}/articles/{{ article.id }}/">{{ article.title }}</a>.
+    User <a href="{{ site_url }}/users/{{ user.username }}/">{{ user.username }}</a>
+    published an article <a href="{{ site_url }}/articles/{{ article.id }}/">{{ article.title }}</a>.
 {% endblock %}

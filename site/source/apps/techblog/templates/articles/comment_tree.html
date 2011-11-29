@@ -19,7 +19,7 @@
             <ul>
         {% endif %}
 
-    <li{% if comment.last %} class="last"{% endif %}>
+        <li{% if comment.last %} class="last"{% endif %}>
 
         <div class="article-comment">
             <a name="reply_to_{{ comment.id }}"></a>
@@ -33,7 +33,7 @@
 
             {% if user.is_authenticated %}
                 <div class="replyLink">
-                    <a href="#comment_{{ comment.id }}"> Ответить </a>
+                    <a href="#comment_{{ comment.id }}">Reply</a>
                 </div>
                 <div class="comment-form" id="comment_{{ comment.id }}" style="display: none;">
                     {% include 'articles/comment_form.html' %}

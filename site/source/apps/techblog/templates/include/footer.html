@@ -1,27 +1,27 @@
 <div class="site-footer">
     <div class="footer-block">
         <div class="bottom-menu">
-            <h2>Блог</h2>
+            <h2>Blog</h2>
             <ul>
-                <li><a href="/">Статьи</a></li>
-                <li><a href="/users/">Авторы</a></li>
-                <li><a href="/tags/">Теги</a></li>
+                <li><a href="/">Articles</a></li>
+                <li><a href="/users/">Authors</a></li>
+                <li><a href="/tags/">Tags</a></li>
             </ul>
         </div>
         {% if request.user.is_authenticated %}
             <div class="bottom-menu">
-                <h2>Моё</h2>
+                <h2>My</h2>
                 <ul>
-                    <li><a href="/articles/add/">Написать статью</a></li>
-                    <li><a href="/users/{{ request.user.username }}/">Профиль</a></li>
-                    <li><a href="/users/{{ request.user.username }}/creative/">Креатив</a></li>
-                    <li><a href="/users/{{ request.user.username }}/marked/">Избранное</a></li>
+                    <li><a href="/articles/add/">Write article</a></li>
+                    <li><a href="/users/{{ request.user.username }}/">Profile</a></li>
+                    <li><a href="/users/{{ request.user.username }}/creative/">Creative</a></li>
+                    {#<li><a href="/users/{{ request.user.username }}/marked/">Favorites</a></li>#}
                 </ul>
             </div>
         {% endif %}
 
         <div class="footer-copyright">
-           &copy; 2011 <a href="http://webriders.com.ua/ru/"> Студия WebRiders</a>
+           &copy; 2011 <a href="http://webriders.com.ua/">WebRiders Studio</a>
         </div>
 
         <div class="clear"></div>  <!-- IE6 fix -->
