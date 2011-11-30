@@ -18,7 +18,7 @@
 {
     padding: 5px;
     float: left;
-    background: #F8DEAB;
+    background-color: #FFEDCB;
     margin-right: 15px;
     border-radius: 5px;
 }
@@ -28,7 +28,7 @@
 }
 
 .articles-block .articles-languages .all-languages-link {
-    background: #cef7af;
+    background: #FFD089;
 }
 
 
@@ -159,12 +159,6 @@
     padding: 20px 40px 30px;
 }
 
-.article-item-block .article-content h2.article-title {
-    color: #2173FC;
-    font-size: 36px;
-    margin-bottom: 2px;
-}
-
 .article-item-block .article-content h2.article-lang {
     color: #D6964E;
     font-size: 18px;
@@ -176,6 +170,11 @@
     margin-top: 10px;
 }
 
+.article-item-block .article-content h2.article-title {
+    color: #2173FC;
+    font-size: 36px;
+    margin-bottom: 2px;
+}
 
 .article-item-block .article-content h2.article-title a {
     text-decoration: none;
@@ -294,6 +293,15 @@
 
 
 /* Article translations */
+
+.translation-link {
+    color: #01317D;
+}
+
+.translation-link img {
+    margin-bottom: 1px;
+}
+
 .article-translations {
 
 }
@@ -308,11 +316,15 @@
 
 .article-translations .translation-item .left-block {
     display: inline;
+    padding-left: 2px;
+    padding-top: 2px;
 }
 
 .article-translations .translation-item .right-block {
     display: inline;
     float: right;
+    margin-right: 2px;
+    margin-top: 2px;
 }
 
 .article-translations .translation-item {
@@ -351,8 +363,9 @@
     background-color: #f7d6ab;
 }
 
-.article-translations .translation-author {
-
+.article-translations .translation-authors a {
+    font-weight: bold;
+    text-decoration: none;
 }
 
 

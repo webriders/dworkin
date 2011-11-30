@@ -1,5 +1,8 @@
 from django import forms
 from django.utils.safestring import mark_safe
+from django.forms.widgets import Select
+from django.utils.encoding import force_unicode
+from django.utils.html import escape, conditional_escape
 from markitup import settings
 from markitup.widgets import MarkItUpWidget
 
@@ -35,37 +38,23 @@ class MultiMarkItUpWidget(MarkItUpWidget):
         return mark_safe(html)
 
 
-#
-# http://djangosnippets.org/snippets/2453/
-#
-# HTML allows an option in a <select> to be disabled. In other words it will appear
-# in the list of choices but won't be selectable. This is done by adding a 'disabled'
-# attribute to the <option> tag, for example: <option value="" disabled="disabled">Disabled option</option>
-#
-# This code subclasses the regular Django Select widget, overriding
-# the render_option method to allow disabling options.
-#
-# Example of usage:
-#
-# class FruitForm(forms.Form):
-#    choices = (('apples', 'Apples'),
-#               ('oranges', 'Oranges'),
-#               ('bananas', {'label': 'Bananas',
-#                            'disabled': True}),    # Yes, we have no bananas
-#               ('grobblefruit', 'Grobblefruit'))
-#
-#    fruit = forms.ChoiceField(choices=choices, widget=SelectWithDisabled())
-
-from django.forms.widgets import Select
-from django.utils.encoding import force_unicode
-from django.utils.html import escape, conditional_escape
-
-
 class SelectWithDisabled(Select):
     """
-    Subclass of Django's select widget that allows disabling options.
-    To disable an option, pass a dict instead of a string for its label,
-    of the form: {'label': 'option label', 'disabled': True}
+    http://djangosnippets.org/snippets/2453/
+
+    HTML allows an option in a <select> to be disabled. In other words it will appear
+    in the list of choices but won't be selectable. This is done by adding a 'disabled'
+    attribute to the <option> tag, for example: <option value="" disabled="disabled">Disabled option</option>
+
+    This code subclasses the regular Django Select widget, overriding
+    the render_option method to allow disabling options.
+
+    Example of usage:
+
+    class FruitForm(forms.Form):
+        choices = (('apples', 'Apples'),
+                   ('bananas', {'label': 'Bananas', 'disabled': True}))
+        fruit = forms.ChoiceField(choices=choices, widget=SelectWithDisabled())
     """
     def render_option(self, selected_choices, option_value, option_label):
         option_value = force_unicode(option_value)

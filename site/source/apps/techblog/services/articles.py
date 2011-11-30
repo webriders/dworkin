@@ -24,7 +24,7 @@ class OwnerFilter(FilterItem):
         super(OwnerFilter, self).__init__(is_multivalue, always_use=True)
 
     def filter(self, query):
-        if self.value and self.user and self.user.is_authenticated:
+        if self.value and self.user and self.user.is_authenticated():
             if self.value == "articles":
                 query = query.filter(authors__in=[self.user.id], is_public=True)
             elif self.value == "drafts":
@@ -40,9 +40,6 @@ class OwnerFilter(FilterItem):
             articles = ArticleService.get_articles_by_author(self.user)
             drafts = ArticleService.get_drafts_by_author(self.user)
 
-#            if filtered_ids:
-#                articles = articles.filter(id__in = filtered_ids)
-#                drafts = drafts.filter(id__in = filtered_ids)
             context["own_articles_count"] = articles.count()
             context["own_drafts_count"] = drafts.count()
 
@@ -55,6 +52,10 @@ class OwnerFilter(FilterItem):
 
 class LangFilter(FilterItem):
     name="langs"
+
+    def __init__(self, *args, **kwargs):
+        super(LangFilter, self).__init__(*args, **kwargs)
+        self.is_multivalue = True
 
     def filter(self, query):
         if self.value == "all":
@@ -82,20 +83,20 @@ class CategoryFilter(FilterItem):
         return query.filter(category__slug=self.value)
 
     def get_context_data(self, filtered_ids):
-        all_categories = list(CategoryService.get_categories_with_count())
-        filtered_categories = list(CategoryService.get_categories_with_count(filtered_ids))
-        filtered_categories = dict(zip([cat.id for cat in filtered_categories], filtered_categories))
+        all_categories = CategoryService.get_categories_with_count()
+        filtered_categories = CategoryService.get_categories_with_count(filtered_ids)
 
         for category in all_categories:
             if category.slug == self.value:
                 category.selected = True
-                category.count = filtered_categories[category.id].count
-            if category.id not in filtered_categories.keys():
-                category.disabled = True
+            try:
+                category.count = filtered_categories.get(id=category.id).count
+            except Category.DoesNotExist:
                 category.count = 0
+                category.disabled = True
+
         context = {"categories": all_categories}
         return context
-
 
 class AuthorFilter(FilterItem):
     name="author"
@@ -104,16 +105,19 @@ class AuthorFilter(FilterItem):
         return query.filter(author__id=self.value)
 
     def get_context_data(self, filtered_ids):
-        author = None
         try:
             author = User.objects.get(id=self.value)
-        except User.DoesNotExist, e:
-            pass
-        return {"selected_author":author}
+        except User.DoesNotExist:
+            author = None
 
+        return {"selected_author":author}
 
 class TagFilter(FilterItem):
     name="tags"
+
+    def __init__(self, *args, **kwargs):
+        super(TagFilter, self).__init__(*args, **kwargs)
+        self.is_multivalue = True
 
     def filter(self, query):
         for tag in self.value:
@@ -122,13 +126,13 @@ class TagFilter(FilterItem):
 
     def get_context_data(self, filtered_ids):
         selected_tag_slugs = []
+
         if self.value:
             selected_tags = TagService.get_by_slugs(self.value)
             selected_tag_slugs = [tag.slug for tag in selected_tags]
 
         all_tags = TagService.get_tag_cloud()
-        filtered_tags = list(TagService.get_filtered_tag_cloud(filtered_ids))
-        filtered_tags = dict(zip([tag.id for tag in filtered_tags], filtered_tags))
+        filtered_tags = TagService.get_filtered_tag_cloud(filtered_ids)
 
         # mark selected
         for tag in all_tags:
@@ -136,9 +140,9 @@ class TagFilter(FilterItem):
             if selected_tag_slugs and (tag.slug in selected_tag_slugs):
                 tag.selected = True
 
-            if tag.id in filtered_tags.keys():
-                tag.count = filtered_tags[tag.id].count
-            else:
+            try:
+                tag.count = filtered_tags.get(id=tag.id).count
+            except Tag.DoesNotExist:
                 tag.disabled = True
                 tag.count = 0
 
@@ -151,9 +155,9 @@ class ArticleService(object):
     def init_filters(self):
         self.filter = Filter()
         self.filter.add_item(OwnerFilter())
-        self.filter.add_item(LangFilter(is_multivalue=True))
+        self.filter.add_item(LangFilter())
         self.filter.add_item(CategoryFilter())
-        self.filter.add_item(TagFilter(is_multivalue=True))
+        self.filter.add_item(TagFilter())
         self.filter.add_item(AuthorFilter())
 
     def filter_articles(self, request):
@@ -298,3 +302,13 @@ class ArticleService(object):
         ids = [article.lang.id]
         ids.extend(trans['lang__id'] for trans in article.get_translations().values('lang__id'))
         return ids
+
+    @classmethod
+    def get_untranslated_ids(cls, article):
+        article_ids = set(cls.get_all_translations_ids(article))
+        all_ids = set(lang['id'] for lang in Language.objects.values('id'))
+        all_ids.difference_update(article_ids)
+        return list(all_ids)
+
+
+

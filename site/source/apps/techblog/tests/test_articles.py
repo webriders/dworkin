@@ -22,9 +22,14 @@ class TestArticleService(TestCase):
         self.assertEqual(len(query), 39)
 
         request = Request()
+        request.GET['own'] = 'articles'
+        query = article_service.filter_articles(request)
+        self.assertEqual(len(query),39)
+
+        request = Request()
         request.GET['own'] = 'drafts'
         query = article_service.filter_articles(request)
-        self.assertEqual(len(query), 0)
+        self.assertEqual(len(query),39)
 
 
     def test_article_filters_for_authorized(self):

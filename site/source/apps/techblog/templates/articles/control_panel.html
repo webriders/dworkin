@@ -5,7 +5,7 @@
     {% if current_filters %}
         <div class="current-filters">
             <h3>Selected</h3>
-            <a class="all" href=".">Clear all</a>
+            <a class="all" href=".">All</a>
 
             <div class="clear"></div>
             <ul class="filters-list">
@@ -74,12 +74,7 @@
 
         <ul class="categories">
             {% for category in categories %}
-                {% if category.disabled %}
-{#                    <li class="disabled">#}
-{#                        <div class="button"></div>#}
-{#                        <a href="/articles/{% update_filters the_filter category=category.slug all_tags=1 %}">{{ category.title }} ({{ category.count }})</a>#}
-{#                    </li>#}
-                {% else %}
+                {% if not category.disabled %}
                     <li class="{% if category.selected %}selected{% endif %}">
                         <div class="button"></div>
                         <a href="/articles/{% update_filters the_filter category=category.slug %}">{{ category.title }} ({{ category.count }})</a>
@@ -96,14 +91,10 @@
         <div class="clear"></div>
         <div class="tag-cloud">
             {% for tag in tag_cloud %}
-                {% if tag.disabled %}
-{#                    <a href="#" class="disabled">#}
-{#                        {{ tag.name }} ({{ tag.count }})#}
-{#                    </a>#}
-                {% else %}
-                 <a href="/articles/{% update_filters the_filter tag=tag.slug %}" class="{% if tag.selected %}selected{% endif %}">
+                {% if not tag.disabled %}
+                     <a href="/articles/{% update_filters the_filter tag=tag.slug %}" class="{% if tag.selected %}selected{% endif %}">
                         {{ tag.name }} ({{ tag.count }})
-                    </a>
+                     </a>
                 {% endif %}
             {% endfor %}
         </div>

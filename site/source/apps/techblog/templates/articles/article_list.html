@@ -31,7 +31,7 @@
             {% for lang in languages %}
                 <div class="language-link {% if lang.selected %}active{% endif %}">
                     <a href="/articles/{% update_filters the_filter lang=lang.slug %}">
-                        {{ lang.title }} {#({{ lang.count }})#}</a>
+                        {{ lang.title }}</a>
                 </div>
             {% endfor %}
         </div>

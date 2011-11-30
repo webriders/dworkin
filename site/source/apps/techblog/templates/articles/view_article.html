@@ -23,11 +23,6 @@
     <link rel="stylesheet" href="/static/techblog/css/pages/articles.css"/>
     <link rel="stylesheet" href="/static/techblog/css/comments.css"/>
     <link rel="stylesheet" href="/static/pygments/css/default.css"/>
-    {#    <link rel="stylesheet" href="/static/pygments/css/tango.css" />#}
-    {#    <link rel="stylesheet" href="/static/pygments/css/friendly.css" />#}
-    {#    <link rel="stylesheet" href="/static/pygments/css/colorful.css" />#}
-    {#    <link rel="stylesheet" href="/static/pygments/css/highlight_native.css" />#}
-
     <link rel="stylesheet" href="/static/techblog/css/big_forms.css" />
 {% endblock css %}
 
@@ -43,16 +38,14 @@
 {% block content %}
     <div class="articles-block">
         <div class="article-list">
-               {% with 'description' as article_mode %}
-                   {% with object as article %}
-                       {% if article %}
-                           {% include 'articles/article_item.html' %}
-                       {% else %}
-                           {% if not is_public %}
-                              Author have moved this article to draft!
-                           {% endif %}
+               {% with article_mode='description' article=object %}
+                   {% if article %}
+                       {% include 'articles/article_item.html' %}
+                   {% else %}
+                       {% if not is_public %}
+                          Author have moved this article to draft!
                        {% endif %}
-                   {% endwith %}
+                   {% endif %}
                {% endwith %}
            </div>
     </div>

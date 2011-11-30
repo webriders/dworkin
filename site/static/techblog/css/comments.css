@@ -1,6 +1,13 @@
 
+.comments-title {
+    font-size: 22px;
+    margin-left: 40px;
+    color: #FF9C00;
+    margin-bottom: 25px;
+}
+
 .article-comments-teee li {
-    margin-left: 30px;
+    margin-left: 40px;
 }
 
 .article-comments-teee ul, .article-comments-teee li {
@@ -9,6 +16,7 @@
 
 #bottom-comment-form {
     margin: 20px;
+    margin-left: 30px;
 }
 
 

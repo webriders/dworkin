@@ -35,8 +35,7 @@ class TranslateArticleForm(ArticleForm):
     def __init__(self, *args, **kwargs):
         super(TranslateArticleForm, self).__init__(*args, **kwargs)
 
-        initial = kwargs.get('initial')
-        original = initial.get('original')
+        original = self.initial.get('original')
 
         self.fields['category'].widget.attrs['disabled'] = True
         self.fields['tags'].widget.attrs['disabled'] = True
@@ -46,7 +45,7 @@ class TranslateArticleForm(ArticleForm):
         for id, value in self.fields['lang'].widget.choices:
             if id in ids:
                 value = {'label': value, 'disabled': True}
-            choices.append( (id, value) )
+            choices.append((id, value))
 
         self.fields['lang'].widget = SelectWithDisabled(choices=choices)
 

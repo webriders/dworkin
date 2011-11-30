@@ -82,6 +82,8 @@ class Article(models.Model):
     tags = TaggableManager(blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
 
+    untranslated_langs = None
+
     def __unicode__(self):
         return self.title
 

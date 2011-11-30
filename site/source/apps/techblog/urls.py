@@ -14,7 +14,7 @@ urlpatterns = patterns('techblog.views',
     (r'^markitup/preview/(\w+)/$', views.MarkitupPreviewer.as_view()),
 
     (r'^users/$', views.UserProfilesList.as_view()),
-    (r'^users/(?P<user_name>\w+)/$', views.UserProfileDetail.as_view()),
+    url(r'^users/(?P<user_name>\w+)/$', views.UserProfileDetail.as_view(), name='user_profile'),
     (r'^profile/$', views.UserProfileDetail.as_view()),
     (r'^profile/edit/$', views.UserProfileEdit.as_view()),
     (r'^users/(?P<user_name>\w+)/marked/$', 'marked_by_user'),

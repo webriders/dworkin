@@ -50,7 +50,11 @@ class ArticleList(TemplateView, ArticlesControlPanel):
             current_page = paginator.page(page_num)
         except (EmptyPage, InvalidPage):
             current_page = paginator.page(paginator.num_pages)
-        context["article_list"] = list(current_page.object_list)
+
+        article_list = list(current_page.object_list)
+        for article in article_list:
+            article.untranslated_langs = ArticleService.get_untranslated_ids(article)
+        context["article_list"] = article_list
 
         if current_page.has_next():
             preview_page = paginator.page(page_num + 1)

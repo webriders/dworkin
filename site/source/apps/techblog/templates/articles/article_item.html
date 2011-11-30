@@ -25,9 +25,11 @@
             </div>
         {% endif %}
 
-        <div class="item-command">
-            <a href="{{ article.get_absolute_url }}translate/" title="Translate">Translate</a>
-        </div>
+        {% if article.untranslated_langs %}
+            <div class="item-command">
+                <a href="{{ article.get_absolute_url }}translate/" title="Translate">Translate</a>
+            </div>
+        {% endif %}
     </div>
     {% endif %}
 
@@ -38,14 +40,14 @@
             <h2 class="article-lang"> {{ article.lang.slug }} </h2>
 
             {% if sub_page == 'view_article' %}
-                <h1 class="article-title">
+                <h2 class="article-title">
                     {% if article.category %}
                         <span class="category" >
                             <a href="/articles/">Articles</a> &rarr;
                         </span>
                     {% endif %}
                     {{ article.title }}
-                </h1>
+                </h2>
             {% else %}
                 <h2 class="article-title">
                     <a href="/articles/{{ article.id }}/">{{ article.title }}</a>
@@ -53,8 +55,10 @@
             {% endif %}
 
             {% if not article.is_original %}
-                <div class="type-translation">
+                <div class="translation-link">
+                    <img src="/static/techblog/img/pages/articles/arrow.png" width="20" height="6">
                     Translation for <a href="{% url view_article article_id=article.original.id  %}">{{ article.original.title }}</a>
+                    ({{ article.original.lang.slug }})
                 </div>
             {% endif %}
 
@@ -149,8 +153,11 @@
                             {% else %}
                                 <span class="type-translation">Translation</span>
                             {% endif %}
-                            <span class="translation-author">
-                                  <a href="/users/{{ translation.author.username }}/">{% user_avatar translation.author 16 %}</a>
+                            <span class="translation-authors">
+                                {% for author in translation.authors.all %}
+                                     <a href="{% url user_profile user_name=author.username %}">{{ author.username }}</a>
+                                     {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
                              </span>
                         </div>
 
