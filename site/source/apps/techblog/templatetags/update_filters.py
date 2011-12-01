@@ -154,6 +154,7 @@ class RemoveFilters(AbstractFiltersTag):
         filter_name = data.get('filter_name')
         filter_slug = data.get('filter_slug')
         tags = params.get('tags')
+        langs = params.get('langs')
 
         for param_name in ('own', 'category', ):
             if filter_name == param_name and param_name in params:
@@ -163,6 +164,7 @@ class RemoveFilters(AbstractFiltersTag):
             tags = self.toogle_item_in_items(filter_slug, tags)
 
         params = self.update_list_in_params(params, 'tags', tags)
+        params = self.update_list_in_params(params, 'langs', langs)
         return self.make_url(params)
 
 register.tag(RemoveFilters)

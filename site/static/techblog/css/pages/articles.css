@@ -525,6 +525,13 @@
     color: #78ACFF;
 }
 
+.current-filters .all {
+    float: left;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+
 .current-filters .clear {
     margin-bottom: 15px;
 }
