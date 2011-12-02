@@ -7,14 +7,20 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.styles import get_style_by_name
 from pygments.formatters import HtmlFormatter
+from pygments.util import ClassNotFound
 
 def html_parser(value):
         value = re.sub('(?is)(<script[^>]*>.*?</script[^>]*>|<link[^>/]*/?>)', '', value).strip() # cleaning
         if value:
             formatter = HtmlFormatter(nowrap=True, lineseparator='<br/>', style=get_style_by_name('native'))
             def render_raw(match):
-                lexer = get_lexer_by_name(match.groups()[0])
-                return '<code class="highlight">%s</code>' % highlight(match.groups()[1], lexer, formatter)
+                syntax, data = match.groups()
+                try:
+                    lexer = get_lexer_by_name(syntax)
+                    return '<code class="highlight">%s</code>' % highlight(data, lexer, formatter)
+                except ClassNotFound:
+                    return '<code class="highlight">%s</code>' % data
+
             value = re.sub('(?is)<code[^>]*language="(\w+)"[^>]*>(.*?)</code[^>]*>', render_raw, value)
         return value
 
