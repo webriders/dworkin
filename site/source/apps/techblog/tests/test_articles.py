@@ -19,7 +19,7 @@ class TestArticleService(TestCase):
 
         request = Request()
         query = article_service.filter_articles(request)
-        self.assertEqual(len(query), 3)
+        self.assertEqual(len(query), 39)
 
         request = Request()
         request.GET['own'] = 'articles'
