@@ -116,20 +116,23 @@
     color: gray;
 }
 
-.profile-details .information-block .user-dates  {
-    margin-top: 20px;
+.profile-details .information-block .user-dates {
+    margin-top: 10px;
 }
 
 .profile-details .information-block .user-dates p {
-    color: white;
-    font-size: 14px;
+    font-size: 18px;
 }
+
+.profile-details .information-block .user-dates p span {
+    color: gray;
+}
+
 
 .profile-details .information-block .profile-controls {
     float: left;
     margin-bottom: 10px;
 }
-
 
 .profile-details .information-block .profile-controls a {
     background: none repeat scroll 0 0 white;

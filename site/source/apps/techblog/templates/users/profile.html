@@ -64,11 +64,11 @@
                             <p><span>About me:</span></p>
                             <span class="about-me">{{ profile.about_me|linebreaks|urlize }}</span>
                         {% endif %}
-                    </div>
 
-                    <div class="user-dates">
-                        <p>Registered: {{ p_user.date_joined }} </p>
-                        <p>Last activity: {{ p_user.last_login }} </p>
+                        <div class="user-dates">
+                            <p><span>Registered:</span> {{ p_user.date_joined|date:"d M Y H:i" }} </p>
+                            <p><span>Last activity:</span> {{ p_user.last_login|date:"d M Y H:i" }} </p>
+                        </div>
                     </div>
                 </div>
             {% endwith %}
