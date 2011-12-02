@@ -21,7 +21,7 @@ def create_virtualenv():
 
 def run_tests():
     with lcd('source'):
-        local(get_virtual_env_bin('python') + ' manage.py jenkins')
+        local('../' + get_virtual_env_bin('python') + ' manage.py jenkins')
 
 def jenkins():
     create_virtualenv()
